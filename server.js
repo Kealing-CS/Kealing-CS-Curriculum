@@ -13,12 +13,13 @@ app.get('/', function(req, res){
    res.sendFile(path.join(__dirname, 'docs', 'lesson_page.html'));
 });
 
-app.get("/static/css/:file", function(req, res) {
-    res.sendFile(path.join(__dirname, 'static/css', req.params.file));
-});
+app.get("/static/*", function(req, res) {
+    res.sendFile(path.join(__dirname, 'static', req.params['0']));
+})
 
-app.get("/static/js/:file", function(req, res) {
-    res.sendFile(path.join(__dirname, 'static/js', req.params.file));
-});
+app.post("/api/run", function(req, res) {
+    // should run code (sandboxed obv) and check if it works. Save to db the code and the result. Return the result
+
+})
 
 app.listen(8008);

@@ -6,10 +6,10 @@
     <title>KCS | Lesson</title>
     <link rel="stylesheet" href="static/css/lesson page.css">
     <script src="static/js/lesson page.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="static/js/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-    <!- nav bar goes here ig ->
+    <!-- nav bar goes here ig -->
     <div class="editor">
         <div class="editor-wrapper">
             <div class="editor-body">
@@ -19,13 +19,13 @@
             <div class="editor-footer">
                 
                 <div class="editor-footer-left">
-                    <button class="editor-btn editor-run">Run ></button>
+                    <button onclick="run()" class="editor-btn editor-run">Run ></button>
                     <button class="editor-btn editor-reset">Reset ></button>
                 </div>
                 
                 <div class="editor-footer-right">
                     <div class="editor-console">
-                        <ul class="editor-console-logs"></ul>
+                        <p id="console"></p>
                     </div>
                 </div>
             </div>
