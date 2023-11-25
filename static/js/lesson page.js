@@ -43,12 +43,11 @@ async function run() {
     } catch(e) {
         let spn = document.createElement("span");
 
-        spn.innerText += `${e}`
+        spn.innerText += `${e}`;
 
-        let line = `${e.lineNumber}: ${code.split("\n")[e.lineNumber-1]}`
-        let temp = ""
-        for (let i=0;i<line.length;i++) {temp+="^"}
-        spn.innerText += `\n${line}\n${temp}\n`
+        let line = `${e.lineNumber}: ${code.split("\n")[e.lineNumber-1]}`;
+        let temp = "^".repeat(line.length);
+        spn.innerText += `\n${line}\n${temp}\n`;
 
         spn.style.color = "red";
         cnsl.innerHTML = "";
