@@ -1,14 +1,14 @@
-var start_js = new LeaderLine(
+let start_js = new LeaderLine(
     document.getElementById('start'),
     document.getElementById('js')
 );
 
-var start_html = new LeaderLine(
+let start_html = new LeaderLine(
     document.getElementById('start'),
     document.getElementById('html')
 );
 
-var start_css = new LeaderLine(
+let start_css = new LeaderLine(
     document.getElementById('start'),
     document.getElementById('css')
 );
