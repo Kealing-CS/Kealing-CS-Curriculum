@@ -1,6 +1,7 @@
 module.exports = function (app, db) {
     app.post("/api/run", function(req, res) {
         // should run code (sandboxed obv) and check if it works. Save to db the code and the result. Return the result
+        res.send(418)
     })
 
     app.get("/api/getLessons", function(req, res) {

@@ -10,18 +10,35 @@
 }
 
 .level {
+    z-index: 1;
     position: absolute;
-    width: 5em;
-    height: 5em;
+    width: 5vw;
+    height: 5vw;
     border-radius: 100%;
     background-color: #aaa;
     text-align: center;
-    display: table-cell;
-    text-align: center;
-    line-height: 5em;
     text-decoration:none;
+    padding: 0 0;
     /* font-family: that font we used on the website; */
     color:#fff;
+}
+
+.locked {
+    background-color: #444;
+    color: #aaa;
+}
+
+.level p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.level:hover {
+    background-color: #ddd;
+    color: #333;
 }
 
 /*
@@ -39,6 +56,24 @@ left: 47.5vw;
     box-shadow: 0 0 40px 20px #fff;
 }
 
+.js {
+    top: 65vh;
+    left: 35vw;
+    line-height: 5vw;
+}
+
+.html {
+    top: 55vh;
+    left: 48vw;
+    line-height: 5vw;
+}
+
+.css {
+    top: 65vh;
+    left: 61vw;
+    line-height: 5vw;
+}
+
 .test {
     position: absolute;
     top: 0;
@@ -46,6 +81,10 @@ left: 47.5vw;
     width: 1%;
     height: 100%;
     background-color: #fff;
+}
+
+.leader-line {
+    z-index: 0;
 }
 
 .ttest {
