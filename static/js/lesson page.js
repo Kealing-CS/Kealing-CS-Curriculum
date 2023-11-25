@@ -19,23 +19,26 @@ async function run() {
     // console shit
     cnsl.innerHTML = "";
     let output = iframe.contentWindow.console;
-    output.log = function (message) {
+    output.log = function(...message) {
         let spn = document.createElement("span");
-        spn.innerText = `${message}\n`;
+        spn.innerText = `${message.join(" ")}\n`;
         spn.style.color = "white";
         cnsl.appendChild(spn);
     }
-    output.error = function (message) {
+    output.error = function(...message) {
         let spn = document.createElement("span");
-        spn.innerText = `${message}\n`;
+        spn.innerText = `${message.join(" ")}\n`;
         spn.style.color = "red";
         cnsl.appendChild(spn);
     }
-    output.warn = function (message) {
+    output.warn = function(...message) {
         let spn = document.createElement("span");
-        spn.innerText = `${message}\n`;
+        spn.innerText = `${message.join(" ")}\n`;
         spn.style.color = "yellow";
         cnsl.appendChild(spn);
+    }
+    output.clear = function() {
+        cnsl.innerHTML = ""
     }
 
     try {
