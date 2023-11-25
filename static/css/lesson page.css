@@ -86,6 +86,19 @@ html, body {
     border: 1px solid var(--editor-border);
 }
 
+.editor-console {
+    font-family: 'Monaco';
+    font-size: 14px;
+    color: #fff;
+    padding: 1em;
+    overflow: auto;
+}
+
 body {
     background-color: #282828;
+}
+
+@font-face {
+    font-family: 'Monaco';
+    src: url("../assets/fonts/Monaco.ttf");
 }

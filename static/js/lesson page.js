@@ -9,13 +9,16 @@ codeEditor.session.setMode(`ace/mode/javascript`);
 
 
 async function run() {
-    let code = codeEditor.getValue();
-    let iframe = document.createElement("iframe");
+    let code = codeEditor.getValue(); // get the code
+    
+    let iframe = document.createElement("iframe"); // create the iframe for sandboxing
     iframe.style.display = "none";
     iframe.src = "docs/runCodeIframe.html";
     document.body.appendChild(iframe);
+
+    // console shit
+    cnsl.innerHTML = "";
     let output = iframe.contentWindow.console;
-    console.log("gtoif")
     output.log = function (message) {
         let spn = document.createElement("span");
         spn.innerText = `${message}\n`;
@@ -35,6 +38,20 @@ async function run() {
         cnsl.appendChild(spn);
     }
 
-    iframe.contentWindow.eval(code);
+    try {
+        iframe.contentWindow.eval(code);
+    } catch(e) {
+        let spn = document.createElement("span");
 
+        spn.innerText += `${e}`
+
+        let line = `${e.lineNumber}: ${code.split("\n")[e.lineNumber-1]}`
+        let temp = ""
+        for (let i=0;i<line.length;i++) {temp+="^"}
+        spn.innerText += `\n${line}\n${temp}\n`
+
+        spn.style.color = "red";
+        cnsl.innerHTML = "";
+        cnsl.appendChild(spn);
+    }
 }
