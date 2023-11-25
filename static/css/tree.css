@@ -1,0 +1,58 @@
+.levels-holder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #333;
+}
+
+.level {
+    position: absolute;
+    width: 5em;
+    height: 5em;
+    border-radius: 100%;
+    background-color: #aaa;
+    text-align: center;
+    display: table-cell;
+    text-align: center;
+    line-height: 5em;
+    text-decoration:none;
+    /* font-family: that font we used on the website; */
+    color:#fff;
+}
+
+/*
+center:
+top: 45vh;
+left: 47.5vw;
+( for a width and height of 6vw )
+*/
+
+.start {
+    top: 80vh;
+    left: 47.5vw;
+    width: 6vw;
+    height: 6vw;
+    box-shadow: 0 0 40px 20px #fff;
+}
+
+.test {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.ttest {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1%;
+    background-color: #fff;
+}
