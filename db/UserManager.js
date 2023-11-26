@@ -37,7 +37,12 @@ module.exports = class UserManager {
     }
 
     getlevels(username) {
-        return this.dataDB.get(username).levels;
+        try {
+            return this.dataDB.get(username).levels;
+        }
+        catch {
+            return [];
+        }
     }
 
     addlevel(username, level) {
@@ -45,7 +50,12 @@ module.exports = class UserManager {
     }
 
     getCode(username, level) {
-        return this.dataDB.get(username).code[level];
+        try {
+            return this.dataDB.get(username).code[level];
+        }
+        catch {
+            return "";
+        }
     }
 
     setCode(username, level, code) {

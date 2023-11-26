@@ -34,7 +34,13 @@ instructionsClose.addEventListener("click", function() {
     instructionsContainer.style.display = "none";
 });
 
-function log([message], color) {
+function log([message], color, image=null) {
+    if (image) {
+        let img = document.createElement("img")
+        img.src = image
+        img.classList.add("console-image")
+        cnsl.appendChild(img)
+    }
     let spn = document.createElement("span");
     spn.innerText = `${message}\n`;
     spn.style.color = color;
@@ -58,18 +64,10 @@ async function run() {
         log(message, "#fff")
     }
     output.error = function(...message) {
-        let img = document.createElement("img")
-        img.src = "static/assets/images/error.svg"
-        img.classList.add("console-image")
-        cnsl.appendChild(img)
-        log(message, "red")
+        log(message, "red", "static/assets/images/error.svg")
     }
     output.warn = function(...message) {
-        let img = document.createElement("img")
-        img.src = "static/assets/images/warning.svg"
-        img.classList.add("console-image")
-        cnsl.appendChild(img)
-        log(message, "yellow")
+        log(message, "yellow", "static/assets/images/warning.svg")
     }
     output.clear = function() {
         cnsl.innerHTML = ""
@@ -77,17 +75,11 @@ async function run() {
 
     try {
         iframe.contentWindow.eval(code);
+        // delete the iframe
+        iframe.remove()
     } catch(e) {
-        let spn = document.createElement("span");
-
-        spn.innerText += `${e}`;
-
         let line = `${e.lineNumber}: ${code.split("\n")[e.lineNumber-1]}`;
         let temp = "^".repeat(line.length);
-        spn.innerText += `\n${line}\n${temp}\n`;
-
-        spn.style.color = "red";
-        cnsl.innerHTML = "";
-        cnsl.appendChild(spn);
+        log(`${e}\n${line}\n${temp}\n`, "red", "static/assets/images/error.svg");
     }
 }
