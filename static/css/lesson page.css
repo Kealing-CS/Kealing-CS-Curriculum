@@ -16,44 +16,35 @@ html, body {
     width: 100%;
 }
 
-.editor {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
+/*
 .editor-wrapper {
     width: 50%;
     height: 70%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background: var(--editor-bg);
     padding: 2em;
     border-radius: 3px;
     border: 1px solid #3b3b3b;
 }
+*/
 
 .editor-body {
-    flex: 1;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width:50%;
+    height: 90%;
 }
 
-.editor-footer {
+.editor-buttons {
     display: flex;
+    flex-direction: row;
+    position:absolute;
+    top: 0;
+    left: 0;
 }
 
-.editor-footer-left {
-    display: flex;
-    flex-direction: column;
-}
-
-.editor-footer-right {
-    flex: 1;
-    margin-left: 10px;
-    overflow: hidden;
-}
 
 .editor-btn {
     border: 0;
@@ -68,11 +59,15 @@ html, body {
 
 .editor-console {
     background-color: #333333;
-    width: 100%;
-    height: 130px;
+    width: 50%;
+    height: 100%;
     margin-top: .9em;
     border: 1px solid var(--editor-border);
     overflow: auto;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    right: 0;
 }
 
 .editor-code {
@@ -88,11 +83,12 @@ html, body {
 
 .editor-console {
     font-family: 'Monaco';
-    font-size: 14px;
+    font-size: 75%;
     color: #fff;
     padding: 1em;
     overflow: auto;
 }
+
 
 body {
     background-color: #282828;

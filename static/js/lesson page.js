@@ -7,6 +7,13 @@ let cnsl = document.getElementById("console")
 codeEditor.setTheme(`ace/theme/tomorrow_night`);
 codeEditor.session.setMode(`ace/mode/javascript`);
 
+function log([message], color) {
+    let spn = document.createElement("span");
+    spn.innerText = `${message}\n`;
+    spn.style.color = color;
+    spn.classList.add("console-log");
+    cnsl.appendChild(spn);
+}
 
 async function run() {
     let code = codeEditor.getValue(); // get the code
@@ -20,10 +27,7 @@ async function run() {
     cnsl.innerHTML = "";
     let output = iframe.contentWindow.console;
     output.log = function(...message) {
-        let spn = document.createElement("span");
-        spn.innerText = `${message.join(" ")}\n`;
-        spn.style.color = "white";
-        cnsl.appendChild(spn);
+        log(message, "#fff")
     }
     output.error = function(...message) {
         let spn = document.createElement("span");

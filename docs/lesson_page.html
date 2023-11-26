@@ -11,24 +11,18 @@
 <body>
     <!-- nav bar goes here ig -->
     <div class="editor">
-        <div class="editor-wrapper">
-            <div class="editor-body">
-                <div id="editorCode" class="editor-code"></div>
-            </div>
+        <div class="editor-buttons">
+            <button onclick="run()" class="editor-btn editor-run">Run</button>
+            <button class="editor-btn editor-reset">Reset</button>
+            <button class="editor-btn editor-instructions">Instructions</button>
+        </div>
 
-            <div class="editor-footer">
-                
-                <div class="editor-footer-left">
-                    <button onclick="run()" class="editor-btn editor-run">Run ></button>
-                    <button class="editor-btn editor-reset">Reset ></button>
-                </div>
-                
-                <div class="editor-footer-right">
-                    <div class="editor-console">
-                        <p id="console"></p>
-                    </div>
-                </div>
-            </div>
+        <div class="editor-body">
+            <div id="editorCode" class="editor-code"></div>
+        </div>
+
+        <div class="editor-console">
+            <p id="console"></p>
         </div>
     </div>
 </body>
