@@ -1,5 +1,17 @@
+let url = new URL(window.location.href)
+let level = url.searchParams.get("level")
+let levels = [
+    "start",
+    "js", "html", "css",
+]
+if (!levels.includes(level)) {
+    window.location.href = "/tree"
+}
+
+
 let runButton = document.querySelector(".editor-run");
 let resetButton = document.querySelector(".editor-reset");
+let instructions = document.querySelector(".editor-instructions");
 
 let codeEditor = ace.edit("editorCode");
 let cnsl = document.getElementById("console")
@@ -7,10 +19,22 @@ let cnsl = document.getElementById("console")
 codeEditor.setTheme(`ace/theme/tomorrow_night`);
 codeEditor.session.setMode(`ace/mode/javascript`);
 
+let instructionsContainer = document.querySelector(".instructions-container");
+let instructionsClose = document.querySelector(".instructions-close");
+
+instructions.addEventListener("click", function() {
+    instructionsContainer.style.display = "flow";
+});
+
+instructionsClose.addEventListener("click", function() {
+    instructionsContainer.style.display = "none";
+});
+
 function log([message], color) {
     let spn = document.createElement("span");
     spn.innerText = `${message}\n`;
     spn.style.color = color;
+    spn.style.overflowWrap = "anywhere";
     spn.classList.add("console-log");
     cnsl.appendChild(spn);
 }

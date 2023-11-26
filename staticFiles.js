@@ -8,12 +8,16 @@ module.exports = function (app, db) {
     app.get('/tree', function(req, res){
         res.sendFile(path.join(__dirname, 'docs', 'tree.html'));
     });
+
+    app.get('/login', function(req, res){
+        res.sendFile(path.join(__dirname, 'docs', 'login.html'));
+    });
      
     app.get("/static/*", function(req, res) {
         res.sendFile(path.join(__dirname, 'static', req.params['0']));
-    })
+    });
 
     app.get("/docs/*", function(req, res) {
         res.sendFile(path.join(__dirname, 'docs', req.params['0']));
-    })
+    });
 }
