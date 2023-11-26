@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = function (app, db) {
     app.get('/', function(req, res){
-        res.sendFile(path.join(__dirname, 'docs', 'lesson_page.html'));
+        res.sendFile(path.join(__dirname, 'docs', 'level_page.html'));
     });
 
     app.get('/tree', function(req, res){
@@ -12,6 +12,10 @@ module.exports = function (app, db) {
     app.get('/login', function(req, res){
         res.sendFile(path.join(__dirname, 'docs', 'login.html'));
     });
+
+    app.get('/createAccount', function(req, res) {
+        res.sendFile(path.join(__dirname, 'docs', 'createAccount.html'));
+    })
      
     app.get("/static/*", function(req, res) {
         res.sendFile(path.join(__dirname, 'static', req.params['0']));

@@ -1,12 +1,16 @@
 let url = new URL(window.location.href)
 let level = url.searchParams.get("level")
-let levels = [
-    "start",
-    "js", "html", "css",
-]
-if (!levels.includes(level)) {
-    window.location.href = "/tree"
-}
+
+let levelExists = fetch(`/api/getInstructions?level=${level}`)
+.then(res => {
+    if (res.status == 404) {
+        window.location.href = "/tree";
+    }
+    return res.text();
+})
+.then(res => {
+    document.getElementById("instructions").innerHTML = res;
+});
 
 
 let runButton = document.querySelector(".editor-run");
