@@ -44,25 +44,14 @@ html, body {
     border-radius: 2vh;
 }
 
-/*
-.editor-wrapper {
-    width: 50%;
-    height: 70%;
+.editor-body {
     display: flex;
     flex-direction: row;
-    background: var(--editor-bg);
-    padding: 2em;
-    border-radius: 3px;
-    border: 1px solid #3b3b3b;
-}
-*/
-
-.editor-body {
     position: absolute;
-    top: 10%;
+    top: 2.1em;
     left: 0;
-    width:50%;
-    height: 90%;
+    width: 50%;
+    height: calc(100% - 2.1em);
 }
 
 .editor-buttons {
@@ -80,7 +69,6 @@ html, body {
     background-color: #555555;
     border: 2px solid #333;
     color: #fff;
-    margin-top: 1em;
     width: 100px;
     cursor: pointer;
 }
@@ -89,13 +77,16 @@ html, body {
     background-color: #333333;
     width: 50%;
     height: 100%;
-    margin-top: .9em;
     border: 1px solid var(--editor-border);
     overflow: auto;
     position: absolute;
     overflow: hidden;
     top: 0;
     right: 0;
+    font-family: 'Monaco';
+    font-size: 75%;
+    color: #fff;
+    padding: 1em;
 }
 
 .editor-code {
@@ -106,15 +97,7 @@ html, body {
     bottom: 0;
     left: 0;
     right: 0;
-    border: 1px solid var(--editor-border);
-}
-
-.editor-console {
-    font-family: 'Monaco';
-    font-size: 75%;
-    color: #fff;
-    padding: 1em;
-    overflow: auto;
+    border: 1px solid var(--editor-fborder);
 }
 
 
