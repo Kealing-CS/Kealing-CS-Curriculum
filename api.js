@@ -63,9 +63,9 @@ module.exports = function (app) {
         res.send(UserManager.createAccount(user, password));
     })
 
-    app.post("/api/login", function(req, res) {
-        user = req.body.user;
-        password = req.body.password;
+    app.get("/api/login", function(req, res) {
+        user = req.query.user;
+        password = req.query.password;
         res.send(UserManager.checkLogin(user, password));
     })
 }

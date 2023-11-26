@@ -62,6 +62,11 @@ html, body {
     left: 0;
 }
 
+.console-image {
+    width: 1em;
+    height: 1em;
+}
+
 
 .editor-btn {
     border: 0;
@@ -84,7 +89,6 @@ html, body {
     top: 0;
     right: 0;
     font-family: 'Monaco';
-    font-size: 75%;
     color: #fff;
     padding: 1em;
 }

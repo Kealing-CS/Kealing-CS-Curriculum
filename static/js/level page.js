@@ -58,16 +58,18 @@ async function run() {
         log(message, "#fff")
     }
     output.error = function(...message) {
-        let spn = document.createElement("span");
-        spn.innerText = `${message.join(" ")}\n`;
-        spn.style.color = "red";
-        cnsl.appendChild(spn);
+        let img = document.createElement("img")
+        img.src = "static/assets/images/error.svg"
+        img.classList.add("console-image")
+        cnsl.appendChild(img)
+        log(message, "red")
     }
     output.warn = function(...message) {
-        let spn = document.createElement("span");
-        spn.innerText = `${message.join(" ")}\n`;
-        spn.style.color = "yellow";
-        cnsl.appendChild(spn);
+        let img = document.createElement("img")
+        img.src = "static/assets/images/warning.svg"
+        img.classList.add("console-image")
+        cnsl.appendChild(img)
+        log(message, "yellow")
     }
     output.clear = function() {
         cnsl.innerHTML = ""

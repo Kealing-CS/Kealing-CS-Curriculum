@@ -1,7 +1,8 @@
 {
   "admin": {
     "levels": [
-      "start"
+      "start",
+      "js"
     ],
     "code": {
       "start": "",

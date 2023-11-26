@@ -9,6 +9,16 @@ let correctLogin = fetch(`/api/login?user=${localStorage.getItem('username')}&pa
     }
 });
 
+let unlocked = fetch(`/api/getLevels?user=${localStorage.getItem('username')}`)
+.then(res => res.text())
+.then(res => {
+    let levels = JSON.parse(res);
+    for (let i = 0; i < levels.length; i++) {
+        console.log(levels[i])
+        document.getElementById(levels[i]).classList.remove("locked");
+    }
+});
+
 
 let start_js = new LeaderLine(
     document.getElementById('start'),
