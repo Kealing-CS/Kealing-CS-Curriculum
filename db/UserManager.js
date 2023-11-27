@@ -22,11 +22,10 @@ module.exports = class UserManager {
 
     checkLogin(username, password) {
         let sensativeDB = new Database('./db/sensative.json');
-
         if (!sensativeDB.get(username)) {
             return [false, "Username not found"];
         }
-        if (sensativeDB.get(username) != this._hashPassword(password, 10)) {
+        if (bcrypt.compareSync(password, sensativeDB.get(username))) {
             return [false, "Incorrect password"];
         }
         return [true, "Login successful"];
