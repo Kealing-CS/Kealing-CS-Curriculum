@@ -1,12 +1,14 @@
 {
   "admin": {
-    "levels": [
+    "unlocked": [
       "start",
-      "js"
+      "js",
+      "html",
+      "css"
     ],
+    "completed": [],
     "code": {
-      "start": "",
-      "js": ""
+      "start": "foemsdf"
     }
   }
 }

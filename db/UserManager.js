@@ -2,31 +2,31 @@ const Database = require('easy-json-database');
 const bcrypt = require('bcrypt');
 
 module.exports = class UserManager {
-    constructor() {
-        this.dataDB = new Database('./db/userdata.json');
-        this.sensativeDB = new Database('./db/sensative.json');
-    }
-
     createAccount(username, password) {
-        if (this.sensativeDB.get(username)) {
+        let dataDB = new Database('./db/userdata.json');
+        let sensativeDB = new Database('./db/sensative.json');
+
+        if (sensativeDB.get(username)) {
             return [false, "Username already taken"];
         }
-        this.sensativeDB.set(username, this._hashPassword(password, 10));
-        this.dataDB.set(username, {
-            "levels": ["start"],
+        sensativeDB.set(username, this._hashPassword(password, 10));
+        dataDB.set(username, {
+            "unlocked": ["start"],
+            "completed": [],
             "code": {
-                "start": "",
-                "js": ""
+                "start": ""
             }
         });
         return [true, "Account created"];
     }
 
     checkLogin(username, password) {
-        if (!this.sensativeDB.get(username)) {
+        let sensativeDB = new Database('./db/sensative.json');
+
+        if (!sensativeDB.get(username)) {
             return [false, "Username not found"];
         }
-        if (this.sensativeDB.get(username) != this._hashPassword(password, 10)) {
+        if (sensativeDB.get(username) != this._hashPassword(password, 10)) {
             return [false, "Incorrect password"];
         }
         return [true, "Login successful"];
@@ -36,22 +36,51 @@ module.exports = class UserManager {
         return bcrypt.hashSync(password, saltRounds);
     }
 
-    getlevels(username) {
+    getUnlocked(username) {
+        let dataDB = new Database('./db/userdata.json');
+
         try {
-            return this.dataDB.get(username).levels;
+            return dataDB.get(username).unlocked;
         }
         catch {
             return [];
         }
     }
 
-    addlevel(username, level) {
-        this.dataDB.push(username + ".levels", level);
+    unlockLevel(username, level) {
+        let dataDB = new Database('./db/userdata.json');
+
+        let data = dataDB.get(username);
+        data.unlocked.push(level);
+
+        dataDB.set(username, data);
+    }
+
+    getCompleted(username) {
+        let dataDB = new Database('./db/userdata.json');
+
+        try {
+            return dataDB.get(username).completed;
+        }
+        catch {
+            return [];
+        }
+    }
+
+    completeLevel(username, level) {
+        let dataDB = new Database('./db/userdata.json');
+
+        let data = dataDB.get(username);
+        data.completed.push(level);
+
+        dataDB.set(username, data);
     }
 
     getCode(username, level) {
+        let dataDB = new Database('./db/userdata.json');
+
         try {
-            return this.dataDB.get(username).code[level];
+            return dataDB.get(username).code[level];
         }
         catch {
             return "";
@@ -59,6 +88,8 @@ module.exports = class UserManager {
     }
 
     setCode(username, level, code) {
-        this.dataDB.set(username + ".code." + level, code);
+        let dataDB = new Database('./db/userdata.json');
+
+        dataDB.set(username + ".code." + level, code);
     }
 }

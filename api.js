@@ -1,5 +1,6 @@
 const UM = require("./db/UserManager.js");
 const instructions = require("./db/instructions.json");
+const leveltree = require("./db/leveltree.json");
 
 module.exports = function (app) {
     const UserManager = new UM();
@@ -25,13 +26,20 @@ module.exports = function (app) {
         UserManager.setCode(user, level, code);
         // check if code works
         // if it works:
-        UserManager.addlevel(user, level);
-        res.send(true);
+        let item;
+        for (let key in leveltree) {
+            if (leveltree[key]) {
+                if (leveltree[key].includes(level)) {
+                    UserManager.unlockLevel(user, key);
+                }
+            }
+        }
+        res.sendStatus(200);
     })
 
     app.get("/api/getlevels", function(req, res) {
         user = req.query.user;
-        res.send(UserManager.getlevels(user));
+        res.send(UserManager.getUnlocked(user));
     })
 
     app.get("/api/getCode", function(req, res) {
