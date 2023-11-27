@@ -45,9 +45,14 @@ module.exports = function (app) {
         res.sendStatus(200);
     })
 
-    app.get("/api/getlevels", function(req, res) {
+    app.get("/api/getUnlocked", function(req, res) {
         user = req.query.user;
         res.send(UserManager.getUnlocked(user));
+    })
+
+    app.get("/api/getCompleted", function(req, res) {
+        user = req.query.user;
+        res.send(UserManager.getCompleted(user));
     })
 
     app.get("/api/getCode", function(req, res) {

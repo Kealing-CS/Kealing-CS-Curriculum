@@ -9,13 +9,20 @@ let correctLogin = fetch(`/api/login?user=${localStorage.getItem('username')}&pa
     }
 });
 
-let unlocked = fetch(`/api/getLevels?user=${localStorage.getItem('username')}`)
+const levels = document.querySelectorAll(".level");
+levels.forEach(level => {
+    level.classList.add("locked");
+});
+
+let unlocked = fetch(`/api/getUnlocked?user=${localStorage.getItem('username')}`)
 .then(res => res.text())
 .then(res => {
+    let level;
     let levels = JSON.parse(res);
     for (let i = 0; i < levels.length; i++) {
-        console.log(levels[i])
-        document.getElementById(levels[i]).classList.remove("locked");
+        level = document.getElementById(levels[i]);
+        level.classList.add("unlocked");
+        level.classList.remove("locked");
     }
 });
 

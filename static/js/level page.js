@@ -1,5 +1,6 @@
-let url = new URL(window.location.href)
-let level = url.searchParams.get("level")
+const url = new URL(window.location.href)
+const level = url.searchParams.get("level")
+const user = localStorage.getItem("username")
 
 let levelExists = fetch(`/api/getInstructions?level=${level}`)
 .then(res => {
@@ -11,6 +12,14 @@ let levelExists = fetch(`/api/getInstructions?level=${level}`)
 .then(res => {
     document.getElementById("instructions").innerHTML = res;
 });
+
+let levelUnlocked = fetch(`/api/getUnlocked?user=${user}`)
+.then(res => res.json())
+.then(res => {
+    if (!res.includes(level)) {
+        window.location.href = "/tree";
+    }
+})
 
 
 let runButton = document.querySelector(".editor-run");
