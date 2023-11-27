@@ -12,6 +12,7 @@
     <container id="login-box">
     <input type="text" id="username" placeholder="Username"><br>
     <input type="password" id="password" placeholder="Password"><br>
+    <input type="password" id="passwordConfirm" placeholder="Retype Password"><br>
     <button onclick="createAccount()">create</button>
     </container>
 
@@ -19,6 +20,10 @@
         function createAccount() {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
+	    var retypedPassword = document.getElementById("passwordConfirm").value;
+
+	    // User must re-enter password
+	    if (password == retypedPassword) {
 
             let out = fetch("api/createAccount", {
                 method: "POST",
@@ -39,6 +44,10 @@
                 }
                 alert(data[1]);
             })
+
+	    } else {
+		alert("Passwords do not match!")
+	    }
         }
     </script>
 </body>
