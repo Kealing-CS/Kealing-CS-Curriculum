@@ -3,6 +3,6 @@ This is the curriculum game made for kealing cs.
 
 # Author(s)
 Ian Hawthorne - ian.hawthornezt@stu.austinisd.org
+Max Wang - maxwell.wangv5@stu.austinisd.org
 
-# When Cloning
-there is a "sensative.json" file in the db folder that is in the gitignore. you will have to create this yourself
+<!-- hey ian if nobody can email school addresses why are they even here -->
