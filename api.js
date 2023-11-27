@@ -31,6 +31,7 @@ module.exports = function (app) {
         }
 
         UserManager.setCode(user, level, code);
+        UserManager.completeLevel(user, level)
         // TODO: check if code works, if so: //
         let completed = UserManager.getCompleted(user);
         for (let key in leveltree) {

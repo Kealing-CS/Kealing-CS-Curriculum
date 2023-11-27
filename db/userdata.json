@@ -10,5 +10,19 @@
     "code": {
       "start": "foemsdf"
     }
+  },
+  "testt": {
+    "unlocked": [
+      "start",
+      "js",
+      "html",
+      "css"
+    ],
+    "completed": [
+      "start"
+    ],
+    "code": {
+      "start": "foemsdf"
+    }
   }
 }
