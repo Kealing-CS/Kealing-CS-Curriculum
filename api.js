@@ -19,17 +19,24 @@ module.exports = function (app) {
         const user = req.body.user;
         const password = req.body.password;
         const level = req.body.level;
+
         if (!UserManager.checkLogin(user, password)) {
             res.sendStatus(401);
             return;
         }
+
+        if (!UserManager.getUnlocked(user).includes(level)) {
+            res.sendStatus(403);
+            return;
+        }
+
         UserManager.setCode(user, level, code);
-        // check if code works
-        // if it works:
-        let item;
+        // TODO: check if code works, if so: //
+        let completed = UserManager.getCompleted(user);
         for (let key in leveltree) {
             if (leveltree[key]) {
-                if (leveltree[key].includes(level)) {
+                let allCompleted = leveltree[key].every(v => completed.includes(v))
+                if (allCompleted) {
                     UserManager.unlockLevel(user, key);
                 }
             }
