@@ -10,7 +10,7 @@ fs.writeFile('./db/sensative.json', "{}", { flag: 'wx' }, function (err) {
     if (err) { console.log("sensative.json already exists") } else { console.log("sensative.json created") };
 });
 fs.writeFile('./db/userdata.json', "{}", { flag: 'wx' }, function (err) {
-    ifs (err) { console.log("sensative.json already exists") } else { console.log("sensative.json created") };
+    if (err) { console.log("userdata.json already exists") } else { console.log("sensative.json created") };
 });
 
 var app = express();
