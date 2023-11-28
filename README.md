@@ -1,12 +1,14 @@
 # Kealing-CS-Curriculum
-This is the curriculum game made for kealing cs.
+This is the curriculum website made for the Kealing Computer Science Program.
 
-# Author(s)
-Ian Hawthorne - ian.hawthornezt@stu.austinisd.org\
-Max Wang - maxwell.wangv5@stu.austinisd.org
+## Authors
+Ian Hawthorne\
+Max Wang
 
-# Resources for Contributing
-Color Palette - https://palettes.shecodes.io/palettes/1448 \
-Hex Codes - #e7eaf6, #a2a8d3, #38598b, #113f67
-
-<!-- hey ian if nobody can email school addresses why are they even here -->
+## Resources for Contributing
+##### Color Palette - Rich Black, Teal, Cambridge Blue, Ash Gray, and Parchment
+Rich Black - 031926ff\
+Teal - #468189ff\
+Cambridge Blue - #77aca2ff\
+Ash Gray - #9dbebbff\
+Parchment - #f4e9cdff
