@@ -6,8 +6,11 @@ var api = require('./api.js');
 var fs = require('fs')
 
 // Creates sensative.json if it does not exist
-fs.writeFile('./db/sensative.json', "", { flag: 'wx' }, function (err) {
+fs.writeFile('./db/sensative.json', "{}", { flag: 'wx' }, function (err) {
     if (err) { console.log("sensative.json already exists") } else { console.log("sensative.json created") };
+});
+fs.writeFile('./db/userdata.json', "{}", { flag: 'wx' }, function (err) {
+    ifs (err) { console.log("sensative.json already exists") } else { console.log("sensative.json created") };
 });
 
 var app = express();
