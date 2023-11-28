@@ -1,0 +1,182 @@
+:root {
+    --rich-black: #031926ff;
+    --teal: #468189ff;
+    --cambridge-blue: #77aca2ff;
+    --ash-gray: #9dbebbff;
+    --parchment: #f4e9cdff;
+
+    /* aliases */
+
+    --black: #031926ff;
+    --teal: #468189ff;
+    --green: #77aca2ff;
+    --gray: #9dbebbff;
+    --white: #f4e9cdff;
+
+    /* IDE colors */
+    --editor-bg: #1f1f1f;
+    --editor-border: #3f87a6;
+}
+
+/*  */
+/*  */
+/* login + createaccount */
+/*  */
+/*  */
+
+body {
+	background-color: var(--black);
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+#login-box {
+	position: absolute;
+	margin: 0;
+	top: 50%;
+	left: 50;
+	transform: translate(-50%, -50%);
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+input {
+	margin: 5px;
+	border-width: 2px;
+	border-radius: 11px;
+	box-shadow: none;
+	outline: none;
+	font-size: x-large;
+	padding: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-style: solid;
+	color: var(--white);
+	background-color: var(--teal);
+	border-color: var(--teal);
+}
+
+button {
+	border-style: solid;
+	font-size: x-large;
+	margin: 5px;
+	border-radius: 7.5px;
+	color: var(--black);
+	background-color: var(--green);
+	border-color: var(--green);
+	transition-property: transform, box-shadow;
+	transition-duration: 0.25s;
+}
+
+button:active {
+	transform: translateY(2.5px) scale(0.95);
+	border-color: var(--white);
+	color: var(--teal);
+	background-color: var(--white);
+}
+
+/*  */
+/*  */
+/* tree */
+/*  */
+/*  */
+
+.levels-holder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: var(--black);
+}
+
+.level {
+    z-index: 1;
+    position: absolute;
+    width: 5vw;
+    height: 5vw;
+    border-radius: 100%;
+    background-color: #aaa;
+    text-align: center;
+    text-decoration:none;
+    padding: 0 0;
+    color: #fff;
+}
+
+.locked {
+    background-color: var(--green);
+    color: var(--teal);
+    font-size: small;
+    box-shadow: 0 0 40px 20px var(--green);
+}
+
+.level p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.level:hover {
+    background-color: var(--white);
+    color: #333;
+    box-shadow: 0 0 40px 20px var(--white);
+}
+
+.start {
+    top: 80vh;
+    left: 47.5vw;
+    width: 6vw;
+    height: 6vw;
+    box-shadow: 0 0 40px 20px #aaa;
+}
+
+.js {
+    top: 65vh;
+    left: 35vw;
+    line-height: 5vw;
+}
+
+.html {
+    top: 55vh;
+    left: 48vw;
+    line-height: 5vw;
+}
+
+.css {
+    top: 65vh;
+    left: 61vw;
+    line-height: 5vw;
+}
+
+.test {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.leader-line {
+    z-index: 0;
+}
+
+.ttest {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1%;
+    background-color: #fff;
+}
+
+/*  */
+/*  */
+/* level page */
+/*  */
+/*  */
