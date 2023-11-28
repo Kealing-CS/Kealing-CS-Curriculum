@@ -107,10 +107,10 @@ button:active {
 }
 
 .locked {
-    background-color: var(--green);
-    color: var(--teal);
+    background-color: var(--teal);
+    color: var(--white);
     font-size: small;
-    box-shadow: 0 0 40px 20px var(--green);
+    box-shadow: 0 0 20px 10px var(--green);
 }
 
 .level p {
@@ -132,7 +132,7 @@ button:active {
     left: 47.5vw;
     width: 6vw;
     height: 6vw;
-    box-shadow: 0 0 40px 20px #aaa;
+    box-shadow: 0 0 40px 20px var(--gray);
 }
 
 .js {
