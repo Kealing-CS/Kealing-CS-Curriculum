@@ -21,7 +21,8 @@ let levelUnlocked = fetch(`/api/getUnlocked?user=${user}`)
     }
 })
 
-let baseCode = "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));"
+let baseJsCode = "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));"
+let baseHtmlCode = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Document</title>\n</head>\n<body>\n\n</body>\n</html>'
 
 let runButton = document.querySelector(".editor-run");
 let resetButton = document.querySelector(".editor-reset");
@@ -30,7 +31,10 @@ let instructions = document.querySelector(".editor-instructions");
 let codeEditor = ace.edit("editorCode");
 let cnsl = document.getElementById("console")
 
-codeEditor.setValue(baseCode);
+let jsFile = ace.createEditSession(baseJsCode.split("\n"))
+let htmlFile = ace.createEditSession(baseHtmlCode.split("\n"))
+
+codeEditor.setSession(jsFile)
 
 codeEditor.setTheme(`ace/theme/tomorrow_night`);
 codeEditor.session.setMode(`ace/mode/javascript`);
@@ -59,6 +63,18 @@ function log([message], color, image=null) {
     spn.style.overflowWrap = "anywhere";
     spn.classList.add("console-log");
     cnsl.appendChild(spn);
+}
+
+function jsButton() {
+    console.log("hi")
+    codeEditor.setSession(jsFile)
+    codeEditor.session.setMode(`ace/mode/javascript`);
+}
+
+function htmlButton() {
+    console.log("heee")
+    codeEditor.setSession(htmlFile)
+    codeEditor.session.setMode(`ace/mode/html`);
 }
 
 async function run() {

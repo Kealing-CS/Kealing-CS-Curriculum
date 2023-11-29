@@ -45,6 +45,33 @@ html, body {
     color: #fff;
 }
 
+.files {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 2.1em;
+    left: 0%;
+    width: 50%;
+    height: calc(100% - 2.1em);
+    width: 5%;
+}
+
+.file-button {
+    height: 5%;
+    background-color: #1f1f1f;
+    color: white;
+    border-width: 0;
+}
+
+.file-button img {
+    height: 40%;
+    width: auto;
+}
+
+.file-button:hover {
+    background-color: #222;
+}
+
 .editor-body {
     display: flex;
     flex-direction: row;
