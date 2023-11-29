@@ -10,7 +10,7 @@
     --black: #031926ff;
     --teal: #468189ff;
     --green: #77aca2ff;
-    --gray: #9dbebbff;
+    --grey: #9dbebbff;
     --white: #f4e9cdff;
 
     /* IDE colors */
@@ -55,6 +55,10 @@ body {
 	color: var(--white);
 	background-color: var(--teal);
 	border-color: var(--teal);
+}
+
+.login-input::placeholder {
+    color: var(--grey);
 }
 
 .login-button {
@@ -132,7 +136,7 @@ body {
     left: 47.5vw;
     width: 6vw;
     height: 6vw;
-    box-shadow: 0 0 40px 20px var(--gray);
+    box-shadow: 0 0 40px 20px var(--grey);
 }
 
 .js {
