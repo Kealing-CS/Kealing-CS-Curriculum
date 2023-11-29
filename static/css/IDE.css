@@ -50,9 +50,10 @@ html, body {
     flex-direction: row;
     position: absolute;
     top: 2.1em;
-    left: 0;
+    right: 50%;
     width: 50%;
     height: calc(100% - 2.1em);
+    width: 45%;
 }
 
 .editor-buttons {

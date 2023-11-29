@@ -119,7 +119,7 @@ body {
     background-color: var(--teal);
     color: var(--white);
     font-size: small;
-    box-shadow: 0 0 20px 10px var(--green);
+    box-shadow: 0 0 15px 7px var(--green);
 }
 
 .level p {
@@ -133,7 +133,7 @@ body {
 .level:hover {
     background-color: var(--white);
     color: #333;
-    box-shadow: 0 0 40px 20px var(--white);
+    box-shadow: 0 0 20px 10px var(--white);
 }
 
 .start {
@@ -142,6 +142,10 @@ body {
     width: 6vw;
     height: 6vw;
     box-shadow: 0 0 40px 20px var(--grey);
+}
+
+.start:hover {
+    box-shadow: 0 0 50px 30px var(--white);
 }
 
 .js {

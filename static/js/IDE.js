@@ -21,6 +21,7 @@ let levelUnlocked = fetch(`/api/getUnlocked?user=${user}`)
     }
 })
 
+let baseCode = "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));"
 
 let runButton = document.querySelector(".editor-run");
 let resetButton = document.querySelector(".editor-reset");
@@ -28,6 +29,8 @@ let instructions = document.querySelector(".editor-instructions");
 
 let codeEditor = ace.edit("editorCode");
 let cnsl = document.getElementById("console")
+
+codeEditor.setValue(baseCode);
 
 codeEditor.setTheme(`ace/theme/tomorrow_night`);
 codeEditor.session.setMode(`ace/mode/javascript`);
