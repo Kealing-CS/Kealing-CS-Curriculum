@@ -13,8 +13,8 @@ module.exports = function (app, db) {
         res.sendFile(path.join(__dirname, 'docs', 'login.html'));
     });
 
-    app.get('/createAccount', function(req, res) {
-        res.sendFile(path.join(__dirname, 'docs', 'createAccount.html'));
+    app.get('/register', function(req, res) {
+        res.sendFile(path.join(__dirname, 'docs', 'register.html'));
     })
      
     app.get("/static/*", function(req, res) {

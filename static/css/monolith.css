@@ -57,6 +57,11 @@ body {
 	border-color: var(--teal);
 }
 
+.register-link {
+    text-decoration: none;
+    color: var(--teal)
+}
+
 .login-input::placeholder {
     color: var(--grey);
 }
