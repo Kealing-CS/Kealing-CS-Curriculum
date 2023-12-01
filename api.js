@@ -1,18 +1,26 @@
 const UM = require("./db/UserManager.js");
-const instructions = require("./db/instructions.json");
-const leveltree = require("./db/leveltree.json");
+const levelinfo = require("./db/levelinformation.json");
 
 module.exports = function (app) {
     const UserManager = new UM();
 
     app.get("/api/getInstructions", function(req, res) {
         const level = req.query.level;
-        if (!instructions[level]) {
+        if (!levelinfo[level]) {
             res.sendStatus(404);
             return;
         }
-        res.send(instructions[level]);
-    })
+        res.send(levelinfo[level]["instructions"]);
+    });
+
+    app.get("/api/getRequiredLanguages", function(req, res) {
+        const level = req.query.level;
+        if (!levelinfo[level]) {
+            res.sendStatus(404);
+            return;
+        }
+        res.send(levelinfo[level]["needs"])
+    });
 
     app.post("/api/submit", function(req, res) {
         const code = req.body.code;
@@ -34,9 +42,9 @@ module.exports = function (app) {
         UserManager.completeLevel(user, level)
         // TODO: check if code works, if so: //
         let completed = UserManager.getCompleted(user);
-        for (let key in leveltree) {
-            if (leveltree[key]) {
-                let allCompleted = leveltree[key].every(v => completed.includes(v))
+        for (let key in levelinfo) {
+            if (levelinfo[key]["parents"]) {
+                let allCompleted = levelinfo[key]["parents"].every(v => completed.includes(v))
                 if (allCompleted) {
                     UserManager.unlockLevel(user, key);
                 }
@@ -85,6 +93,7 @@ module.exports = function (app) {
     })
 
     app.get("/api/login", function(req, res) {
+        console.log(user, password)
         user = req.query.user;
         password = req.query.password;
         res.send(UserManager.checkLogin(user, password));

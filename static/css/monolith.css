@@ -8,6 +8,7 @@
     /* aliases */
 
     --black: #031926ff;
+    --blue-black: #31304D;
     --teal: #468189ff;
     --green: #77aca2ff;
     --grey: #9dbebbff;
@@ -116,6 +117,13 @@ body {
 }
 
 .locked {
+    background-color: var(--blue-black);
+    color: var(--ash-gray);
+    pointer-events: none;
+    cursor: default;
+}
+
+.unlocked {
     background-color: var(--teal);
     color: var(--white);
     font-size: small;
@@ -130,7 +138,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.level:hover {
+.unlocked:hover {
     background-color: var(--white);
     color: #333;
     box-shadow: 0 0 20px 10px var(--white);

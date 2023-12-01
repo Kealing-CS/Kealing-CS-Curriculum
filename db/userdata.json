@@ -1,3 +1,25 @@
 {
-  
+  "admin": {
+    "unlocked": [
+      "start",
+      "js",
+      "html",
+      "css"
+    ],
+    "completed": [
+      "start"
+    ],
+    "code": {
+      "start": "hi"
+    }
+  },
+  "stupid": {
+    "unlocked": [
+      "start"
+    ],
+    "completed": [],
+    "code": {
+      "start": ""
+    }
+  }
 }

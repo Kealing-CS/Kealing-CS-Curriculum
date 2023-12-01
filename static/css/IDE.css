@@ -110,12 +110,12 @@ html, body {
 .editor-console {
     background-color: #333333;
     width: 50%;
-    height: 100%;
+    height: 33%;
     border: 1px solid var(--editor-border);
     overflow: auto;
     position: absolute;
     overflow: hidden;
-    top: 0;
+    top: 67%;
     right: 0;
     font-family: 'Monaco';
     color: #fff;
@@ -145,4 +145,13 @@ body {
 
 #instructions {
     font-size: 2em;
+}
+
+.code-iframe {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 67%;
+    z-index: -1;
 }
