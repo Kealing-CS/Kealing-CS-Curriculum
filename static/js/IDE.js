@@ -113,11 +113,13 @@ change edit mode
 */
 
 function jsButton() {
+    console.log("js")
     codeEditor.setSession(jsFile);
     codeEditor.session.setMode(`ace/mode/javascript`);
 }
 
 function htmlButton() {
+    console.log("html")
     codeEditor.setSession(htmlFile);
     codeEditor.session.setMode(`ace/mode/html`);
 }

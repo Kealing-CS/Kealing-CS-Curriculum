@@ -61,15 +61,16 @@ html, body {
     background-color: #1f1f1f;
     color: white;
     border-width: 0;
+    cursor: pointer;
+}
+
+.file-button:hover {
+    background-color: #444;
 }
 
 .file-button img {
     height: 40%;
     width: auto;
-}
-
-.file-button:hover {
-    background-color: #444;
 }
 
 .editor-body {
@@ -105,6 +106,10 @@ html, body {
     color: #fff;
     width: 100px;
     cursor: pointer;
+}
+
+.editor-btn:hover {
+    background-color: #444;
 }
 
 .editor-console {
