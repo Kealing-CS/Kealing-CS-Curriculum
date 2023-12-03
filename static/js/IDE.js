@@ -155,20 +155,23 @@ async function runJS(iframe, code) {
         cnsl.innerHTML = "";
     };
 
-
-    /*
-    `try {
-        ${code}
-    } catch (e) {
-        console.error(e.message);
-    }`
-    */
-
-    let tempcode = code;
+    // handle errors:
     let doc = iframe.contentWindow.document;
     let scriptObj = doc.createElement("script");
     scriptObj.type = "text/javascript";
-    console.log(tempcode)
+    scriptObj.innerHTML = `
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.error(msg, url, lineNo, columnNo, error);
+    }`;
+    doc.body.appendChild(scriptObj);
+
+    let tempcode = `try {
+        ${code}\n
+    } catch (e) {
+        console.error(e.message);
+    }`;
+    scriptObj = doc.createElement("script");
+    scriptObj.type = "text/javascript";
     scriptObj.innerHTML = tempcode;
     return scriptObj.outerHTML;
 }
