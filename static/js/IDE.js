@@ -166,7 +166,7 @@ async function runJS(iframe, code) {
     doc.body.appendChild(scriptObj);
 
     let tempcode = `try {
-        ${code}\n
+        ${code.replace("</script>", "<\\/script>")}\n
     } catch (e) {
         console.error(e.message);
     }`;
