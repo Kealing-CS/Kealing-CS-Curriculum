@@ -93,9 +93,9 @@ module.exports = function (app) {
     })
 
     app.get("/api/login", function(req, res) {
-        console.log(user, password)
         user = req.query.user;
         password = req.query.password;
+        console.log(user, password);
         res.send(UserManager.checkLogin(user, password));
     })
 }

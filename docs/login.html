@@ -22,21 +22,13 @@
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
 
-            let out = fetch("api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "user": username,
-                    "password": password
-                })
-            }).then(response => response.json())
-
-            out.then(data => {
+            let out = fetch(`api/login?user=${username}&password=${password}`)
+            .then(response => response.json())
+            .then(data => {
                 if (data[0]) {
                     localStorage.setItem("username", username);
                     localStorage.setItem("password", password);
+                    console.log("iihi")
                     window.location.href = "http://localhost:8008/tree";
                 }
                 alert(data[1]);
