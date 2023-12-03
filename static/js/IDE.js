@@ -123,8 +123,21 @@ function htmlButton() {
 }
 
 /*
-run the different languages
+run the code
 */
+
+function sanitize(string) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        "/": '&#x2F;',
+    };
+    const reg = /[&<>"'/]/ig;
+    return string.replace(reg, (match)=>(map[match]));
+}
 
 async function runJS(iframe, code) {
     cnsl.innerHTML = "";
@@ -142,20 +155,22 @@ async function runJS(iframe, code) {
         cnsl.innerHTML = "";
     };
 
-    try {
-        iframe.contentWindow.eval(code)
-    } catch(e) {
-        console.log(e)
-        let line = `${e.lineNumber}: ${code.split("\n")[e.lineNumber-1]}`;
-        let temp = "^".repeat(line.length);
-        log(`${e}\n${line}\n${temp}\n`, "red", "static/assets/images/error.svg");
-    }
-}
 
-async function runHTML(iframe, code) {
-    iframe.classList.add("code-iframe")
-    iframe.id = "codeIframe"
-    iframe.srcdoc = code
+    /*
+    `try {
+        ${code}
+    } catch (e) {
+        console.error(e.message);
+    }`
+    */
+
+    let tempcode = code;
+    let doc = iframe.contentWindow.document;
+    let scriptObj = doc.createElement("script");
+    scriptObj.type = "text/javascript";
+    console.log(tempcode)
+    scriptObj.innerHTML = tempcode;
+    return scriptObj.outerHTML;
 }
 
 async function run() {
@@ -165,6 +180,10 @@ async function run() {
     }
     let iframe = document.createElement("iframe"); // create the iframe for sandboxing
     document.body.appendChild(iframe);
-    runHTML(iframe, htmlFile.getValue());
-    runJS(iframe, jsFile.getValue());
+    iframe.id = "codeIframe"
+    iframe.classList.add("code-iframe")
+    let code = "";
+    code += await htmlFile.getValue()
+    code += await runJS(iframe, jsFile.getValue());
+    iframe.srcdoc = code;
 }
