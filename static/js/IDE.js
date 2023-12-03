@@ -61,7 +61,8 @@ load ace
 */
 
 let baseJsCode = "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));";
-let baseHtmlCode = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Document</title>\n</head>\n<body>\n\n</body>\n</html>';
+let baseHTMLCode = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>';
+let baseCSSCode = "body {\n    color: white;\n}";
 
 let runButton = document.querySelector(".editor-run");
 let resetButton = document.querySelector(".editor-reset");
@@ -71,12 +72,13 @@ let codeEditor = ace.edit("editorCode");
 let cnsl = document.getElementById("console");
 
 let jsFile = ace.createEditSession(baseJsCode.split("\n"));
-let htmlFile = ace.createEditSession(baseHtmlCode.split("\n"));
+let htmlFile = ace.createEditSession(baseHTMLCode.split("\n"));
+let cssFile = ace.createEditSession(baseCSSCode.split("\n"));
 
-codeEditor.setSession(jsFile);
+codeEditor.setSession(htmlFile);
 
 codeEditor.setTheme(`ace/theme/tomorrow_night`);
-codeEditor.session.setMode(`ace/mode/javascript`);
+codeEditor.session.setMode(`ace/mode/html`);
 
 let instructionsContainer = document.querySelector(".instructions-container");
 let instructionsClose = document.querySelector(".instructions-close");
@@ -113,35 +115,25 @@ change edit mode
 */
 
 function jsButton() {
-    console.log("js")
     codeEditor.setSession(jsFile);
     codeEditor.session.setMode(`ace/mode/javascript`);
 }
 
 function htmlButton() {
-    console.log("html")
     codeEditor.setSession(htmlFile);
     codeEditor.session.setMode(`ace/mode/html`);
+}
+
+function cssButton() {
+    codeEditor.setSession(cssFile);
+    codeEditor.session.setMode(`ace/mode/css`);
 }
 
 /*
 run the code
 */
 
-function sanitize(string) {
-    const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#x27;',
-        "/": '&#x2F;',
-    };
-    const reg = /[&<>"'/]/ig;
-    return string.replace(reg, (match)=>(map[match]));
-}
-
-async function runJS(iframe, code) {
+function runJS(iframe, code) {
     cnsl.innerHTML = "";
     let output = iframe.contentWindow.console;
     output.log = function(...message) {
@@ -178,6 +170,14 @@ async function runJS(iframe, code) {
     return scriptObj.outerHTML;
 }
 
+function runCSS(iframe, code) {
+    let doc = iframe.contentWindow.document;
+    let styleObj = doc.createElement("style");
+    styleObj.type = "text/css";
+    styleObj.innerHTML = code;
+    return styleObj.outerHTML;
+}
+
 async function run() {
     let existing = document.getElementsByTagName("iframe");
     for (var i = 0; i < existing.length; i++) {
@@ -190,5 +190,8 @@ async function run() {
     let code = "";
     code += await htmlFile.getValue()
     code += await runJS(iframe, jsFile.getValue());
+    code += runCSS(iframe, cssFile.getValue());
+    console.log(code)
+    console.log(cssFile)
     iframe.srcdoc = code;
 }
