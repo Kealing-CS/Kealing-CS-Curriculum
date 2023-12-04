@@ -3,9 +3,14 @@ Get basic info
 */
 
 const url = new URL(window.location.href);
-const level = url.searchParams.get("level");
+let level = url.searchParams.get("level");
 const user = localStorage.getItem("username");
 
+
+if (!level) {
+    level = "sandbox"
+    console.log("hi :3")
+}
 
 /*
 Check that the user has the level exists and that the user has it unlocked
@@ -24,7 +29,6 @@ async function checks() {
             window.location.href = "/login";
         }
     });
-    */
 
     await fetch(`/api/getUnlocked?user=${user}`)
     .then(res => res.json())
@@ -33,16 +37,20 @@ async function checks() {
             window.location.href = "/tree";
         }
     });
+    */
 
     await fetch(`/api/getInstructions?level=${level}`)
     .then(res => {
+        console.log("hi!!!!")
         if (res.status == 404) {
             console.log("404")
-            window.location.href = "/tree";
+            //window.location.href = "/tree";
         }
+        console.log("heshr")
         return res.text();
     })
     .then(res => {
+        console.log(res)
         document.getElementById("instructions").innerHTML = res;
     });
 }
@@ -66,7 +74,7 @@ async function _editLangs() {
         document.getElementById("jsButton").remove()
     } 
 }
-_editLangs()
+//_editLangs()
 
 /*
 load ace

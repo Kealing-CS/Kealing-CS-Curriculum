@@ -1,6 +1,6 @@
-if (!localStorage.getItem('username') || !localStorage.getItem('password')) {
-    window.location.href = "/login";
-}
+//if (!localStorage.getItem('username') || !localStorage.getItem('password')) {
+//    window.location.href = "/login";
+//}
 
 /*
 TODO: reenable this when the login system is fixed

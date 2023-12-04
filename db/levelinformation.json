@@ -18,5 +18,10 @@
         "parents": ["start"],
         "instructions": "temp",
         "needs": ["html", "css"]
+    },
+    "sandbox": {
+        "parents": null,
+        "instructions": "Welcome to the sandbox! In here you can do whatever you want. Have fun!",
+        "needs": ["html", "js", "css"]
     }
 }
