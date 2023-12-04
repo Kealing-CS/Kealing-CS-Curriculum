@@ -51,7 +51,6 @@ html, body {
     position: absolute;
     top: 2.1em;
     left: 0%;
-    width: 50%;
     height: calc(100% - 2.1em);
     width: 5%;
 }
@@ -79,7 +78,6 @@ html, body {
     position: absolute;
     top: 2.1em;
     right: 50%;
-    width: 50%;
     height: calc(100% - 2.1em);
     width: 45%;
 }
@@ -99,7 +97,6 @@ html, body {
 
 
 .editor-btn {
-    border: 0;
     padding: .5em;
     background-color: #555555;
     border: 2px solid #333;
@@ -117,7 +114,6 @@ html, body {
     width: 50%;
     height: 33%;
     border: 1px solid var(--editor-border);
-    overflow: auto;
     position: absolute;
     overflow: hidden;
     top: 67%;
@@ -156,5 +152,5 @@ body {
     left: 50%;
     width: 50%;
     height: 67%;
-    z-index: -1;
+    z-index: 1000000;
 }

@@ -221,3 +221,6 @@ async function run() {
     code += runCSS(iframe, cssFile.getValue());
     iframe.srcdoc = code;
 }
+
+
+run()
