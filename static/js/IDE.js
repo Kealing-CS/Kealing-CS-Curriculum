@@ -14,6 +14,18 @@ This should work but for clarity should mabye be changed later
 */
 
 async function checks() {
+    /*
+    TODO: reenable this when the login system is fixed
+
+    await fetch(`/api/login?user=${user}&password=${localStorage.getItem("password")}`)
+    .then(res => res.json())
+    .then(res => {
+        if (!res[0]) {
+            window.location.href = "/login";
+        }
+    });
+    */
+
     await fetch(`/api/getUnlocked?user=${user}`)
     .then(res => res.json())
     .then(res => {
@@ -135,7 +147,7 @@ run the code
 
 function runJS(iframe, code) {
     cnsl.innerHTML = "";
-    let output = iframe.contentWindow.console;
+    let output = {};
     output.log = function(...message) {
         log(message, "#fff");
     };
@@ -145,8 +157,15 @@ function runJS(iframe, code) {
     output.warn = function(...message) {
         log(message, "yellow", "static/assets/images/warning.svg");
     };
-    output.clear = function() {
-        cnsl.innerHTML = "";
+
+    window.onmessage = function(e) {
+        if (e.data.type == "log") {
+            output.log(e.data.message);
+        } else if (e.data.type == "error") {
+            output.error(e.data.message);
+        } else if (e.data.type == "warn") {
+            output.warn(e.data.message);
+        }
     };
 
     // handle errors:
@@ -159,7 +178,16 @@ function runJS(iframe, code) {
     }`;
     doc.body.appendChild(scriptObj);
 
-    let tempcode = `try {
+    let tempcode = `console.log = function(...message) {
+        window.parent.postMessage({type: "log", message: message}, "*");
+    };
+    console.error = function(...message) {
+        window.parent.postMessage({type: "error", message: message}, "*");
+    };
+    console.warn = function(...message) {
+        window.parent.postMessage({type: "warn", message: message}, "*");
+    };
+    try {
         ${code.replace("</script>", "<\\/script>")}\n
     } catch (e) {
         console.error(e.message);
@@ -191,7 +219,5 @@ async function run() {
     code += await htmlFile.getValue()
     code += await runJS(iframe, jsFile.getValue());
     code += runCSS(iframe, cssFile.getValue());
-    console.log(code)
-    console.log(cssFile)
     iframe.srcdoc = code;
 }
