@@ -5,6 +5,7 @@ if (!localStorage.getItem('username') || !localStorage.getItem('password')) {
 let correctLogin = fetch(`/api/login?user=${localStorage.getItem('username')}&password=${localStorage.getItem('password')}`)
 .then(res => res.json())
 .then(res => {
+    console.log(res)
     if (!res[0]) {
         window.location.href = "/login";
     }
@@ -17,12 +18,13 @@ levels.forEach(level => {
 });
 
 let unlocked = fetch(`/api/getUnlocked?user=${localStorage.getItem('username')}`)
-.then(res => res.text())
+.then(res => res.json())
 .then(res => {
+    console.log(res)
     let level;
-    let levels = JSON.parse(res);
-    for (let i = 0; i < levels.length; i++) {
-        level = document.getElementById(levels[i]);
+    for (let i = 0; i < res.length; i++) {
+        level = document.getElementById(res[i]);
+        if (!level) continue
         level.classList.add("unlocked");
         level.classList.remove("locked");
     }

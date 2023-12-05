@@ -155,27 +155,6 @@ function cssButton() {
 }
 
 /*
-submit
-*/
-
-async function submit() {
-    let res = await fetch("/api/submit", {
-        method: "POST",
-        body: JSON.stringify({
-            code: {"html": htmlFile.getValue(), "js": jsFile.getValue(), "css": cssFile.getValue()},
-            user: user,
-            password: localStorage.getItem("password"),
-            level: level
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    });
-
-    
-}
-
-/*
 run the code
 */
 
@@ -251,6 +230,7 @@ async function run() {
     code += await runJS(iframe, jsFile.getValue());
     code += runCSS(iframe, cssFile.getValue());
     iframe.srcdoc = code;
+    
 }
 
 

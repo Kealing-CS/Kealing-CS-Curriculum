@@ -1,5 +1,6 @@
 const UM = require("./db/UserManager.js");
 const levelinfo = require("./db/levelinformation.json");
+import puppeteer from 'puppeteer';
 
 module.exports = function (app) {
     const UserManager = new UM();
@@ -22,7 +23,7 @@ module.exports = function (app) {
         res.send(levelinfo[level]["needs"])
     });
 
-    app.post("/api/submit", function(req, res) {
+    app.post("/api/submit", async function(req, res) {
         const code = req.body.code;
         const user = req.body.user;
         const password = req.body.password;
@@ -39,8 +40,14 @@ module.exports = function (app) {
         }
 
         UserManager.setCode(user, level, code);
+        if (levelinfo[level]["needs"].length === 1 && levelinfo[level]["needs"][0] === "js") {
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
+            await page.setContent(code["html"])
+            await page.setViewport({width: 1080, height: 1024});
+        }
+
         UserManager.completeLevel(user, level)
-        // TODO: check if code works, if so: //
         let completed = UserManager.getCompleted(user);
         for (let key in levelinfo) {
             if (levelinfo[key]["parents"]) {
