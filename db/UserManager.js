@@ -25,7 +25,7 @@ module.exports = class UserManager {
         if (!sensativeDB.get(username)) {
             return [false, "Username not found"];
         }
-        if (bcrypt.compareSync(password, sensativeDB.get(username))) {
+        if (!bcrypt.compareSync(password, sensativeDB.get(username))) {
             return [false, "Incorrect password"];
         }
         return [true, "Login successful"];
