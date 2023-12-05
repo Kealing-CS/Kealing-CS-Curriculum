@@ -7,10 +7,7 @@ let level = url.searchParams.get("level");
 const user = localStorage.getItem("username");
 
 
-if (!level) {
-    level = "sandbox"
-    console.log("hi :3")
-}
+if (!level) level = "sandbox"
 
 /*
 Check that the user has the level exists and that the user has it unlocked
@@ -38,16 +35,13 @@ async function checks() {
 
     await fetch(`/api/getInstructions?level=${level}`)
     .then(res => {
-        console.log("hi!!!!")
         if (res.status == 404) {
             console.log("404")
-            //window.location.href = "/tree";
+            window.location.href = "/tree";
         }
-        console.log("heshr")
         return res.text();
     })
     .then(res => {
-        console.log(res)
         document.getElementById("instructions").innerHTML = res;
     });
 }
@@ -115,7 +109,7 @@ baseCode();
 base log
 */
 
-function log([message], color, image=null) {
+function log(message, color, image=null, end="\n") {
     if (image) {
         let img = document.createElement("img");
         img.src = image;
@@ -123,7 +117,7 @@ function log([message], color, image=null) {
         cnsl.appendChild(img);
     }
     let spn = document.createElement("span");
-    spn.innerText = `${message}\n`;
+    spn.innerText = `${message}${end}`;
     spn.style.color = color;
     spn.style.overflowWrap = "anywhere";
     spn.classList.add("console-log");
@@ -159,8 +153,16 @@ function runJS(iframe, code) {
     output.log = function(...message) {
         log(message, "#fff");
     };
-    output.error = function(...message) {
-        log(message, "red", "static/assets/images/error.svg");
+    output.error = function(message, lineNo, columnNo) {
+        log(`${message}\t`, "red", "static/assets/images/error.svg", "");
+        let btn = document.createElement("button");
+        btn.innerText = `(line ${lineNo-12}, column ${columnNo})`;
+        btn.classList.add("error-pos");
+        btn.onclick = function() {
+            codeEditor.setSession(jsFile);
+            codeEditor.gotoLine(lineNo-12, columnNo-1, true);
+        };
+        cnsl.appendChild(btn);
     };
     output.warn = function(...message) {
         log(message, "yellow", "static/assets/images/warning.svg");
@@ -170,40 +172,29 @@ function runJS(iframe, code) {
         if (e.data.type == "log") {
             output.log(e.data.message);
         } else if (e.data.type == "error") {
-            output.error(e.data.message);
+            output.error(e.data.message, e.data.lineNo, e.data.columnNo);
         } else if (e.data.type == "warn") {
             output.warn(e.data.message);
+        } else if (e.data.type == "clear") {
+            cnsl.innerHTML = "";
         }
     };
 
+    let out = "";
     // handle errors:
     let doc = iframe.contentWindow.document;
     let scriptObj = doc.createElement("script");
     scriptObj.type = "text/javascript";
     scriptObj.innerHTML = `
-    window.onerror = function(msg, url, lineNo, columnNo, error) {
-        console.error(msg, url, lineNo, columnNo, error);
-    }`;
-    doc.body.appendChild(scriptObj);
+    window.onerror = function(msg, url, lineNo, columnNo, error) {console.error(msg, lineNo, columnNo);return true;};console.log = function(...message) {window.parent.postMessage({type: "log", message: message}, "*");};console.error = function(message, lineNo, columnNo) {window.parent.postMessage({type: "error", message: message, lineNo: lineNo, columnNo: columnNo}, "*");};console.warn = function(...message) {window.parent.postMessage({type: "warn", message: message}, "*");};console.clear = function() {window.parent.postMessage({type: "clear"}, "*");};`;
+    out += scriptObj.outerHTML;
 
-    let tempcode = `console.log = function(...message) {
-        window.parent.postMessage({type: "log", message: message}, "*");
-    };
-    console.error = function(...message) {
-        window.parent.postMessage({type: "error", message: message}, "*");
-    };
-    console.warn = function(...message) {
-        window.parent.postMessage({type: "warn", message: message}, "*");
-    };
-    try {
-        ${code.replace("</script>", "<\\/script>")}\n
-    } catch (e) {
-        console.error(e.message);
-    }`;
+    let tempcode = `\n${code.replace("</script>", "<\\/script>")}\n`;
     scriptObj = doc.createElement("script");
     scriptObj.type = "text/javascript";
     scriptObj.innerHTML = tempcode;
-    return scriptObj.outerHTML;
+    out += scriptObj.outerHTML;
+    return out;
 }
 
 function runCSS(iframe, code) {
