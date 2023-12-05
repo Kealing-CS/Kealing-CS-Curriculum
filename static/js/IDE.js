@@ -45,6 +45,7 @@ async function checks() {
         document.getElementById("instructions").innerHTML = res;
     });
 }
+checks()
 
 /*
 load ace
@@ -69,6 +70,16 @@ codeEditor.setSession(htmlFile);
 
 codeEditor.setTheme(`ace/theme/tomorrow_night`);
 codeEditor.session.setMode(`ace/mode/html`);
+
+codeEditor.setOptions({
+    fontSize: "12pt",
+    fontFamily: "DSM",
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true,
+    enableSnippets: true,
+    showPrintMargin: false,
+    showGutter: true,
+});
 
 let instructionsContainer = document.querySelector(".instructions-container");
 let instructionsClose = document.querySelector(".instructions-close");

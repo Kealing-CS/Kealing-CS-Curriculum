@@ -27,7 +27,7 @@ html, body {
     border-radius: 1.5vh;
     border-color: #3f87a6;
     padding: 1em;
-    font-family: 'Monaco';
+    font-family: 'DSM';
     font-size: 75%;
     color: #fff;
     display: none;
@@ -152,7 +152,12 @@ body {
 
 @font-face {
     font-family: 'Monaco';
-    src: url("../assets/fonts/Monaco.ttf");
+    src: url("/static/assets/fonts/Monaco.ttf");
+}
+
+@font-face {
+    font-family: 'DSM';
+    src: url("/static/assets/fonts/DroidSansMono.ttf");
 }
 
 #instructions {

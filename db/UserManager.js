@@ -11,7 +11,7 @@ module.exports = class UserManager {
         }
         sensativeDB.set(username, this._hashPassword(password, 10));
         dataDB.set(username, {
-            "unlocked": ["start"],
+            "unlocked": ["start", "sandbox"],
             "completed": [],
             "code": {
                 "start": ""
