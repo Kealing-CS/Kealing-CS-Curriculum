@@ -52,34 +52,13 @@ async function checks() {
     });
 }
 
-checks()
-
-/*
-Get the languages that this level uses
-then only includes the abilty to change the files that are in use
-*/
-
-
-async function _editLangs() {
-    let requiredLangs = await fetch(`/api/getRequiredLanguages?level=${level}`)
-    .then(res => res.json())
-    if (!requiredLangs.includes("html")) {
-        document.getElementById("htmlButton").remove()
-    }
-
-    if (!requiredLangs.includes("js")) {
-        document.getElementById("jsButton").remove()
-    } 
-}
-_editLangs()
-
 /*
 load ace
 */
 
-let baseJsCode = "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));";
-let baseHTMLCode = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>';
-let baseCSSCode = "body {\n    color: white;\n}";
+let baseJsCode = "// loading...";
+let baseHTMLCode = "<!-- loading... -->";
+let baseCSSCode = "/* loading... */"
 
 let runButton = document.querySelector(".editor-run");
 let resetButton = document.querySelector(".editor-reset");
@@ -107,6 +86,30 @@ instructions.addEventListener("click", function() {
 instructionsClose.addEventListener("click", function() {
     instructionsContainer.style.display = "none";
 });
+
+/*
+get the base code for the level
+*/
+
+async function baseCode() {
+    let baseCode = await fetch(`/api/getBaseCode?level=${level}`)
+    .then(res => res.json())
+    .then(res => {
+        return res;
+    });
+
+    baseJsCode = baseCode.js;
+    baseHTMLCode = baseCode.html;
+    baseCSSCode = baseCode.css;
+
+    jsFile.setValue(baseJsCode);
+    htmlFile.setValue(baseHTMLCode);
+    cssFile.setValue(baseCSSCode);
+    
+    run();
+}
+
+baseCode();
 
 /*
 base log

@@ -2,26 +2,51 @@
     "start": {
         "parents": null,
         "instructions": "Welcome to CS! This is the start of your journey. You will learn about the basics of programming and how to use the tools you need to be successful. In This level, you must log \"Hello, world!\" to the console.",
-        "needs": ["html", "js", "css"]
+        "needs": ["html", "js", "css"],
+        "baseCode": {
+            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
+            "css": "body {\n    color: white;\n}"
+        }
     },
     "js": {
         "parents": ["start"],
         "instructions": "temp",
-        "needs": ["js"]
+        "needs": ["js"],
+        "baseCode": {
+            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
+            "css": "body {\n    color: white;\n}"
+        }
     },
     "html": {
         "parents": ["start"],
         "instructions": "temp",
-        "needs": ["html"]
+        "needs": ["html"],
+        "baseCode": {
+            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
+            "css": "body {\n    color: white;\n}"
+        }
     },
     "css": {
         "parents": ["start"],
         "instructions": "temp",
-        "needs": ["html", "css"]
+        "needs": ["css"],
+        "baseCode": {
+            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
+            "css": "body {\n    color: white;\n}"
+        }
     },
     "sandbox": {
         "parents": null,
         "instructions": "Welcome to the sandbox! In here you can do whatever you want. Have fun!",
-        "needs": ["html", "js", "css"]
+        "needs": ["html", "js", "css"],
+        "baseCode": {
+            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
+            "css": "body {\n    color: white;\n}"
+        }
     }
 }

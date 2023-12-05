@@ -51,17 +51,17 @@ module.exports = function (app) {
             }
         }
         res.sendStatus(200);
-    })
+    });
 
     app.get("/api/getUnlocked", function(req, res) {
         user = req.query.user;
         res.send(UserManager.getUnlocked(user));
-    })
+    });
 
     app.get("/api/getCompleted", function(req, res) {
         user = req.query.user;
         res.send(UserManager.getCompleted(user));
-    })
+    });
 
     app.get("/api/getCode", function(req, res) {
         user = req.query.user;
@@ -72,7 +72,7 @@ module.exports = function (app) {
             return;
         }
         res.send(UserManager.getCode(user, level));
-    })
+    });
 
     app.post("/api/setCode", function(req, res) {
         user = req.body.user;
@@ -84,17 +84,22 @@ module.exports = function (app) {
             return;
         }
         UserManager.setCode(user, level, code);
-    })
+    });
 
     app.post("/api/createAccount", function(req, res) {
         user = req.body.user;
         password = req.body.password;
         res.send(UserManager.createAccount(user, password));
-    })
+    });
 
     app.get("/api/login", function(req, res) {
         user = req.query.user;
         password = req.query.password;
         res.send(UserManager.checkLogin(user, password));
-    })
+    });
+
+    app.get("/api/getBaseCode", function(req, res) {
+        level = req.query.level;
+        res.send(levelinfo[level]["baseCode"]);
+    });
 }
