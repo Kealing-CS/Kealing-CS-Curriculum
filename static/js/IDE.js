@@ -19,8 +19,6 @@ This should work but for clarity should mabye be changed later
 */
 
 async function checks() {
-    /*
-    TODO: reenable this when the login system is fixed
 
     await fetch(`/api/login?user=${user}&password=${localStorage.getItem("password")}`)
     .then(res => res.json())
@@ -37,7 +35,6 @@ async function checks() {
             window.location.href = "/tree";
         }
     });
-    */
 
     await fetch(`/api/getInstructions?level=${level}`)
     .then(res => {
@@ -74,7 +71,7 @@ async function _editLangs() {
         document.getElementById("jsButton").remove()
     } 
 }
-//_editLangs()
+_editLangs()
 
 /*
 load ace

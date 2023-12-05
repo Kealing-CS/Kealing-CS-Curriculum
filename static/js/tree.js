@@ -1,9 +1,6 @@
-//if (!localStorage.getItem('username') || !localStorage.getItem('password')) {
-//    window.location.href = "/login";
-//}
-
-/*
-TODO: reenable this when the login system is fixed
+if (!localStorage.getItem('username') || !localStorage.getItem('password')) {
+    window.location.href = "/login";
+}
 
 let correctLogin = fetch(`/api/login?user=${localStorage.getItem('username')}&password=${localStorage.getItem('password')}`)
 .then(res => res.json())
@@ -12,7 +9,7 @@ let correctLogin = fetch(`/api/login?user=${localStorage.getItem('username')}&pa
         window.location.href = "/login";
     }
 });
-*/
+
 
 const levels = document.querySelectorAll(".level");
 levels.forEach(level => {
