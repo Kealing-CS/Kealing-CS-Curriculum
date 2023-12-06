@@ -158,22 +158,25 @@ function cssButton() {
 submit
 */
 
-async function submit() {
-    let res = await fetch("/api/submit", {
+function submit() {
+    fetch("/api/submit", {
         method: "POST",
         body: JSON.stringify({
-            code: {"html": htmlFile.getValue(), "js": jsFile.getValue(), "css": cssFile.getValue()},
             user: user,
             password: localStorage.getItem("password"),
-            level: level
+            level: level,
+            code: {
+                html: htmlFile.getValue(),
+                js: jsFile.getValue(),
+                css: cssFile.getValue()
+            }
         }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
     });
-
-    
 }
+submitButton.onclick = submit
 
 /*
 run the code

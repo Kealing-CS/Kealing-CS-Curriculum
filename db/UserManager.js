@@ -12,6 +12,8 @@ module.exports = class UserManager {
         sensativeDB.set(username, this._hashPassword(password, 10));
         dataDB.set(username, {
             "unlocked": ["start", "sandbox"],
+            "submitted": {
+            },
             "completed": [],
             "code": {
                 "start": ""
@@ -53,6 +55,20 @@ module.exports = class UserManager {
         data.unlocked.push(level);
 
         dataDB.set(username, data);
+    }
+
+    getSubmitted(username) {
+        let dataDB = new Database('./db/userdata.json');
+
+        return dataDB.get(username).submitted.keys()
+    }
+
+    submitLevel(username, level, correctOutput, err=null) {
+        let dataDB = new Database('./db/userdata.json');
+
+        let submitted = dataDB.get(username)
+        submitted.submitted[level] = [correctOutput, err]
+        dataDB.set(username, submitted)
     }
 
     getCompleted(username) {
