@@ -1,6 +1,6 @@
 const UM = require("./db/UserManager.js");
 const levelinfo = require("./db/levelinformation.json");
-import puppeteer from 'puppeteer';
+const puppeteer = require('puppeteer');
 
 module.exports = function (app) {
     const UserManager = new UM();
@@ -29,6 +29,26 @@ module.exports = function (app) {
         const password = req.body.password;
         const level = req.body.level;
 
+        /*
+        fetch("/api/submit", {
+            method: "POST",
+            body: JSON.stringify({
+                user: "username",
+                password: "password",
+                level: "level",
+                code: {
+                    html: "htmlcode",
+                    js: "jscode",
+                    css: "csscode"
+                }
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+
+        */
+
         if (!UserManager.checkLogin(user, password)) {
             res.sendStatus(401);
             return;
@@ -40,12 +60,18 @@ module.exports = function (app) {
         }
 
         UserManager.setCode(user, level, code);
-        if (levelinfo[level]["needs"].length === 1 && levelinfo[level]["needs"][0] === "js") {
-            const browser = await puppeteer.launch();
+        //if (levelinfo[level]["needs"].length === 1 && levelinfo[level]["needs"][0] === "js") {
+            const browser = await puppeteer.launch({headless: false});
             const page = await browser.newPage();
             await page.setContent(code["html"])
+            await page.addStyleTag({content: code["css"]})
+            await page.addScriptTag({path: "./static/js/pptrRunJS.js"})
+            try {await page.evaluate(code["js"])}
+            catch(e) {console.log("error")}
+            let logs = await page.evaluate("logs")
+            console.log(logs)
             await page.setViewport({width: 1080, height: 1024});
-        }
+        //}
 
         UserManager.completeLevel(user, level)
         let completed = UserManager.getCompleted(user);
