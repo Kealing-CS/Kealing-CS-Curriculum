@@ -112,6 +112,7 @@ body {
     background-color: #aaa;
     text-align: center;
     text-decoration:none;
+    font-size: .7vw;
     padding: 0 0;
     color: #fff;
 }
@@ -126,7 +127,6 @@ body {
 .unlocked {
     background-color: var(--teal);
     color: var(--white);
-    font-size: small;
     box-shadow: 0 0 15px 7px var(--green);
 }
 
