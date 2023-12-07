@@ -1,7 +1,11 @@
 var path = require('path');
 
 module.exports = function (app, db) {
-    app.get('/', function(req, res){
+    app.get('/', function(req, res) {
+        res.sendFile(path.join(__dirname, 'docs', 'index.html'));
+    });
+
+    app.get('/IDE', function(req, res){
         res.sendFile(path.join(__dirname, 'docs', 'IDE.html'));
     });
 
