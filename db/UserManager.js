@@ -2,7 +2,7 @@ const Database = require('easy-json-database');
 const bcrypt = require('bcrypt');
 
 module.exports = class UserManager {
-    createAccount(username, password) {
+    createAccount(username, password, teacher=false) {
         let dataDB = new Database('./db/userdata.json');
         let sensativeDB = new Database('./db/sensative.json');
 
@@ -17,7 +17,9 @@ module.exports = class UserManager {
             "completed": [],
             "code": {
                 "start": ""
-            }
+            },
+            "teacher": teacher,
+            "class": teacher ? "" : null
         });
         return [true, "Account created"];
     }
@@ -106,5 +108,16 @@ module.exports = class UserManager {
         let dataDB = new Database('./db/userdata.json');
 
         dataDB.set(username + ".code." + level, code);
+    }
+
+    isTeacher(username) {
+        let dataDB = new Database('./db/userdata.json');
+
+        try {
+            return dataDB.get(username).teacher;
+        }
+        catch {
+            return false;
+        }
     }
 }
