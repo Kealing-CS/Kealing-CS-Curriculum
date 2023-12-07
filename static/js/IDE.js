@@ -178,7 +178,7 @@ async function submit() {
     .then(res => {
         return res.text()
     });
-    
+
     if (works === "true") {
         alert("Submitted. Your teacher will check it out shortly.")
     } else {
@@ -205,6 +205,7 @@ function runJS(iframe, code) {
         btn.onclick = function() {
             codeEditor.setSession(jsFile);
             codeEditor.gotoLine(lineNo-12, columnNo-1, true);
+            codeEditor.focus();
         };
         cnsl.appendChild(btn);
     };
