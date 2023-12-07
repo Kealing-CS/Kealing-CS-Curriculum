@@ -158,8 +158,8 @@ function cssButton() {
 submit
 */
 
-function submit() {
-    fetch("/api/submit", {
+async function submit() {
+    let works = await fetch("/api/submit", {
         method: "POST",
         body: JSON.stringify({
             user: user,
@@ -174,7 +174,16 @@ function submit() {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
+    })
+    .then(res => {
+        return res.text()
     });
+    
+    if (works === "true") {
+        alert("Submitted. Your teacher will check it out shortly.")
+    } else {
+        alert("Your code does not work. Your code has been submitted but you should try again.")
+    }
 }
 submitButton.onclick = submit
 

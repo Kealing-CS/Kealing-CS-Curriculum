@@ -71,20 +71,12 @@ module.exports = function (app) {
         }
         catch(e) {
             UserManager.submitLevel(user, level, [false, `${e.name}: ${e.message}`])
+            res.send(false)
+            return
         }
         let logs = await page.evaluate("logs")
-        await page.setViewport({width: 1080, height: 1024});
-
-        /*let completed = UserManager.getCompleted(user);
-        for (let key in levelinfo) {
-            if (levelinfo[key]["parents"]) {
-                let allCompleted = levelinfo[key]["parents"].every(v => completed.includes(v))
-                if (allCompleted) {
-                    UserManager.unlockLevel(user, key);
-                }
-            }
-        }*/
-        res.sendStatus(200);
+        await browser.close();
+        res.send(true)
     });
 
     app.get("/api/getUnlocked", function(req, res) {
