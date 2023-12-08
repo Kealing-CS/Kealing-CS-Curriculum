@@ -128,4 +128,27 @@ module.exports = function (app) {
         level = req.query.level;
         res.send(levelinfo[level]["baseCode"]);
     });
+
+    app.get("/api/joinClass", function(req, res) {
+        user = req.query.user;
+        oassword = req.query.password;
+        classCode = req.query.classCode;
+
+        if (UserManager.checkLogin(user, password)) {
+            res.sendStatus(401);
+            return;
+        }
+
+        if (!UserManager.isTeacher(user)) {
+            res.sendStatus(403);
+            return;
+        }
+
+        if (!UserManager.joinClass(user, classCode)) {
+            res.sendStatus(404);
+            return;
+        }
+        
+        res.sendStatus(200);
+    });
 }

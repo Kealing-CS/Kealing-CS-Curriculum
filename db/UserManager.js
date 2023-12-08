@@ -120,4 +120,24 @@ module.exports = class UserManager {
             return false;
         }
     }
+
+    getClass(username) {
+        let dataDB = new Database('./db/userdata.json');
+
+        try {
+            return dataDB.get(username).class;
+        }
+        catch {
+            return null;
+        }
+    }
+
+    setClass(username, classCode) {
+        let dataDB = new Database('./db/userdata.json');
+
+        // check if class code is valid, if not return false
+
+        dataDB.set(username + ".class", classCode);
+        return true;
+    }
 }
