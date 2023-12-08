@@ -3,7 +3,7 @@ Get basic info
 */
 
 const url = new URL(window.location.href);
-let level = url.searchParams.get("level");
+const level = url.searchParams.get("level") ? url.searchParams.get("level") : "sandbox";
 const user = localStorage.getItem("username");
 
 
@@ -11,6 +11,7 @@ if (!level) level = "sandbox"
 
 /*
 Check that the user has the level exists and that the user has it unlocked
+TODO:
 The checking that it exists is kinda messy, it just checks if the level has instructions
 This should work but for clarity should mabye be changed later
 */
@@ -48,6 +49,11 @@ async function checks() {
 checks()
 
 /*
+TODO: give the browser some test data so it can tell the user if it works. Dont give it all the data though,
+or the user can just console.log it instead of actually doing what they are meant to do
+*/
+
+/*
 load ace
 */
 
@@ -62,6 +68,8 @@ let submitButton = document.querySelector(".editor-submit");
 let codeEditor = ace.edit("editorCode");
 let cnsl = document.getElementById("console");
 
+var langTools = ace.require("ace/ext/language_tools");
+
 let jsFile = ace.createEditSession(baseJsCode.split("\n"));
 let htmlFile = ace.createEditSession(baseHTMLCode.split("\n"));
 let cssFile = ace.createEditSession(baseCSSCode.split("\n"));
@@ -75,8 +83,8 @@ codeEditor.setOptions({
     fontSize: "12pt",
     fontFamily: "DSM",
     enableBasicAutocompletion: true,
-    enableLiveAutocompletion: true,
     enableSnippets: true,
+    enableLiveAutocompletion: true,
     showPrintMargin: false,
     showGutter: true,
 });
