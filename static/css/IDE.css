@@ -116,7 +116,7 @@ html, body {
     height: 33%;
     border: 1px solid var(--editor-border);
     position: absolute;
-    overflow: hidden;
+    overflow: auto;
     top: 67%;
     right: 0;
     font-family: 'Monaco';
