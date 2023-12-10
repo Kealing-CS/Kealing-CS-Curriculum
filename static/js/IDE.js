@@ -239,7 +239,7 @@ function runJS(iframe, code) {
     let scriptObj = doc.createElement("script");
     scriptObj.type = "text/javascript";
     scriptObj.innerHTML = `
-    window.onerror = function(msg, url, lineNo, columnNo, error) {console.error(msg, lineNo, columnNo);return true;};console.log = function(...message) {window.parent.postMessage({type: "log", message: message}, "*");};console.error = function(message, lineNo, columnNo) {window.parent.postMessage({type: "error", message: message, lineNo: lineNo, columnNo: columnNo}, "*");};console.warn = function(...message) {window.parent.postMessage({type: "warn", message: message}, "*");};console.clear = function() {window.parent.postMessage({type: "clear"}, "*");};`;
+    console._clear = function() {window.parent.postMessage({type: "clear"});};window.onerror = function(msg, url, lineNo, columnNo, error) {console._clear();console.error(msg, lineNo, columnNo);return true;};console.log = function(...message) {window.parent.postMessage({type: "log", message: JSON.parse(JSON.stringify(message))}, "*");};console.error = function(message, lineNo, columnNo) {window.parent.postMessage({type: "error", message: JSON.parse(JSON.stringify(message)), lineNo: lineNo, columnNo: columnNo}, "*");};console.warn = function(...message) {window.parent.postMessage({type: "warn", message: JSON.parse(JSON.stringify(message))}, "*");};console.clear = function() {window.parent.postMessage({type: "clear"}, "*");};`;
     out += scriptObj.outerHTML;
 
     let tempcode = `\n${code.replace("</script>", "<\\/script>")}\n`;
