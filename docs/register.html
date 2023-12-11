@@ -20,7 +20,7 @@
         function createAccount() {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
-	    var retypedPassword = document.getElementById("passwordConfirm").value;
+	        var retypedPassword = document.getElementById("passwordConfirm").value;
 
 	    // User must re-enter password
 	    if (password == retypedPassword) {
@@ -38,7 +38,7 @@
             .then(data => {
                 if (data[0]) {
                     localStorage.setItem("username", username);
-                    localStorage.setItem("password", password);
+                    localStorage.setItem("token", data[2]);
                     window.location.href = "/tree";
                 }
                 alert(data[1]);

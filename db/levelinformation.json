@@ -5,7 +5,7 @@
         "needs": ["html", "js", "css"],
         "baseCode": {
             "js": "function fib(n) {\n    let out = [];\n    \n    if (n>0) out.push(0);\n    if(n>1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
-            "html": "<!DOCTYPE html>\n>html lang=\"en\">\n>head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n>/head>\n>body>\n\t<h1>Hello, world!</h1>\n>/body>\n>/html>",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
     },
@@ -15,7 +15,7 @@
         "needs": ["js"],
         "baseCode": {
             "js": "function fib(n) {\n    let out = [];\n    \n    if (n>0) out.push(0);\n    if(n>1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
-            "html": "<!DOCTYPE html>\n>html lang=\"en\">\n>head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n>/head>\n>body>\n\t<h1>Hello, world!</h1>\n>/body>\n>/html>",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
     },
@@ -25,7 +25,7 @@
         "needs": ["html"],
         "baseCode": {
             "js": "function fib(n) {\n    let out = [];\n    \n    if (n>0) out.push(0);\n    if(n>1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
-            "html": "<!DOCTYPE html>\n>html lang=\"en\">\n>head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n>/head>\n>body>\n\t<h1>Hello, world!</h1>\n>/body>\n>/html>",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
     },
@@ -35,7 +35,7 @@
         "needs": ["css"],
         "baseCode": {
             "js": "function fib(n) {\n    let out = [];\n    \n    if (n>0) out.push(0);\n    if(n>1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
-            "html": "<!DOCTYPE html>\n>html lang=\"en\">\n>head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n>/head>\n>body>\n\t<h1>Hello, world!</h1>\n>/body>\n>/html>",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
     },
@@ -45,7 +45,7 @@
         "needs": ["html", "js", "css"],
         "baseCode": {
             "js": "function fib(n) {\n    let out = [];\n    \n    if (n>0) out.push(0);\n    if(n>1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
-            "html": "<!DOCTYPE html>\n>html lang=\"en\">\n>head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n>/head>\n>body>\n\t<h1>Hello, world!</h1>\n>/body>\n>/html>",
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
     }

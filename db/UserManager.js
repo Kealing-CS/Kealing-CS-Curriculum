@@ -1,42 +1,10 @@
 const Database = require('easy-json-database');
-const bcrypt = require('bcrypt');
+const Login = require('./Login.js');
 
-module.exports = class UserManager {
-    createAccount(username, password, teacher=false) {
-        let dataDB = new Database('./db/userdata.json');
-        let sensativeDB = new Database('./db/sensative.json');
 
-        if (sensativeDB.get(username)) {
-            return [false, "Username already taken"];
-        }
-        sensativeDB.set(username, this._hashPassword(password, 10));
-        dataDB.set(username, {
-            "unlocked": ["start", "sandbox"],
-            "submitted": {
-            },
-            "completed": [],
-            "code": {
-                "start": ""
-            },
-            "teacher": teacher,
-            "class": teacher ? "" : null
-        });
-        return [true, "Account created"];
-    }
-
-    checkLogin(username, password) {
-        let sensativeDB = new Database('./db/sensative.json');
-        if (!sensativeDB.get(username)) {
-            return [false, "Username not found"];
-        }
-        if (!bcrypt.compareSync(password, sensativeDB.get(username))) {
-            return [false, "Incorrect password"];
-        }
-        return [true, "Login successful"];
-    }
-
-    _hashPassword(password, saltRounds) {
-        return bcrypt.hashSync(password, saltRounds);
+module.exports = class UserManager extends Login {
+    constructor() {
+        super();
     }
 
     getUnlocked(username) {

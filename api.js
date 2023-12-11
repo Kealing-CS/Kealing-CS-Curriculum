@@ -26,7 +26,7 @@ module.exports = function (app) {
     app.post("/api/submit", async function(req, res) {
         const code = req.body.code;
         const user = req.body.user;
-        const password = req.body.password;
+        const token = req.body.token;
         const level = req.body.level;
 
         /*
@@ -34,7 +34,7 @@ module.exports = function (app) {
             method: "POST",
             body: JSON.stringify({
                 user: "username",
-                password: "password",
+                token: "token",
                 level: "level",
                 code: {
                     html: "htmlcode",
@@ -49,7 +49,7 @@ module.exports = function (app) {
 
         */
 
-        if (!UserManager.checkLogin(user, password)) {
+        if (!UserManager.checkLogin(user, token)) {
             res.sendStatus(401);
             return;
         }
@@ -91,9 +91,9 @@ module.exports = function (app) {
 
     app.get("/api/getCode", function(req, res) {
         user = req.query.user;
-        password = req.query.password;
+        token = req.query.token;
         level = req.query.level;
-        if (!UserManager.checkLogin(user, password)) {
+        if (!UserManager.checkLogin(user, token)) {
             res.sendStatus(401);
             return;
         }
@@ -102,26 +102,36 @@ module.exports = function (app) {
 
     app.post("/api/setCode", function(req, res) {
         user = req.body.user;
-        password = req.body.password;
+        token = req.body.token;
         level = req.body.level;
         code = req.body.code;
-        if (!UserManager.checkLogin(user, password)) {
+        if (!UserManager.checkLogin(user, token)) {
             res.sendStatus(401);
             return;
         }
         UserManager.setCode(user, level, code);
     });
 
+    // this is a post request so the password is not sent in the url
     app.post("/api/createAccount", function(req, res) {
         user = req.body.user;
         password = req.body.password;
         res.send(UserManager.createAccount(user, password));
     });
 
-    app.get("/api/login", function(req, res) {
+    // this is a post request so the token is not sent in the url
+    app.post("/api/login", function(req, res) {
+        user = req.body.user;
+        token = req.body.token;
+        res.send(UserManager.checkLogin(user, token));
+    });
+
+
+    // this is a post request so the password is not sent in the url
+    app.post("/api/freshLogin", function(req, res) {
         user = req.query.user;
         password = req.query.password;
-        res.send(UserManager.checkLogin(user, password));
+        res.send(UserManager.freshLogin(user, password));
     });
 
     app.get("/api/getBaseCode", function(req, res) {
@@ -131,10 +141,10 @@ module.exports = function (app) {
 
     app.get("/api/joinClass", function(req, res) {
         user = req.query.user;
-        oassword = req.query.password;
+        token = req.query.token;
         classCode = req.query.classCode;
 
-        if (UserManager.checkLogin(user, password)) {
+        if (UserManager.checkLogin(user, token)) {
             res.sendStatus(401);
             return;
         }

@@ -17,8 +17,16 @@ This should work but for clarity should mabye be changed later
 */
 
 async function checks() {
-
-    await fetch(`/api/login?user=${user}&password=${localStorage.getItem("password")}`)
+    await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify({
+            user: user,
+            token: localStorage.getItem("token")
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
     .then(res => res.json())
     .then(res => {
         if (!res[0]) {
@@ -171,7 +179,7 @@ async function submit() {
         method: "POST",
         body: JSON.stringify({
             user: user,
-            password: localStorage.getItem("password"),
+            token: localStorage.getItem("token"),
             level: level,
             code: {
                 html: htmlFile.getValue(),
