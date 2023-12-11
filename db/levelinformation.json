@@ -4,7 +4,7 @@
         "instructions": "Welcome to CS! This is the start of your journey. You will learn about the basics of programming and how to use the tools you need to be successful. In This level, you must log \"Hello, world!\" to the console.",
         "needs": ["html", "js", "css"],
         "baseCode": {
-            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "js": "function fib(n) {\n    let out = [];\n    \n    if (n<0) out.push(0);\n    if(n<1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
             "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
@@ -14,7 +14,7 @@
         "instructions": "temp",
         "needs": ["js"],
         "baseCode": {
-            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "js": "function fib(n) {\n    let out = [];\n    \n    if (n<0) out.push(0);\n    if(n<1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
             "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
@@ -24,7 +24,7 @@
         "instructions": "temp",
         "needs": ["html"],
         "baseCode": {
-            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "js": "function fib(n) {\n    let out = [];\n    \n    if (n<0) out.push(0);\n    if(n<1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
             "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
@@ -34,7 +34,7 @@
         "instructions": "temp",
         "needs": ["css"],
         "baseCode": {
-            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "js": "function fib(n) {\n    let out = [];\n    \n    if (n<0) out.push(0);\n    if(n<1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
             "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }
@@ -44,7 +44,7 @@
         "instructions": "Welcome to the sandbox! In here you can do whatever you want. Have fun!",
         "needs": ["html", "js", "css"],
         "baseCode": {
-            "js": "function fib(n) {\n    let out = [0,1];\n    for (let i=0;i<n;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    return out;\n}\n\nconsole.log(fib(10));",
+            "js": "function fib(n) {\n    let out = [];\n    \n    if (n<0) out.push(0);\n    if(n<1) out.push(1);\n    \n    for (let i=0;i<n-2;i++) {\n        out.push(out[i]+out[i+1]);\n    }\n    \n    return out;\n}\n    \nconsole.log(fib(10));",
             "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n\t<h1>Hello, world!</h1>\n</body>\n</html>",
             "css": "body {\n\tcolor: white;\n\ttext-align: center\n}"
         }

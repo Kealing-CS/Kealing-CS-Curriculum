@@ -4,6 +4,7 @@ var cors = require('cors');
 var staticFiles = require('./staticFiles.js');
 var api = require('./api.js');
 var fs = require('fs')
+const port = 8008;
 
 // Creates sensative.json if it does not exist
 fs.writeFile('./db/sensative.json', "{}", { flag: 'wx' }, function (err) {
@@ -25,4 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 staticFiles(app);
 api(app);
 
-app.listen(8008);
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
