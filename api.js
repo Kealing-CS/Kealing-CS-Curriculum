@@ -129,8 +129,9 @@ module.exports = function (app) {
 
     // this is a post request so the password is not sent in the url
     app.post("/api/freshLogin", function(req, res) {
-        user = req.query.user;
-        password = req.query.password;
+        user = req.body.user;
+        password = req.body.password;
+        
         res.send(UserManager.freshLogin(user, password));
     });
 
