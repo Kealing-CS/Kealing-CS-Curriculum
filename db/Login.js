@@ -1,4 +1,5 @@
 const Database = require('easy-json-database');
+const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 
 module.exports = class LoginManager {
@@ -41,12 +42,8 @@ module.exports = class LoginManager {
         return bcrypt.hashSync(password, saltRounds);
     }
 
-    _randNum(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    }
-
     _generateToken() {
-        return this._hashPassword(this._randNum(0, 9999999999).toString(32), 2);
+        return crypto.randomBytes(16).toString('base64');
     }
         
 
