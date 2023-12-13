@@ -65,18 +65,27 @@ module.exports = function (app) {
         await page.setContent(code["html"])
         await page.addStyleTag({content: code["css"]})
         await page.addScriptTag({path: "./static/js/pptrRunJS.js"})
+        let logs;
         try {
             await page.evaluate(code["js"]);
-            UserManager.submitLevel(user, level, [true, null])
+            logs = await page.evaluate("BGVavnha2vyCqDt6tGrjWWHwn")
+            if (UserManager.submitLevel(user, level, logs, '')) 
+            res.send(true)
+            else
+            res.send(false)
         }
         catch(e) {
-            UserManager.submitLevel(user, level, [false, `${e.name}: ${e.message}`])
+            try {logs = await page.evaluate("BGVavnha2vyCqDt6tGrjWWHwn")}
+            catch {
+                logs = []
+                UserManager.submitLevel(user, level, logs, "Annoying kid: logs are undefined")
+                res.send(false)
+            }
+            UserManager.submitLevel(user, level, logs, `${e.name}: ${e.message}`)
             res.send(false)
             return
         }
-        let logs = await page.evaluate("logs")
         await browser.close();
-        res.send(true)
     });
 
     app.get("/api/getUnlocked", function(req, res) {

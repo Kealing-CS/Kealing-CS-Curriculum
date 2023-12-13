@@ -198,7 +198,7 @@ async function submit() {
     if (works === "true") {
         alert("Submitted. Your teacher will check it out shortly.")
     } else {
-        alert("Your code does not work. Your code has been submitted but you should try again.")
+        alert("Your code might not work. This could mean you have a stray whitespace in your logs or your code simply gives an error. Either way, it has been submitted.")
     }
 }
 submitButton.onclick = submit
