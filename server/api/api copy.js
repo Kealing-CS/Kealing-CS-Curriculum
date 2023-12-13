@@ -1,5 +1,5 @@
-const UM = require("./db/UserManager.js");
-const levelinfo = require("./db/levelinformation.json");
+const UM = require("../../db/UserManager.js");
+const levelinfo = require("../../db/levelinformation.json");
 const puppeteer = require('puppeteer');
 
 module.exports = function (app) {

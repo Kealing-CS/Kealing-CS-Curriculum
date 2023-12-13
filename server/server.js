@@ -1,9 +1,10 @@
 var express = require('express');
 var path = require('path');
 var cors = require('cors');
-var staticFiles = require('./staticFiles.js');
-var api = require('./api.js');
+var staticFiles = require('./static/staticFiles.js');
+var api = require('./api/api.js');
 var fs = require('fs')
+const ip = require('ip');
 const port = 8008;
 
 // Creates sensative.json if it does not exist
@@ -27,5 +28,6 @@ staticFiles(app);
 api(app);
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on http://${ip.address()}:${port}/`);
+    console.log(`or use http://localhost:${port}/`)
 });
