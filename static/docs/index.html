@@ -18,6 +18,14 @@
             border-radius: 10px;
         }
     </style>
+
+    <script>
+        function signout() {
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            alert("Signed out!");
+        }
+    </script>
 </head>
 <body>
     <!-- nav bar goes here!! :3333 -->
@@ -28,6 +36,7 @@
         <a href="/joinclass" class="nav-button">Join Class</a>
         <a href="/login" class="nav-button">Login</a>
         <a href="/register" class="nav-button">Register</a>
+        <a href="/login" class="nav-button" onclick="signout()">Sign Out</a>
     </div>
 </body>
 </html>
