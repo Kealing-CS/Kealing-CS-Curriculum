@@ -12,3 +12,19 @@ Teal - #468189ff\
 Cambridge Blue - #77aca2ff\
 Ash Gray - #9dbebbff\
 Parchment - #f4e9cdff
+
+## To Do
+
+#### Levels of importance
+🔴 - ASAP <br>
+🟡 - Get it done soon <br>
+⚪ - Get it done on your own time <br>
+🟢 - Completed <br>
+
+
+- ~~Stop the parent.document xss trick 🔴~~ __Completed__
+- Fully implement teacher accounts 🟡
+- Fully implement classes 🟡
+- change to a non-json db 🟡
+- Get it up on an oracle cloud server 🟡⚪
+- Create The home page ⚪

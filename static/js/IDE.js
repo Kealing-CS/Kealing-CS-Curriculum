@@ -275,6 +275,7 @@ async function run() {
     }
     let iframe = document.createElement("iframe"); // create the iframe for sandboxing
     document.body.appendChild(iframe);
+    iframe.sandbox = "allow-scripts"
     iframe.id = "codeIframe"
     iframe.classList.add("code-iframe")
     let code = "";
