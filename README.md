@@ -22,7 +22,7 @@ Parchment - #f4e9cdff
 🟢 - Completed <br>
 
 
-- ~~Stop the parent.document xss trick 🔴~~ __Completed__
+- Stop the parent.document xss trick 🟢
 - Fully implement teacher accounts 🟡
 - Fully implement classes 🟡
 - change to a non-json db 🟡
