@@ -1,5 +1,4 @@
 const { QuickDB } = require("quick.db");
-const path = require('path');
 
 
 module.exports = class LevelManager {
