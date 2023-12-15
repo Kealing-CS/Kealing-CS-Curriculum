@@ -28,4 +28,4 @@ Parchment - #f4e9cdff
 - change to a non-json db 🟡
 - Get it up on an oracle cloud server 🟡⚪
 - Create The home page ⚪
-- Have the code be put on a subdomain so we dont have to worry about xss and can have better error messages ⚪
+- Have the code be put on a subdomain (different port) so we dont have to worry about xss and can have better error messages ⚪
