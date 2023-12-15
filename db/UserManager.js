@@ -1,4 +1,4 @@
-const Database = require('easy-json-database');
+const { QuickDB } = require("quick.db");
 const Login = require('./Login.js');
 const LevelManager = require('./LevelManager.js');
 const fs = require("fs");
@@ -8,45 +8,33 @@ const path = require('path');
 module.exports = class UserManager extends Login {
     constructor() {
         super();
-        this.LevelManager = new LevelManager();
+        this.dataDB = new QuickDB({ filePath: './db/userdata.db'});
+        this.sensativeDB = new QuickDB({ filePath: './db/sensitivedata.db'});
     }
 
-    getUnlocked(username) {
-        let dataDB = new Database('./db/userdata.json');
-
+    async getUnlocked(username) {
         try {
-            return dataDB.get(username).unlocked;
+            return await this.dataDB.get(`${username}.unlocked`)
         }
         catch {
+            console.log("couldnt get unlocked")
             return [];
         }
     }
 
     unlockLevel(username, level) {
-        let dataDB = new Database('./db/userdata.json');
-
-        let data = dataDB.get(username);
-        data.unlocked.push(level);
-
-        dataDB.set(username, data);
+        this.dataDB.push(`${username}.unlocked`, level);
     }
 
-    getSubmitted(username) {
-        let dataDB = new Database('./db/userdata.json');
-
-        return dataDB.get(username).submitted.keys()
+    async getSubmitted(username) {
+        return await this.dataDB.get(`${username}.submitted`).keys();
     }
 
-    submitLevel(username, level, logs, err) {
-        let dataDB = new Database('./db/userdata.json');
+    async submitLevel(username, level, logs, err) {
+        let lm = new LevelManager();
+        let correctLogs = await lm.getCorrectLogs(level)
 
-
-        let correctLogs = this.LevelManager.getCorrectLogs(level)
-
-
-        let submitted = dataDB.get(username)
-        submitted.submitted[level] = [logs, err]
-        dataDB.set(username, submitted)
+        this.dataDB.set(`${username}.submitted.${level}`, [logs, err]);
 
         logs = JSON.stringify(logs)
         correctLogs = JSON.stringify(correctLogs)
@@ -54,71 +42,37 @@ module.exports = class UserManager extends Login {
         return correctLogs === logs
     }
 
-    getCompleted(username) {
-        let dataDB = new Database('./db/userdata.json');
-
+    async getCompleted(username) {
         try {
-            return dataDB.get(username).completed;
+            return await this.dataDB.get(`${username}.completed`)
         }
         catch {
+            console.log("couldnt get completed")
             return [];
         }
     }
 
     completeLevel(username, level) {
-        let dataDB = new Database('./db/userdata.json');
-
-        let data = dataDB.get(username);
-        data.completed.push(level);
-
-        dataDB.set(username, data);
+        this.dataDB.push(`${username}.completed`, level);
     }
 
-    getCode(username, level) {
-        let dataDB = new Database('./db/userdata.json');
-
-        try {
-            return dataDB.get(username).code[level];
-        }
-        catch {
-            return "";
-        }
+    async getCode(username, level) {
+        return await this.dataDB.get(`${username}.code.${level}`);
     }
 
     setCode(username, level, code) {
-        let dataDB = new Database('./db/userdata.json');
-
-        dataDB.set(username + ".code." + level, code);
+        this.dataDB.set(`${username}.code.${level}`, code);
     }
 
-    isTeacher(username) {
-        let dataDB = new Database('./db/userdata.json');
-
-        try {
-            return dataDB.get(username).teacher;
-        }
-        catch {
-            return false;
-        }
+    async isTeacher(username) {
+        return await this.dataDB.get(`${username}.teacher`);
     }
 
-    getClass(username) {
-        let dataDB = new Database('./db/userdata.json');
-
-        try {
-            return dataDB.get(username).class;
-        }
-        catch {
-            return null;
-        }
+    async getClass(username) {
+        return await this.dataDB.get(`${username}.class`);
     }
 
     setClass(username, classCode) {
-        let dataDB = new Database('./db/userdata.json');
-
-        // check if class code is valid, if not return false
-
-        dataDB.set(username + ".class", classCode);
-        return true;
+        this.dataDB.set(`${username}.class`, classCode);
     }
 }

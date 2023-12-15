@@ -1,5 +1,5 @@
 module.exports = function ({app, UserManager}) {
-    app.get("/api/getCode", function(req, res) {
+    app.get("/api/getCode", async function(req, res) {
         const user = req.query.user;
         const token = req.query.token;
         const level = req.query.level;
@@ -7,6 +7,6 @@ module.exports = function ({app, UserManager}) {
             res.sendStatus(401);
             return;
         }
-        res.send(UserManager.getCode(user, level));
+        res.send(await UserManager.getCode(user, level));
     });
 }

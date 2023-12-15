@@ -30,7 +30,9 @@ module.exports = function ({app, UserManager, puppeteer}) {
             return;
         }
 
-        if (!UserManager.getUnlocked(user).includes(level)) {
+        let unlocked = await UserManager.getUnlocked(user);
+
+        if (!unlocked.includes(level)) {
             res.sendStatus(403);
             return;
         }

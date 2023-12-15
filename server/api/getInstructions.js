@@ -1,10 +1,10 @@
 module.exports = function ({app, LevelManager}) {
-    app.get("/api/getInstructions", function(req, res) {
+    app.get("/api/getInstructions", async function(req, res) {
         const level = req.query.level;
-        if (!LevelManager.levelExists(level)) {
+        if (!await LevelManager.levelExists(level)) {
             res.sendStatus(404);
             return;
         }
-        res.send(LevelManager.getInstructions(level));
+        res.send(await LevelManager.getInstructions(level));
     });
 }

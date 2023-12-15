@@ -1,10 +1,10 @@
 module.exports = function ({app, LevelManager}) {
-    app.get("/api/getBaseCode", function(req, res) {
+    app.get("/api/getBaseCode", async function(req, res) {
         const level = req.query.level;
-        if (!LevelManager.levelExists(level)) {
+        if (!await LevelManager.levelExists(level)) {
             res.sendStatus(404);
             return;
         }
-    res.send(LevelManager.getBaseCode(level));
+    res.send(await LevelManager.getBaseCode(level));
     });
 }
