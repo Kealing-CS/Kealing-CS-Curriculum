@@ -1,7 +1,7 @@
 module.exports = function ({app, UserManager}) {
     app.get("/api/joinClass", function(req, res) {
-        user = req.query.user;
-        token = req.query.token;
+        const user = req.query.user;
+        const token = req.query.token;
         classCode = req.query.classCode;
 
         if (UserManager.checkLogin(user, token)) {

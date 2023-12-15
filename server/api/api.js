@@ -1,13 +1,15 @@
 const UM = require("../../db/UserManager.js");
 const puppeteer = require('puppeteer');
 const readFiles = require('../readFiles');
+const LevelManager = require("../../db/LevelManager.js");
 const levelinfo = require("../../db/levelinformation.json");
 const path = require('path');
 
 module.exports = function (app) {
     const UserManager = new UM();
+    const levelManager = new LevelManager();
     let files = readFiles(__dirname).filter(file => file !== "api.js" && file !== "api copy.js");
     files.forEach(file => {
-        require(path.join(__dirname, file))({app: app, levelinfo: levelinfo, UserManager: UserManager, puppeteer: puppeteer});
+        require(path.join(__dirname, file))({app: app, levelinfo: levelinfo, UserManager: UserManager, puppeteer: puppeteer, LevelManager: levelManager});
     })
 }

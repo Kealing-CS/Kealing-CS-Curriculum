@@ -1,5 +1,6 @@
 const Database = require('easy-json-database');
 const Login = require('./Login.js');
+const LevelManager = require('./LevelManager.js');
 const fs = require("fs");
 const path = require('path');
 
@@ -7,6 +8,7 @@ const path = require('path');
 module.exports = class UserManager extends Login {
     constructor() {
         super();
+        this.LevelManager = new LevelManager();
     }
 
     getUnlocked(username) {
@@ -39,7 +41,7 @@ module.exports = class UserManager extends Login {
         let dataDB = new Database('./db/userdata.json');
 
 
-        let correctLogs = JSON.parse(fs.readFileSync("./db/levelinformation.json"))[level].correctLogs
+        let correctLogs = this.LevelManager.getCorrectLogs(level)
 
 
         let submitted = dataDB.get(username)

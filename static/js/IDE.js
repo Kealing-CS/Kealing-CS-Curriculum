@@ -280,8 +280,24 @@ async function run() {
     iframe.classList.add("code-iframe")
     let code = "";
     code += await htmlFile.getValue()
-    code += await runJS(iframe, jsFile.getValue());
+    code += runJS(iframe, jsFile.getValue());
     code += runCSS(iframe, cssFile.getValue());
+    fetch("/api/setCode", {
+        method: "POST",
+        body: JSON.stringify({
+            user: user,
+            token: localStorage.getItem("token"),
+            level: level,
+            code: {
+                html: htmlFile.getValue(),
+                js: jsFile.getValue(),
+                css: cssFile.getValue()
+            }
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
     iframe.srcdoc = code;
 }
 

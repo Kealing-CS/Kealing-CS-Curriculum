@@ -1,6 +1,10 @@
-module.exports = function ({app, levelinfo}) {
+module.exports = function ({app, LevelManager}) {
     app.get("/api/getBaseCode", function(req, res) {
-        level = req.query.level;
-        res.send(levelinfo[level]["baseCode"]);
+        const level = req.query.level;
+        if (!LevelManager.levelExists(level)) {
+            res.sendStatus(404);
+            return;
+        }
+    res.send(LevelManager.getBaseCode(level));
     });
 }

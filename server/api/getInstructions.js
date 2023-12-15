@@ -1,10 +1,10 @@
-module.exports = function ({app, levelinfo}) {
+module.exports = function ({app, LevelManager}) {
     app.get("/api/getInstructions", function(req, res) {
         const level = req.query.level;
-        if (!levelinfo[level]) {
+        if (!LevelManager.levelExists(level)) {
             res.sendStatus(404);
             return;
         }
-        res.send(levelinfo[level]["instructions"]);
+        res.send(LevelManager.getInstructions(level));
     });
 }

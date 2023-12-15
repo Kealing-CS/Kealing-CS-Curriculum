@@ -1,10 +1,10 @@
-module.exports = function ({app, levelinfo}) {
+module.exports = function ({app, LevelManager}) {
     app.get("/api/getRequiredLanguages", function(req, res) {
         const level = req.query.level;
-        if (!levelinfo[level]) {
+        if (!LevelManager.levelExists(level)) {
             res.sendStatus(404);
             return;
         }
-        res.send(levelinfo[level]["needs"])
+        res.send(LevelManager.getRequiredLanguages(level));
     });
 }

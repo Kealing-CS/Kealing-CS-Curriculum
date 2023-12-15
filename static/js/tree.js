@@ -32,7 +32,7 @@ let unlocked = fetch(`/api/getUnlocked?user=${localStorage.getItem('username')}`
     console.log(res)
     let level;
     for (let i = 0; i < res.length; i++) {
-        level = document.getElementById(res[i]);
+        const level = document.getElementById(res[i]);
         if (!level) continue
         level.classList.add("unlocked");
         level.classList.remove("locked");
