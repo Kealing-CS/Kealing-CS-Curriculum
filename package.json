@@ -11,7 +11,7 @@
   },
   "name": "kealing-cs-curriculum",
   "description": "This is the curriculum website made for the Kealing Computer Science Program.",
-  "version": "0.1.03",
+  "version": "0.1.04",
   "main": "start.js",
   "devDependencies": {},
   "scripts": {
