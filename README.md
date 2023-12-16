@@ -26,12 +26,13 @@ Parchment - #f4e9cdff
 ⚪ - Get it done on your own time  
 🟢 - Completed  
 
-- change to a non-json db 🔴
 - Fully implement teacher accounts 🟡
 - Fully implement classes 🟡
 - Add screenshotting to the answer checking 🟡
+- Move data into one file with multiple tables 🟡
 - Get it up on an oracle cloud server 🟡⚪
 - Create Lessons 🟡⚪
 - Create The home page ⚪
 - Have the code be put on a subdomain (different port) so we dont have to worry about xss and can have better error messages ⚪
 - Stop the parent.document xss trick 🟢
+- change to a non-json db 🟢
