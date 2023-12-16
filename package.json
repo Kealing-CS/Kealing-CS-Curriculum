@@ -8,5 +8,23 @@
     "ip": "^1.1.8",
     "puppeteer": "^21.6.0",
     "quick.db": "^9.1.7"
-  }
+  },
+  "name": "kealing-cs-curriculum",
+  "description": "This is the curriculum website made for the Kealing Computer Science Program.",
+  "version": "0.1.03",
+  "main": "start.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "node start.js -R"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kealing-CS/Kealing-CS-Curriculum.git"
+  },
+  "author": "Ian Hawthorne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kealing-CS/Kealing-CS-Curriculum/issues"
+  },
+  "homepage": "https://github.com/Kealing-CS/Kealing-CS-Curriculum#readme"
 }
