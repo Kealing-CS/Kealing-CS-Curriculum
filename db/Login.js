@@ -27,13 +27,17 @@ module.exports = class LoginManager {
         if (!await sensativeDB.get(username)) {
             return [false, "Username not found"];
         }
-        if (!bcrypt.compare(password, sensativeDB.get(username))) {
+
+        if (!bcrypt.compare(password, await sensativeDB.get(username))) {
             return [false, "Incorrect password"];
         }
-        dataDB.set(`${username}.token`, this._generateToken());
+
+        let token = this._generateToken();
+
+        dataDB.set(`${username}.token`, token);
         dataDB.set(`${username}.lastLogin`, Date.now());
 
-        return [true, "Login successful", usr.token];
+        return [true, "Login successful", token];
     }
 
     _hashPassword(password, saltRounds) {
