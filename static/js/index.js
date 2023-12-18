@@ -19,7 +19,7 @@ window.onmousemove = function(e) {
     blob.animate({
         left: `${x - width}px`,
         top: `${y - height}px`
-    }, {duration: 3000, fill: 'forwards'});
+    }, {duration: 5000, fill: 'forwards'});
 
     blob.style.display = 'block';
 }
