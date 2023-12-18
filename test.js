@@ -6,7 +6,6 @@ if (process.argv.indexOf("--reset") === -1 && process.argv.indexOf("-R") === -1)
 require("./server/server")
 
 async function t() {
-    process.exit(1)
 
     let create = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
