@@ -15,7 +15,7 @@
   "main": "start.js",
   "devDependencies": {},
   "scripts": {
-    "test": "node start.js -R"
+    "test": "node start.js -T -R"
   },
   "repository": {
     "type": "git",
