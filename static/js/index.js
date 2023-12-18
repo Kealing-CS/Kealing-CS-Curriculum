@@ -5,6 +5,10 @@ const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I",
                 "J", "K", "L", "M", "N", "O", "P", "Q", "R",
                 "S", "T", "U", "V", "X", "Y", "Z"];
 
+function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 window.onmousemove = function(e) {
     const x = e.clientX;
     const y = e.clientY;
@@ -20,7 +24,7 @@ window.onmousemove = function(e) {
     blob.style.display = 'block';
 }
 
-title.onmouseover = function(e) {
+function randText() {
     let iters = 0
     const maxIters = title.innerText.length
 
@@ -49,4 +53,10 @@ title.onmouseover = function(e) {
     }, 45);
 
     title.innerText = title.dataset.value;
+
+    setTimeout(randText, rand(2000, 6000));
 }
+
+title.onmouseover = randText
+
+setTimeout(randText, rand(2500, 6000));
