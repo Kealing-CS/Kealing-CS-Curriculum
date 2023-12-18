@@ -57,6 +57,6 @@ function randText() {
     setTimeout(randText, rand(2000, 6000));
 }
 
-title.onmouseover = randText
+// title.onmouseover = randText
 
 setTimeout(randText, rand(2500, 6000));
