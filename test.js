@@ -52,6 +52,10 @@ async function t() {
     })
     .then(res => res.json())
 
+    if (freshLogin[0] !== true) {
+        console.log("Failed to freshLogin")
+        process.exit(1)
+    }
 
     let submitWrong = await fetch("http://localhost:8008/api/submit", {
         method: "POST",
