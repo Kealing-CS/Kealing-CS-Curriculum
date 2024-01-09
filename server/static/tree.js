@@ -1,8 +1,5 @@
-const getStatic = require('./_getStatic');
-
-module.exports = function (app) {
+module.exports = function ({app, getStatic}) {
     app.get('/tree', function(req, res) {
         res.sendFile(getStatic('docs/tree.html'));
-        //res.redirect('/login');
     });
 }

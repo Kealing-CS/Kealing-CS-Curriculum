@@ -1,6 +1,4 @@
-const getStatic = require('./_getStatic');
-
-module.exports = function (app) {
+module.exports = function ({app, getStatic}) {
     app.get('/login', function(req, res) {
         res.sendFile(getStatic('docs/login.html'));
         //res.redirect('/login');
