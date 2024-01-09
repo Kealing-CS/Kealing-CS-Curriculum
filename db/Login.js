@@ -8,6 +8,7 @@ module.exports = class LoginManager {
     async checkLogin(username, token) {
         let dataDB = new QuickDB({ filePath: './db/userdata.db'});
         let sensativeDB = new QuickDB({ filePath: './db/sensitivedata.db'});
+
         if (!await sensativeDB.get(username)) {
             return [false, "Username not found"];
         }
