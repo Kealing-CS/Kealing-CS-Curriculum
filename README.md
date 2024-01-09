@@ -17,6 +17,12 @@ Cambridge Blue - #77aca2ff
 Ash Gray - #9dbebbff  
 Parchment - #f4e9cdff  
 
+## How to start
+
+clone the repo with `git clone https://github.com/Kealing-CS/Kealing-CS-Curriculum`  
+run the server with `npm start`  
+the server will start on port 8008  
+
 ## To Do
 
 ### Levels of importance
