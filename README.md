@@ -42,3 +42,5 @@ the server will start on port 8008
 - Have the code be put on a subdomain (different port) so we dont have to worry about xss and can have better error messages ⚪
 - Stop the parent.document xss trick 🟢
 - change to a non-json db 🟢
+
+uwu
