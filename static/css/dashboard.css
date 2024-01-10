@@ -29,7 +29,7 @@ body {
     padding-top: 5em
 }
 
-.dashboard-symbol {
+.sidebar-symbol {
     font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 1, 'opsz' 48;
     padding: 2em;
     color: white;
