@@ -1,0 +1,122 @@
+:root {
+    --rich-black: #031926ff;
+    --teal: #468189ff;
+    --cambridge-blue: #77aca2ff;
+    --ash-gray: #9dbebbff;
+    --parchment: #f4e9cdff;
+
+    /* aliases */
+
+    --black: #031926ff;
+    --blue-black: #31304D;
+    --dark-bb: #25243a;
+    --teal: #468189ff;
+    --green: #77aca2ff;
+    --grey: #9dbebbff;
+    --white: #f4e9cdff;
+    --dwhite: #696969;
+
+    /* IDE colors */
+    --editor-bg: #1f1f1f;
+    --editor-border: #3f87a6;
+}
+
+body {
+    background-color: var(--blue-black);
+    margin: 0;
+}
+
+.sidebar {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 10vw;
+    z-index: 9999;
+    background-color: var(--black);
+}
+
+.sidebar-filler {
+    padding: 1em;
+}
+
+.sidebar-symbol {
+    font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 1, 'opsz' 48;
+    padding: 2em;
+    color: white;
+    /* stop highlighting */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;  /* Safari */
+    -khtml-user-select: none;  /* Konqueror HTML */
+    -moz-user-select: none;   /* Old versions of Firefox */
+    -ms-user-select: none;   /* Internet Explorer/Edge */
+    user-select: none;      /* Non-prefixed version, currently */
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        position: absolute;
+        left: 0;
+        width: 100vw;
+        height: 10vh;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.sidebar-symbol.active {
+    color: var(--teal);
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;  /* Safari */
+    -khtml-user-select: none;  /* Konqueror HTML */
+    -moz-user-select: none;   /* Old versions of Firefox */
+    -ms-user-select: none;   /* Internet Explorer/Edge */
+    user-select: none;      /* Non-prefixed version, currently */
+    pointer-events: none;
+}
+
+.main-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10vw;
+    right: 0;
+    overflow: hidden;
+}
+
+
+.test {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1%;
+    background-color: var(--teal);
+}
+
+
+.level {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-bb);
+    color: var(--dwhite);
+    width: 10vh;
+    height: 10vh;
+    font-size: .8vw;
+    text-decoration: none;
+}
+
+.level.unlocked {
+    background-color: var(--teal);
+    color: var(--parchment);
+}
+
+.leader-line {
+    z-index: 0;
+}

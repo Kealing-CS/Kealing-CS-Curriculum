@@ -29,4 +29,8 @@ module.exports = class LevelManager {
     async levelExists(level) {
         return await this.levelDB.has(level);
     }
+
+    async getAll() {
+        return await this.levelDB.all();
+    }
 }

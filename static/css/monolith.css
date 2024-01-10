@@ -19,11 +19,11 @@
     --editor-border: #3f87a6;
 }
 
-/*  */
-/*  */
+  /*                       */
+ /*                       */
 /* login + createaccount */
-/*  */
-/*  */
+/*                      */
+/*                     */
 
 body {
 	background-color: var(--black);
@@ -85,110 +85,3 @@ body {
 	color: var(--teal);
 	background-color: var(--white);
 }
-
-/*  */
-/*  */
-/* tree */
-/*  */
-/*  */
-
-.levels-holder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: var(--black);
-}
-
-.level {
-    z-index: 1;
-    position: absolute;
-    width: 5vw;
-    height: 5vw;
-    border-radius: 100%;
-    background-color: #aaa;
-    text-align: center;
-    text-decoration:none;
-    font-size: .7vw;
-    padding: 0 0;
-    color: #fff;
-}
-
-.locked {
-    background-color: var(--blue-black);
-    color: var(--ash-gray);
-    pointer-events: none;
-    cursor: default;
-}
-
-.unlocked {
-    background-color: var(--teal);
-    color: var(--white);
-    box-shadow: 0 0 15px 7px var(--green);
-}
-
-.level p {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.unlocked:hover {
-    background-color: var(--white);
-    color: #333;
-    box-shadow: 0 0 20px 10px var(--white);
-}
-
-.start {
-    top: 80vh;
-    left: 47.5vw;
-    width: 6vw;
-    height: 6vw;
-    box-shadow: 0 0 40px 20px var(--grey);
-}
-
-.start:hover {
-    box-shadow: 0 0 50px 30px var(--white);
-}
-
-.js {
-    top: 65vh;
-    left: 35vw;
-    line-height: 5vw;
-}
-
-.html {
-    top: 55vh;
-    left: 48vw;
-    line-height: 5vw;
-}
-
-.css {
-    top: 65vh;
-    left: 61vw;
-    line-height: 5vw;
-}
-
-.test {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 1%;
-    height: 100%;
-    background-color: #fff;
-}
-
-.leader-line {
-    z-index: 0;
-}
-
-/*  */
-/*  */
-/* level page */
-/*  */
-/*  */

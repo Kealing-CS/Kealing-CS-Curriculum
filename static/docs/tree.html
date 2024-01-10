@@ -6,27 +6,48 @@
     <title>Level Tree</title>
     <script src="static/js/tree.js" defer></script>
     <script src="static/js/leader-line.min.js"></script>
-    <link rel="stylesheet" href="static/css/monolith.css">
+    <link rel="stylesheet" href="static/css/tree.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 </head>
 <body>
-    <!-- nav bar goes here!!!!! -->
+    <div class="sidebar">
+        <div class="sidebar-filler"></div>
 
-    <div class="levels-holder">
-        <a href="/ide?level=start" id="start" class="level start">
-            <p>Start</p>
+        <a class="sidebar-symbol" href="/">
+            <span class="material-symbols-outlined noselect">home</span>
         </a>
 
-        <a href="/ide?level=js" id="js" class="level js locked">
-            <p>Javascript</p>
+        <a class="sidebar-symbol" href="/dashboard">
+            <span class="material-symbols-outlined noselect">Dashboard</span>
         </a>
 
-        <a href="/ide?level=html" id="html" class="level html locked">
-            <p>HTML</p>
+        <a class="sidebar-symbol active" href="#">
+            <span class="material-symbols-outlined">account_tree</span>
         </a>
+    </div>
 
-        <a href="/ide?level=css" id="css" class="level css locked">
-            <p>CSS</p>
-        </a>
+    <div class="main-content">
+        <!-- <div class="test"></div> -->
+
+        <div class="tree-container">
+
+            <a href="/ide?level=start" id="start" class="level start">
+                <p>Start</p>
+            </a>
+
+            <a href="/ide?level=js" id="js" class="level js locked">
+                <p>Javascript</p>
+            </a>
+
+            <a href="/ide?level=html" id="html" class="level html locked">
+                <p>HTML</p>
+            </a>
+
+            <a href="/ide?level=css" id="css" class="level css locked">
+                <p>CSS</p>
+            </a>
+
+        </div>
     </div>
     <!--
     <div class="test"></div>
