@@ -4,12 +4,12 @@ module.exports = function ({app, UserManager}) {
         const token = req.body.token;
 
         if (!user) {
-            res.send(418);
+            res.sendStatus(418);
             return;
         }
 
         if (!token) {
-            res.send(418);
+            res.sendStatus(418);
             return;
         }
 

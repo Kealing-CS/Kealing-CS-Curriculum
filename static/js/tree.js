@@ -26,6 +26,7 @@ const tree = document.querySelector(".tree");
 fetch("/api/getAllLevels")
 .then(res => res.json())
 .then(res => {
+    let level;
     res.forEach(level => {
         level = level.value
         const level_temp = document.createElement("a");
@@ -55,9 +56,9 @@ fetch("/api/getAllLevels")
     .then(res => res.json())
     .then(res => {
         for (let i = 0; i < res.length; i++) {
-            const level = document.getElementById(res[i]);
+            level = document.getElementById(res[i]);
             if (!level) continue
-            level_temp.href = "/ide?level=" + level.id;
+            level.href = "/ide?level=" + level.id;
             level.classList.add("unlocked");
         }
     });

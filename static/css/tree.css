@@ -64,7 +64,7 @@ body {
     /* sizing shit */
     width: 10vh;
     height: 10vh;
-    font-size: .8vw;
+    font-size: .9rem;
     /* so no underline from a tag */
     text-decoration: none;
 }
