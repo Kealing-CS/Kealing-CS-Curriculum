@@ -14,64 +14,63 @@ let correctLogin = fetch("/api/login", {
 })
 .then(res => res.json())
 .then(res => {
-    console.log(res)
     if (!res[0]) {
         window.location.href = "/login";
     }
 });
 
+const levels = [];
+const lines = [];
+const tree = document.querySelector(".tree");
 
-const levels = document.querySelectorAll(".level");
-levels.forEach(level => {
-    level.classList.add("locked");
-});
-
-let unlocked = fetch(`/api/getUnlocked?user=${localStorage.getItem('username')}`)
+fetch("/api/getAllLevels")
 .then(res => res.json())
 .then(res => {
-    console.log(res)
-    let level;
-    for (let i = 0; i < res.length; i++) {
-        const level = document.getElementById(res[i]);
-        if (!level) continue
-        level.classList.add("unlocked");
-        level.classList.remove("locked");
-    }
-});
+    res.forEach(level => {
+        level = level.value
+        const level_temp = document.createElement("a");
+        level_temp.classList.add("level");
+        level_temp.classList.add(level.id);
+        
+        level_temp.id = level.id;
 
+        const levelName = document.createElement("p");
+        levelName.innerText = level.name;
 
-let start_js = new LeaderLine(
-    document.getElementById('start'),
-    document.getElementById('js')
-);
+        level_temp.appendChild(levelName);
+        levels.push(level_temp);
+        tree.appendChild(level_temp);
+        if (level.parents) {
+            level.parents.forEach(parent => {
+                const line = new LeaderLine(
+                    document.getElementById(parent),
+                    document.getElementById(level.id)
+                );
+                lines.push(line);
+            });
+        }
+    });
 
-let start_html = new LeaderLine(
-    document.getElementById('start'),
-    document.getElementById('html')
-);
+    fetch(`/api/getUnlocked?user=${localStorage.getItem('username')}`)
+    .then(res => res.json())
+    .then(res => {
+        for (let i = 0; i < res.length; i++) {
+            const level = document.getElementById(res[i]);
+            if (!level) continue
+            level_temp.href = "/ide?level=" + level.id;
+            level.classList.add("unlocked");
+        }
+    });
 
-let start_css = new LeaderLine(
-    document.getElementById('start'),
-    document.getElementById('css')
-);
-
-start_js.setOptions({
-    // get rid of the arrow and change the color
-    endPlug: 'behind',
-    color: '#ccc',
-    size: 10,
-});
-
-start_html.setOptions({
-    // get rid of the arrow and change the color
-    endPlug: 'behind',
-    color: '#ccc',
-    size: 10,
-});
-
-start_css.setOptions({
-    // get rid of the arrow and change the color
-    endPlug: 'behind',
-    color: '#ccc',
-    size: 10,
+    lines.forEach(line => {
+        line.setOptions({
+            // get rid of the arrow and change the color
+            endPlug: 'behind',
+            color: '#ccc',
+            size: 8,
+            path: "grid",
+            startSocket: 'right',
+            endSocket: 'left',
+        });
+    });
 });

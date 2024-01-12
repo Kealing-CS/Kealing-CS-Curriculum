@@ -33,4 +33,17 @@ module.exports = class LevelManager {
     async getAll() {
         return await this.levelDB.all();
     }
+
+    createLevel(id, name, parents, instructions, needs, baseCode, correctLogs, position) {
+        this.levelDB.set(id, {
+            id: id,
+            name: name,
+            parents: parents,
+            instructions: instructions,
+            requiredLanguages: needs,
+            baseCode: baseCode,
+            correctLogs: correctLogs,
+            position: position
+        }); 
+    }
 }

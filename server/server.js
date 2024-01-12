@@ -8,13 +8,6 @@ const ip = require('ip');
 const port = 8008;
 
 
-if (process.argv.indexOf("--reset") > -1 || process.argv.indexOf("-R") > -1) {
-    console.log("Resetting database...")
-    fs.writeFileSync('./db/sensitivedata.db', '')
-    fs.writeFileSync('./db/userdata.db', '')
-    console.log("Done!")
-}
-
 // Creates sensitivedata.db and userdata.db if it does not exist
 if (!fs.existsSync('./db/sensitivedata.db')) {
     fs.writeFileSync('./db/sensitivedata.db', '')

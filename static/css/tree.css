@@ -41,51 +41,57 @@ body {
     overflow: hidden;
 }
 
-.test {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 1%;
-    background-color: var(--teal);
-}
-
-.ttest {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1%;
-    background-color: var(--teal);
-
-}
-
 .tree {
+    position: absolute;
+    top: -2vh;
     display: grid;
     width: 100%;
-    min-height: 100vh;
-    grid-template-columns: repeat(21, calc(100% / 10));
-    grid-template-rows: repeat(11, calc(100% / 10));
+    height: 100%;
+    grid-template-columns: repeat(100, 4vh);
+    grid-template-rows: repeat(100, 4vh);
 }
 
 .level {
+    /* makes it a circle */
     border-radius: 50%;
+    /* uses flexbox to center the text */
     display: flex;
     align-items: center;
     justify-content: center;
+    /* color shit */
     background-color: var(--dark-bb);
     color: var(--dwhite);
+    /* sizing shit */
     width: 10vh;
     height: 10vh;
     font-size: .8vw;
+    /* so no underline from a tag */
     text-decoration: none;
-    min-width: min-content;
-    min-height: min-content;
 }
 
 .start {
     grid-column: 2;
-    grid-row: 5 ;
+    grid-row: 13;
+}
+
+.js {
+    grid-column: 7;
+    grid-row: 16;
+}
+
+.css {
+    grid-column: 7;
+    grid-row: 10;
+}
+
+.html {
+    grid-column: 10;
+    grid-row: 13;
+}
+
+.testt {
+    grid-column: 12;
+    grid-row: 18;
 }
 
 .level.unlocked {

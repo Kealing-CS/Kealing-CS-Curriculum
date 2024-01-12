@@ -1,3 +1,4 @@
 /db/userdata.db
 /db/sensitivedata.db
 /node_modules
+/db/admins.json
