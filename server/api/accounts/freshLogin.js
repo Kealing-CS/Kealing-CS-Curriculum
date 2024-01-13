@@ -3,6 +3,15 @@ module.exports = function ({app, UserManager}) {
         const user = req.body.user;
         password = req.body.password;
         
+        let tn = await UserManager.freshLogin(user, password);
+
+        if (!tn[0]) {
+            res.send(tn);
+            return;
+        }
+
+        req.account = [user, tn[2]];
+
         res.send(await UserManager.freshLogin(user, password));
     });
 }

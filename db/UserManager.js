@@ -75,4 +75,9 @@ module.exports = class UserManager extends Login {
     setClass(username, classCode) {
         this.dataDB.set(`${username}.class`, classCode);
     }
+
+    isAdmin(username) {
+        const admins = JSON.parse(fs.readFileSync(path.join(__dirname, "./admins.json")));
+        return admins.includes(username);
+    }
 }

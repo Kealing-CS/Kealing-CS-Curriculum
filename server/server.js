@@ -1,9 +1,10 @@
-var express = require('express');
-var path = require('path');
-var cors = require('cors');
-var staticFiles = require('./static/staticFiles.js');
-var api = require('./api/api.js');
-var fs = require('fs')
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const staticFiles = require('./static/staticFiles.js');
+const cookieParser = require("cookie-parser");
+const api = require('./api/api.js');
+const fs = require('fs')
 const ip = require('ip');
 const port = 8008;
 
@@ -22,6 +23,8 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 

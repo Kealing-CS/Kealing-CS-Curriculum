@@ -2,10 +2,25 @@
 Get basic info
 */
 
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+}
+
 const url = new URL(window.location.href);
 const level = url.searchParams.get("level") ? url.searchParams.get("level") : "sandbox";
-const user = localStorage.getItem("username");
-
+const user = getCookie("username");
 
 if (!level) level = "sandbox"
 
@@ -21,7 +36,7 @@ async function checks() {
         method: "POST",
         body: JSON.stringify({
             user: user,
-            token: localStorage.getItem("token")
+            token: getCookie("token")
         }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
@@ -179,7 +194,7 @@ async function submit() {
         method: "POST",
         body: JSON.stringify({
             user: user,
-            token: localStorage.getItem("token"),
+            token: getCookie("token"),
             level: level,
             code: {
                 html: htmlFile.getValue(),
@@ -286,7 +301,7 @@ async function run() {
         method: "POST",
         body: JSON.stringify({
             user: user,
-            token: localStorage.getItem("token"),
+            token: getCookie("token"),
             level: level,
             code: {
                 html: htmlFile.getValue(),

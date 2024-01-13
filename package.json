@@ -2,6 +2,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "better-sqlite3": "^9.2.2",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "easy-json-database": "^1.5.1",
     "express": "^4.18.2",
@@ -13,7 +14,6 @@
   "description": "This is the curriculum website made for the Kealing Computer Science Program.",
   "version": "0.1.04",
   "main": "start.js",
-  "devDependencies": {},
   "scripts": {
     "test": "node start.js -T -R",
     "start": "node start.js"

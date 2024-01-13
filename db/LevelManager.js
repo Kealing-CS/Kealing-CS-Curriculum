@@ -34,7 +34,7 @@ module.exports = class LevelManager {
         return await this.levelDB.all();
     }
 
-    createLevel(id, name, parents, instructions, needs, baseCode, correctLogs, position) {
+    setLevel(id, name, parents, instructions, needs, baseCode, correctLogs, position) {
         this.levelDB.set(id, {
             id: id,
             name: name,
@@ -45,5 +45,13 @@ module.exports = class LevelManager {
             correctLogs: correctLogs,
             position: position
         }); 
+    }
+
+    deleteLevel(id) {
+        this.levelDB.delete(id);
+    }
+
+    async getLevel(id) {
+        return await this.levelDB.get(id);
     }
 }

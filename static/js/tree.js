@@ -1,12 +1,31 @@
-if (!localStorage.getItem('username') || !localStorage.getItem('token')) {
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+const username = getCookie("username");
+const token = getCookie("token");
+
+if (!username || !token) {
     window.location.href = "/login";
 }
 
 let correctLogin = fetch("/api/login", {
     method: "POST",
     body: JSON.stringify({
-        user: localStorage.getItem("username"),
-        token: localStorage.getItem("token")
+        user: username,
+        token: token
     }),
     headers: {
         "Content-type": "application/json; charset=UTF-8"
@@ -35,12 +54,17 @@ fetch("/api/getAllLevels")
         
         level_temp.id = level.id;
 
+        level_temp.style.gridColumn = level.position.x;
+        level_temp.style.gridRow = level.position.y;
+
         const levelName = document.createElement("p");
         levelName.innerText = level.name;
 
         level_temp.appendChild(levelName);
         levels.push(level_temp);
         tree.appendChild(level_temp);
+        console.log(level.id)
+        console.log(level.parents)
         if (level.parents) {
             level.parents.forEach(parent => {
                 const line = new LeaderLine(
@@ -52,7 +76,7 @@ fetch("/api/getAllLevels")
         }
     });
 
-    fetch(`/api/getUnlocked?user=${localStorage.getItem('username')}`)
+    fetch(`/api/getUnlocked?user=${username}`)
     .then(res => res.json())
     .then(res => {
         for (let i = 0; i < res.length; i++) {
