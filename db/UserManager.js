@@ -80,4 +80,9 @@ module.exports = class UserManager extends Login {
         const admins = JSON.parse(fs.readFileSync(path.join(__dirname, "./admins.json")));
         return admins.includes(username);
     }
+
+    async isStudent(username) {
+        return !(await this.isTeacher(username)) &&
+               !(await this.isAdmin(username));
+    }
 }

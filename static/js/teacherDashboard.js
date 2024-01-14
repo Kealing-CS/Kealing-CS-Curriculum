@@ -41,7 +41,7 @@ fetch("/api/login", {
 });
 
 // check if the user is an admin
-fetch("/api/isStudent?user=" + user)
+fetch("/api/isTeacher?user=" + user)
 .then(res => res.json())
 .then(res => {
     if (!res) {

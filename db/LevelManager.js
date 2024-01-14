@@ -34,13 +34,12 @@ module.exports = class LevelManager {
         return await this.levelDB.all();
     }
 
-    setLevel(id, name, parents, instructions, needs, baseCode, correctLogs, position) {
+    setLevel(id, name, parents, instructions, baseCode, correctLogs, position) {
         this.levelDB.set(id, {
             id: id,
             name: name,
             parents: parents,
             instructions: instructions,
-            requiredLanguages: needs,
             baseCode: baseCode,
             correctLogs: correctLogs,
             position: position

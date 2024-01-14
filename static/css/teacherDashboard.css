@@ -1,0 +1,13 @@
+:root {
+    --black: #031926ff;
+    --blue-black: #31304D;
+    --teal: #468189ff;
+    --green: #77aca2ff;
+    --grey: #9dbebbff;
+    --white: #f4e9cdff;
+}
+
+body {
+    background-color: var(--blue-black);
+    margin: 0;
+}

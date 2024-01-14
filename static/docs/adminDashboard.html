@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/adminDashboard.css">
     <link rel="stylesheet" href="static/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <script src="/static/js/adminDashboard.js"></script>
@@ -31,7 +31,21 @@
     </div>
 
     <div class="main-content">
-        admin dashboard
+        <div class="main-content-filler create-level">
+            <h2 style="margin-bottom: 2em;">Create Level</h2>
+            <form onsubmit="createLevel()" class="create-level-form">
+                <input type="text" name="levelId" id="levelID" placeholder="Level ID" required>
+                <input type="text" name="levelName" id="LevelName" placeholder="Level Name" required>
+                <input type="submit" value="Create">
+            </form>
+        </div>
+        <div class="main-content-filler delete-level"></div>
+        <div class="main-content-filler edit-level"></div>
+        <div class="main-content-filler ban-user"></div>
+        <div class="main-content-filler square-3"></div>
+        <div class="main-content-filler square-4"></div>
+        <div class="main-content-filler square-5"></div>
+        <div class="main-content-filler square-6"></div>
     </div>
 </body>
 </html>

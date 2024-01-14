@@ -70,3 +70,32 @@ function deleteLevel() {
         }
     });
 }
+
+function createLevel() {
+    let id = document.getElementById("levelID").value;
+    let name = document.getElementById("levelName").value;
+
+    return false;
+
+    fetch("/api/setLevel", {
+        method: "POST",
+        body: JSON.stringify({
+            user: user,
+            token: token,
+            data: {
+                id: id,
+                name: name,
+                parents: ["js"],
+                instructions: "gersd",
+                baseCode: {"js": "console.log('Hello World!');", "html": "<h1>Hello World!</h1>", "css": "h1 { color: red; }"},
+                correctLogs: [],
+                position: {"x": 15, "y": 15}
+            }
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    return false;
+}

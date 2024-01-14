@@ -5,10 +5,10 @@ module.exports = function ({app, UserManager, LevelManager}) {
         const data = req.body.data;
 
         if (
-            !data.id || !data.name              ||
+            !data.id||!data.name                ||
             !data.parents || !data.instructions ||
-            !data.needs || !data.baseCode       ||
-            !data.correctLogs || !data.position
+            !data.baseCode || !data.correctLogs ||
+            !data.position
         ) {
             res.sendStatus(400);
             return;
@@ -29,12 +29,35 @@ module.exports = function ({app, UserManager, LevelManager}) {
             data.name,
             data.parents,
             data.instructions,
-            data.needs,
             data.baseCode,
             data.correctLogs,
             data.position
         );
 
+        console.log("haii!! :3")
+
         res.sendStatus(200);
     });
 }
+
+/*
+fetch("/api/setLevel", {
+    method: "POST",
+    body: JSON.stringify({
+        user: user,
+        token: token,
+        data: {
+            id: id,
+            name: name,
+            parents: parents,
+            instructions: instructions,
+            baseCode: baseCode,
+            correctLogs: correctLogs,
+            position: position
+        }
+    }),
+    headers: {
+        "Content-type": "application/json; charset=UTF-8"
+    }
+})
+*/
