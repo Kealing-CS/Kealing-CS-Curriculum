@@ -69,6 +69,15 @@ fetch("/api/getAllLevels")
                     document.getElementById(parent),
                     document.getElementById(level.id)
                 );
+                line.setOptions({
+                    // get rid of the arrow and change the color
+                    endPlug: 'behind',
+                    color: '#ccc',
+                    size: 8,
+                    path: "grid",
+                    startSocket: 'right',
+                    endSocket: 'left',
+                });
                 lines.push(line);
             });
         }
@@ -83,17 +92,5 @@ fetch("/api/getAllLevels")
             level.href = "/ide?level=" + level.id;
             level.classList.add("unlocked");
         }
-    });
-
-    lines.forEach(line => {
-        line.setOptions({
-            // get rid of the arrow and change the color
-            endPlug: 'behind',
-            color: '#ccc',
-            size: 8,
-            path: "grid",
-            startSocket: 'right',
-            endSocket: 'left',
-        });
     });
 });
