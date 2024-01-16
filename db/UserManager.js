@@ -53,36 +53,71 @@ module.exports = class UserManager extends Login {
     }
 
     completeLevel(username, level) {
+        
         this.dataDB.push(`${username}.completed`, level);
     }
 
     async getCode(username, level) {
+        /* get the code for a level for a user
+            username: the username of the user to get the code of
+            level: the level id to get the code of
+        */
         return await this.dataDB.get(`${username}.code.${level}`);
     }
 
     setCode(username, level, code) {
+        /* set the code for a level for a user
+            username: the username of the user to set the code of
+            level: the level id to set the code of
+            code: the code to set the users code to
+        */
         this.dataDB.set(`${username}.code.${level}`, code);
     }
 
     async exists(username) {
+        /* checks if the user exists
+            username: the username of the user to check
+        */
         return await this.sensativeDB.has(username);
     }
 
     async isTeacher(username) {
+        /* checks if the user is a teacher
+            username: the username of the user to check
+        */
         return await this.dataDB.get(`${username}.teacher`);
     }
 
     async getClass(username) {
+        /* get the class code of a user
+            username: the username of the user to get the class code of
+        */
         return await this.dataDB.get(`${username}.class`);
     }
 
     setClass(username, classCode) {
+        /* set a users class to a class code
+            username: the username of the user to set the class of
+            classCode: the class code to set the users class to
+        */
         this.dataDB.set(`${username}.class`, classCode);
     }
 
     isAdmin(username) {
+        /* checks if the user is an admin
+            username: the username of the user to check
+        */
         const admins = JSON.parse(fs.readFileSync(path.join(__dirname, "./admins.json")));
         return admins.includes(username);
+    }
+
+    setAdmin(username) {
+        /* adds the user to the admins.json file
+            username: the username of the user to add to the admins.json file
+        */
+        const admins = JSON.parse(fs.readFileSync(path.join(__dirname, "./admins.json")));
+        admins.push(username);
+        fs.writeFileSync(path.join(__dirname, "./admins.json"), JSON.stringify(admins));
     }
 
     async isStudent(username) {
