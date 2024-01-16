@@ -51,7 +51,7 @@ fetch("/api/isAdmin?user=" + user)
 
 
 function deleteLevel() {
-    let id = document.getElementById("levelID").value;
+    let id = document.getElementById("deleteLevelID").value;
 
     fetch("/api/deleteLevel", {
         method: "POST",
@@ -69,6 +69,8 @@ function deleteLevel() {
             alert(res.status);
         }
     });
+
+    return false;
 }
 
 function createLevel() {
