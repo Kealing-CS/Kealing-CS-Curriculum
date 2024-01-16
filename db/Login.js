@@ -70,7 +70,9 @@ module.exports = class LoginManager {
             "teacher": teacher,
             "token": token,
             "lastLogin": Date.now(),
-            "class": teacher ? "" : null
+            "class": teacher ? "" : null,
+            "banned": false,
+            "banReason": "",
         });
         return [true, "Account created", token];
     }

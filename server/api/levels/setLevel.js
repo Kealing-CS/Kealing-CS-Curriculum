@@ -14,6 +14,11 @@ module.exports = function ({app, UserManager, LevelManager}) {
             return;
         }
 
+        if (typeof data.id !== "string") {
+            res.sendStatus(400);
+            return;
+        }
+
         if (!await UserManager.checkLogin(user, token)) {
             res.sendStatus(401);
             return;
@@ -33,8 +38,6 @@ module.exports = function ({app, UserManager, LevelManager}) {
             data.correctLogs,
             data.position
         );
-
-        console.log("haii!! :3")
 
         res.sendStatus(200);
     });

@@ -35,6 +35,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data[0]) {
+                    // TODO: should prob sanitize on server side
                     /* sanitize username for cookie */
                     username = username.replace(/[^a-zA-Z0-9]/g, "");
                     document.cookie = "username=" + username;

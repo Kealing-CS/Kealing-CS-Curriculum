@@ -72,11 +72,40 @@ function deleteLevel() {
 }
 
 function createLevel() {
-    let id = document.getElementById("levelID").value;
-    let name = document.getElementById("levelName").value;
+    let id = document.getElementById("createLevelID").value;
+    let name = document.getElementById("createLevelName").value;
+    let parents = JSON.parse(document.getElementById("createParents"));
+    let instructions = document.getElementById("createInstructions").value;
+    let baseJS = document.getElementById("createBaseJS").value;
+    let baseHTML = document.getElementById("createBaseHTML").value;
+    let baseCSS = document.getElementById("createBaseCSS").value;
+    let baseCode = {"js": baseJS, "html": baseHTML, "css": baseCSS};
+    let correctLogs = JSON.parse(document.getElementById("createCorrectLogs").value);
+    let xpos = document.getElementById("createXpos").value;
+    let ypos = document.getElementById("createYpos").value;
+    let pos = {"x": xpos, "y": ypos};
 
-    return false;
+    setLevel(id, name, parents, instructions, baseCode, correctLogs, pos);
+}
 
+function editLevel() {
+    let id = document.getElementById("editLevelID").value;
+    let name = document.getElementById("editLevelName").value;
+    let parents = JSON.parse(document.getElementById("editParents"));
+    let instructions = document.getElementById("editInstructions").value;
+    let baseJS = document.getElementById("editBaseJS").value;
+    let baseHTML = document.getElementById("editBaseHTML").value;
+    let baseCSS = document.getElementById("editBaseCSS").value;
+    let baseCode = {"js": baseJS, "html": baseHTML, "css": baseCSS};
+    let correctLogs = JSON.parse(document.getElementById("editCorrectLogs").value);
+    let xpos = document.getElementById("editXpos").value;
+    let ypos = document.getElementById("editYpos").value;
+    let pos = {"x": xpos, "y": ypos};
+
+    setLevel(id, name, parents, instructions, baseCode, correctLogs, pos);
+}
+
+function setLevel(id, name, parents, instructions, baseCode, correctLogs, position) {
     fetch("/api/setLevel", {
         method: "POST",
         body: JSON.stringify({
@@ -85,16 +114,68 @@ function createLevel() {
             data: {
                 id: id,
                 name: name,
-                parents: ["js"],
-                instructions: "gersd",
-                baseCode: {"js": "console.log('Hello World!');", "html": "<h1>Hello World!</h1>", "css": "h1 { color: red; }"},
-                correctLogs: [],
-                position: {"x": 15, "y": 15}
+                parents: parents,
+                instructions: instructions,
+                baseCode: baseCode,
+                correctLogs: correctLogs,
+                position: position
             }
         }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
+    });
+
+    return false;
+}
+
+function banUser() {
+    let username = document.getElementById("banUsername").value;
+    let reason = document.getElementById("banReason").value;
+
+    fetch("/api/ban", {
+        method: "POST",
+        body: JSON.stringify({
+            username: user,
+            token: token,
+            user: username,
+            reason: reason
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    return false;
+}
+
+function unbanUser() {
+    let username = document.getElementById("unbanUsername").value;
+
+    console.log("hhi")
+
+    fetch("/api/unban", {
+        method: "POST",
+        body: JSON.stringify({
+            username: user,
+            token: token,
+            user: username
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    return false;
+}
+
+function getBanReason() {
+    let username = document.getElementById("gbrUsername").value;
+
+    fetch("/api/getBanReason?user=" + username)
+    .then(res => res.text())
+    .then(res => {
+        alert(`Reason: ${res}`);
     });
 
     return false;

@@ -64,6 +64,10 @@ module.exports = class UserManager extends Login {
         this.dataDB.set(`${username}.code.${level}`, code);
     }
 
+    async exists(username) {
+        return await this.sensativeDB.has(username);
+    }
+
     async isTeacher(username) {
         return await this.dataDB.get(`${username}.teacher`);
     }
@@ -84,5 +88,34 @@ module.exports = class UserManager extends Login {
     async isStudent(username) {
         return !(await this.isTeacher(username)) &&
                !(await this.isAdmin(username));
+    }
+
+    async isBanned(username) {
+        return await this.dataDB.get(`${username}.banned`);
+    }
+
+    async getBanReason(username) {
+        return await this.dataDB.get(`${username}.banReason`);
+    }
+
+    async ban(username, reason) {
+        await this.dataDB.set(`${username}.banned`, true);
+        await this.dataDB.set(`${username}.banReason`, reason);
+    }
+
+    async unban(username) {
+        await this.dataDB.set(`${username}.banned`, false);
+        await this.dataDB.set(`${username}.banReason`, "");
+    }
+
+    async getBanned() {
+        let users = await this.dataDB.keys();
+        let banned = [];
+        for (let user of users) {
+            if (await this.isBanned(user)) {
+                banned.push(user);
+            }
+        }
+        return banned;
     }
 }

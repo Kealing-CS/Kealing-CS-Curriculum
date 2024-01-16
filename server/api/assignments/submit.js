@@ -58,10 +58,11 @@ module.exports = function ({app, UserManager, puppeteer}) {
                 logs = []
                 UserManager.submitLevel(user, level, logs, "Annoying kid: logs are undefined")
                 res.send(false)
+                return;
             }
-            UserManager.submitLevel(user, level, logs, `${e.name}: ${e.message}`)
-            res.send(false)
-            return
+            UserManager.submitLevel(user, level, logs, `${e.name}: ${e.message}`);
+            res.send(false);
+            return;
         }
         await browser.close();
     });
