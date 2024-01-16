@@ -33,9 +33,9 @@ async function t() {
             token: create[2]
         })
     })
-    .then(res => res.json())
+    .then(res => res.status)
     
-    if (login[0] !== true) {
+    if (login != 200) {
         console.log("Failed to login")
         process.exit(1)
     }

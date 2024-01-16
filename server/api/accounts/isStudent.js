@@ -1,6 +1,6 @@
 module.exports = function ({app, UserManager}) {
-    app.get("/api/isTeacher", async function(req, res) {
+    app.get("/api/isStudent", async function(req, res) {
         const user = req.query.user;
-        res.send(await UserManager.isTeacher(user));
+        res.send(await UserManager.isStudent(user));
     });
 }

@@ -24,10 +24,10 @@ let correctLogin = fetch("/api/login", {
         "Content-type": "application/json; charset=UTF-8"
     }
 })
-.then(res => res.json())
+.then(res => res.status)
 .then(res => {
     console.log(res)
-    if (!res[0]) {
+    if (res != 200) {
         window.location.href = "/login";
     }
 });

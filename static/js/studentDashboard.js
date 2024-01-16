@@ -33,10 +33,10 @@ fetch("/api/login", {
         "Content-type": "application/json; charset=UTF-8"
     }
 })
-.then(res => res.json())
+.then(res => res.status)
 .then(res => {
-    if (!res[0]) {
-        window.location.href = "/login?redir=";
+    if (res != 200) {
+        window.location.href = "/login?redir=dashboard";
     }
 });
 

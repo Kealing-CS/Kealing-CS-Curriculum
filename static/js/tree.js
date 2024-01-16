@@ -31,9 +31,9 @@ let correctLogin = fetch("/api/login", {
         "Content-type": "application/json; charset=UTF-8"
     }
 })
-.then(res => res.json())
+.then(res => res.status)
 .then(res => {
-    if (!res[0]) {
+    if (res != 200) {
         window.location.href = "/login";
     }
 });
@@ -63,8 +63,6 @@ fetch("/api/getAllLevels")
         level_temp.appendChild(levelName);
         levels.push(level_temp);
         tree.appendChild(level_temp);
-        console.log(level.id)
-        console.log(level.parents)
         if (level.parents) {
             level.parents.forEach(parent => {
                 const line = new LeaderLine(
