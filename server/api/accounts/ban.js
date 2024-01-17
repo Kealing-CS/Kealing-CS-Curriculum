@@ -5,7 +5,7 @@ module.exports = function ({app, UserManager}) {
 
         const user = req.body.user;
         const reason = req.body.reason;
-        console.log("k(m/y)s")
+
 
         if (!(await UserManager.checkLogin(username, token))[0]) {
             res.status(401);

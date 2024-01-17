@@ -10,8 +10,6 @@ module.exports = function ({app, UserManager}) {
             return;
         }
 
-        req.account = [user, tn[2]];
-
-        res.send(await UserManager.freshLogin(user, password));
+        res.send(tn);
     });
 }

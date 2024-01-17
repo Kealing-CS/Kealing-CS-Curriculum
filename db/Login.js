@@ -12,7 +12,7 @@ module.exports = class LoginManager {
         if (!await sensativeDB.get(username)) {
             return [false, "Username not found"];
         }
-        if (token !== await dataDB.get(`${username}.token`)) {
+        if (await dataDB.get(`${username}.token`) != token) {
             return [false, "Incorrect token"];
         }
         if (await dataDB.get(`${username}.lastLogin`) + 604800000 < Date.now()) {
@@ -35,8 +35,8 @@ module.exports = class LoginManager {
 
         let token = this._generateToken();
 
-        dataDB.set(`${username}.token`, token);
-        dataDB.set(`${username}.lastLogin`, Date.now());
+        await dataDB.set(`${username}.token`, token);
+        await dataDB.set(`${username}.lastLogin`, Date.now());
 
         return [true, "Login successful", token];
     }
