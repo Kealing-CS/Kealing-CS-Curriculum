@@ -102,28 +102,6 @@ module.exports = class UserManager extends Login {
         return await this.classDB.get(`${classCode}.students`);
     }
 
-    joinClass(username, classCode) {
-        /* set a users class to a class code & add them to the class
-            username: the username of the user to set the class of
-            classCode: the class code to set the users class to
-        */
-        if (!this.classCodeExists(classCode)) {
-            this.dataDB.set(`${username}.class`, classCode);
-            this.classDB.push(`${classCode}.students`, username);
-            return true;
-        }
-        return false;
-    }
-
-    async leaveClass(username) {
-        /* set a users class to null & remove them from the class
-            username: the username of the user to set the class of
-        */
-        let classCode = await this.getClass(username);
-        this.dataDB.set(`${username}.class`, null);
-        this.classDB.pull(`${classCode}.students`, username);
-    }
-
     isAdmin(username) {
         /* checks if the user is an admin
             username: the username of the user to check
@@ -186,5 +164,38 @@ module.exports = class UserManager extends Login {
             code = Math.random().toString(36).substring(2, 8);
         } while (await this.classCodeExists(code));
         return code;
+    }
+
+    async createClass(username) {
+        /* create a class for a user
+            username: the username of the user to create the class for
+        */
+        let classCode = await this._generateClassCode();
+        this.dataDB.set(`${username}.class`, classCode);
+        this.classDB.set(`${classCode}.teacher`, username);
+        this.classDB.set(`${classCode}.students`, []);
+        return classCode;
+    }
+
+    joinClass(username, classCode) {
+        /* set a users class to a class code & add them to the class
+            username: the username of the user to set the class of
+            classCode: the class code to set the users class to
+        */
+        if (!this.classCodeExists(classCode)) {
+            this.dataDB.set(`${username}.class`, classCode);
+            this.classDB.push(`${classCode}.students`, username);
+            return true;
+        }
+        return false;
+    }
+
+    async leaveClass(username) {
+        /* set a users class to null & remove them from the class
+            username: the username of the user to set the class of
+        */
+        let classCode = await this.getClass(username);
+        this.dataDB.set(`${username}.class`, null);
+        this.classDB.pull(`${classCode}.students`, username);
     }
 }
