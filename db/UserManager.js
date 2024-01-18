@@ -10,6 +10,7 @@ module.exports = class UserManager extends Login {
         super();
         this.dataDB = new QuickDB({ filePath: './db/userdata.db'});
         this.sensativeDB = new QuickDB({ filePath: './db/sensitivedata.db'});
+        this.classDB = new QuickDB({ filePath: './db/classes.db'});
     }
 
     async getUnlocked(username) {
@@ -53,7 +54,6 @@ module.exports = class UserManager extends Login {
     }
 
     completeLevel(username, level) {
-        
         this.dataDB.push(`${username}.completed`, level);
     }
 
@@ -95,12 +95,33 @@ module.exports = class UserManager extends Login {
         return await this.dataDB.get(`${username}.class`);
     }
 
-    setClass(username, classCode) {
-        /* set a users class to a class code
+    async getStudents(classCode) {
+        /* get the students in a class
+            classCode: the class code of the class to get the students of
+        */
+        return await this.classDB.get(`${classCode}.students`);
+    }
+
+    joinClass(username, classCode) {
+        /* set a users class to a class code & add them to the class
             username: the username of the user to set the class of
             classCode: the class code to set the users class to
         */
-        this.dataDB.set(`${username}.class`, classCode);
+        if (!this.classCodeExists(classCode)) {
+            this.dataDB.set(`${username}.class`, classCode);
+            this.classDB.push(`${classCode}.students`, username);
+            return true;
+        }
+        return false;
+    }
+
+    async leaveClass(username) {
+        /* set a users class to null & remove them from the class
+            username: the username of the user to set the class of
+        */
+        let classCode = await this.getClass(username);
+        this.dataDB.set(`${username}.class`, null);
+        this.classDB.pull(`${classCode}.students`, username);
     }
 
     isAdmin(username) {
@@ -152,5 +173,18 @@ module.exports = class UserManager extends Login {
             }
         }
         return banned;
+    }
+
+    async classCodeExists(code) {
+        let classes = await this.classDB.keys();
+        return classes.includes(code);
+    }
+
+    async _generateClassCode() {
+        let code;
+        do {
+            code = Math.random().toString(36).substring(2, 8);
+        } while (await this.classCodeExists(code));
+        return code;
     }
 }

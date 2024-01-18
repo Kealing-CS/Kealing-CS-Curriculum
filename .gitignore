@@ -2,3 +2,4 @@
 /db/sensitivedata.db
 /node_modules
 /db/admins.json
+/db/classes.db

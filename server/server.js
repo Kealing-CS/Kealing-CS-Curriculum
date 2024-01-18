@@ -16,6 +16,12 @@ if (!fs.existsSync('./db/sensitivedata.db')) {
 if (!fs.existsSync('./db/userdata.db')) {
     fs.writeFileSync('./db/userdata.db', '')
 }
+if (!fs.existsSync('./db/classes.db')) {
+    fs.writeFileSync('./db/classes.db', '')
+}
+if (!fs.existsSync('./db/admins.json')) {
+    fs.writeFileSync('./db/admins.json', '[]')
+}
 
 var app = express();
 

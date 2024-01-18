@@ -74,6 +74,10 @@ body {
     color: var(--parchment);
 }
 
+.level.unlocked:hover {
+    background-color: var(--ash-gray);
+}
+
 .leader-line {
     z-index: 0;
 }
