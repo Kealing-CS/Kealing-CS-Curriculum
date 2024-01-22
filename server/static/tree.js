@@ -4,12 +4,11 @@ module.exports = function ({app, getStatic, UserManager, banned}) {
         const token = req.cookies.token;
 
         if (!username || !token) {
-            console.log("erm")
             res.redirect('/login');
             return;
         }
 
-        if (!await UserManager.checkLogin(username, token)[0]) {
+        if (!(await UserManager.checkLogin(username, token))[0]) {
             res.redirect('/login');
             return;
         }

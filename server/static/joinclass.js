@@ -5,7 +5,7 @@ module.exports = function ({app, getStatic, UserManager, banned}) {
             return;
         }
 
-        if (!await UserManager.checkLogin(username, token)[0]) {
+        if (!await (UserManager.checkLogin(username, token))[0]) {
             res.redirect('/login');
             return;
         }

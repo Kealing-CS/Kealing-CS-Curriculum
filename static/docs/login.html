@@ -18,9 +18,37 @@
     </container>
 
     <script>
+        const LETTERS = "abcdefghijklmnopqrstuvwxyz";
+        const NUMBERS = "0123456789";
+
+        function wrong(element) {
+            element.classList.remove("wrong");
+            
+            element.classList.add("wrong");
+            
+            element.addEventListener("animationend", () => {
+                element.classList.remove("wrong");
+            })
+        }
+
         function login() {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
+
+            for (const char of username.toLowerCase()) {
+                if (!LETTERS.includes(char) && !NUMBERS.includes(char)) {
+                    wrong(document.getElementById("username"));
+                    return;
+                }
+            }
+
+            for (const char of password.toLowerCase()) {
+                if (!LETTERS.includes(char) && !NUMBERS.includes(char)) {
+                    wrong(document.getElementById("password"));
+                    return;
+                }
+            }
+
             let out = fetch("api/freshLogin", {
                 method: "POST",
                 headers: {

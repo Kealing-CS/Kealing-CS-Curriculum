@@ -85,3 +85,18 @@ body {
 	color: var(--teal);
 	background-color: var(--white);
 }
+
+.wrong {
+	animation: fadeout 1s;
+}
+
+
+@keyframes fadeout {
+	from {
+		border-color: red;
+	}
+
+	to {
+		border-color: var(--teal);
+	}
+}

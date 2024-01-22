@@ -9,14 +9,9 @@ module.exports = class LoginManager {
         let dataDB = new QuickDB({ filePath: './db/userdata.db'});
         let sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
 
-        console.log(username)
-        console.log(await sensitiveDB.get(username))
         if (!await sensitiveDB.get(username)) {
-            console.log("WHAT THE FUCK")
             return [false, "Username not found"];
         }
-        console.log(await dataDB.get(`${username}.token`))
-        console.log(token)
         if (await dataDB.get(`${username}.token`) != token) {
             return [false, "Incorrect token"];
         }
@@ -31,21 +26,18 @@ module.exports = class LoginManager {
         let sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
 
         if (!await sensitiveDB.get(username)) {
-            console.log("kay")
             return [false, "Username not found"];
         }
 
         if (!bcrypt.compare(password, await sensitiveDB.get(username))) {
-            console.log("why")
             return [false, "Incorrect password"];
         }
 
         let token = this._generateToken();
 
         await dataDB.set(`${username}.token`, token);
+        console.log(token)
         await dataDB.set(`${username}.lastLogin`, Date.now());
-
-        console.log(await dataDB.get(`${username}.token`));
 
         return [true, "Login successful", token];
     }
@@ -68,7 +60,6 @@ module.exports = class LoginManager {
         }
         await sensitiveDB.set(username, this._hashPassword(password, 10));
         let token = this._generateToken();
-        console.log(token)
         dataDB.set(username, {
             "unlocked": ["start", "sandbox"],
             "submitted": {
