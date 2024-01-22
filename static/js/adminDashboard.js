@@ -154,7 +154,6 @@ function banUser() {
 function unbanUser() {
     let username = document.getElementById("unbanUsername").value;
 
-    console.log("hhi")
 
     fetch("/api/unban", {
         method: "POST",

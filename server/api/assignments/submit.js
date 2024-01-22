@@ -25,7 +25,7 @@ module.exports = function ({app, UserManager, puppeteer}) {
 
         */
 
-        if (!UserManager.checkLogin(user, token)) {
+        if (!await UserManager.checkLogin(user, token)) {
             res.sendStatus(401);
             return;
         }

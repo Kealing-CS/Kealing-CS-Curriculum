@@ -21,7 +21,6 @@
         function login() {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
-
             let out = fetch("api/freshLogin", {
                 method: "POST",
                 headers: {
@@ -37,13 +36,14 @@
                 if (data[0]) {
                     // TODO: should prob sanitize on server side
                     /* sanitize username for cookie */
-                    username = username.replace(/[^a-zA-Z0-9]/g, "");
+                    
                     document.cookie = "username=" + username;
                     let token = data[2];
                     document.cookie = "token=" + token;
                     window.location.href = "/tree";
+                } else {
+                    alert(data[1]);
                 }
-                alert(data[1]);
             })
         }
     </script>

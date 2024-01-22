@@ -5,11 +5,6 @@ module.exports = function ({app, UserManager}) {
         
         let tn = await UserManager.freshLogin(user, password);
 
-        if (!tn[0]) {
-            res.send(tn);
-            return;
-        }
-
         res.send(tn);
     });
 }

@@ -7,11 +7,16 @@ module.exports = class LoginManager {
 
     async checkLogin(username, token) {
         let dataDB = new QuickDB({ filePath: './db/userdata.db'});
-        let sensativeDB = new QuickDB({ filePath: './db/sensitivedata.db'});
+        let sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
 
-        if (!await sensativeDB.get(username)) {
+        console.log(username)
+        console.log(await sensitiveDB.get(username))
+        if (!await sensitiveDB.get(username)) {
+            console.log("WHAT THE FUCK")
             return [false, "Username not found"];
         }
+        console.log(await dataDB.get(`${username}.token`))
+        console.log(token)
         if (await dataDB.get(`${username}.token`) != token) {
             return [false, "Incorrect token"];
         }
@@ -23,13 +28,15 @@ module.exports = class LoginManager {
 
     async freshLogin(username, password) {
         let dataDB = new QuickDB({ filePath: './db/userdata.db'});
-        let sensativeDB = new QuickDB({ filePath: './db/sensitivedata.db'});
+        let sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
 
-        if (!await sensativeDB.get(username)) {
+        if (!await sensitiveDB.get(username)) {
+            console.log("kay")
             return [false, "Username not found"];
         }
 
-        if (!bcrypt.compare(password, await sensativeDB.get(username))) {
+        if (!bcrypt.compare(password, await sensitiveDB.get(username))) {
+            console.log("why")
             return [false, "Incorrect password"];
         }
 
@@ -37,6 +44,8 @@ module.exports = class LoginManager {
 
         await dataDB.set(`${username}.token`, token);
         await dataDB.set(`${username}.lastLogin`, Date.now());
+
+        console.log(await dataDB.get(`${username}.token`));
 
         return [true, "Login successful", token];
     }
@@ -52,13 +61,14 @@ module.exports = class LoginManager {
 
     async createAccount(username, password, teacher=false) {
         let dataDB = new QuickDB({ filePath: './db/userdata.db'});
-        let sensativeDB = new QuickDB({ filePath: './db/sensitivedata.db'});
+        let sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
         
-        if (await sensativeDB.get(username)) {
+        if (await sensitiveDB.get(username)) {
             return [false, "Username already taken"];
         }
-        sensativeDB.set(username, this._hashPassword(password, 10));
+        await sensitiveDB.set(username, this._hashPassword(password, 10));
         let token = this._generateToken();
+        console.log(token)
         dataDB.set(username, {
             "unlocked": ["start", "sandbox"],
             "submitted": {
