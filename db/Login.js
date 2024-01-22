@@ -74,6 +74,14 @@ module.exports = class LoginManager {
             return [false, "uat"];
         }
 
+        if (username.length < 3 || username.length > 16) {
+            return [false, "username"];
+        }
+
+        if (password.length < 8 || password.length > 32) {
+            return [false, "password"];
+        }
+
         for (const char of username.toLowerCase()) {
             if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
                 return [false, "username"];
