@@ -17,45 +17,73 @@
     <p style="color: var(--white);">Already have an account? <a href="login" class="register-link">Login here!</a></p>
     </container>
 
-    <style>
-        .wrong {
-            /* makes a lil fading red animation to show the input was wrong */
-            
-        }
-    </style>
-
     <script>
+
+        const LETTERS = "abcdefghijklmnopqrstuvwxyz";
+        const NUMBERS = "0123456789";
+
+        function wrong(element) {
+            element.classList.remove("wrong");
+            
+            element.classList.add("wrong");
+            
+            element.addEventListener("animationend", () => {
+                element.classList.remove("wrong");
+            })
+        }
+
         function createAccount() {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
 	        var retypedPassword = document.getElementById("passwordConfirm").value;
             
-            // make sure that its only letters numbers and underscores
-            
+            for (const char of username.toLowerCase()) {
+                if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
+                    wrong(document.getElementById("username"));
+                    return;
+                }
+            }
 
-	    // User must re-enter password
-	    if (password == retypedPassword) {
+            for (const char of password.toLowerCase()) {
+                if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
+                    wrong(document.getElementById("password"));
+                    return;
+                }
+            }
 
-            let out = fetch("api/createAccount", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "user": username,
-                    "password": password
+            // User must re-enter password
+            if (password == retypedPassword) {
+
+                let out = fetch("api/createAccount", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "user": username,
+                        "password": password
+                    })
+                }).then(response => response.json())
+                .then(data => {
+                    if (data[0]) {
+                        document.cookie = "username=" + username;
+                        let token = data[2];
+                        console.log(token)
+                        document.cookie = "token=" + token;
+                        window.location.href = "/tree";
+                    } else {
+                        if (data[1] === "username") {
+                            wrong(document.getElementById("username"));
+                        } else if (data[1] === "password") {
+                            wrong(document.getElementById("password"));
+                        } else if (data[1] === "uat") {
+                            /* username already taken */
+                            wrong(document.getElementById("username"));
+                        } else {
+                            alert("Unknown error!");
+                        }
+                    }
                 })
-            }).then(response => response.json())
-            .then(data => {
-                if (data[0]) {
-                    document.cookie = "username=" + username;
-                    let token = data[2];
-                    console.log(token)
-                    document.cookie = "token=" + token;
-                    //window.location.href = "/tree";
-                } else
-                alert(data[1]);
-            })
 
             } else {
                 alert("Passwords do not match!")

@@ -36,14 +36,14 @@
             var password = document.getElementById("password").value;
 
             for (const char of username.toLowerCase()) {
-                if (!LETTERS.includes(char) && !NUMBERS.includes(char)) {
+                if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
                     wrong(document.getElementById("username"));
                     return;
                 }
             }
 
             for (const char of password.toLowerCase()) {
-                if (!LETTERS.includes(char) && !NUMBERS.includes(char)) {
+                if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
                     wrong(document.getElementById("password"));
                     return;
                 }
@@ -63,14 +63,17 @@
             .then(data => {
                 if (data[0]) {
                     // TODO: should prob sanitize on server side
-                    /* sanitize username for cookie */
                     
                     document.cookie = "username=" + username;
                     let token = data[2];
                     document.cookie = "token=" + token;
                     window.location.href = "/tree";
                 } else {
-                    alert(data[1]);
+                    if (data[1] == "username") {
+                        wrong(document.getElementById("username"));
+                    } else if (data[1] == "password") {
+                        wrong(document.getElementById("password"));
+                    }
                 }
             })
         }

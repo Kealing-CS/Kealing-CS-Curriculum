@@ -2,6 +2,9 @@ const { QuickDB } = require("quick.db");
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 
+const LETTERS = "abcdefghijklmnopqrstuvwxyz";
+const NUMBERS = "0123456789";
+
 module.exports = class LoginManager {
     constructor() {}
 
@@ -26,17 +29,29 @@ module.exports = class LoginManager {
         let sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
 
         if (!await sensitiveDB.get(username)) {
-            return [false, "Username not found"];
+            return [false, "username"];
         }
 
-        if (!bcrypt.compare(password, await sensitiveDB.get(username))) {
-            return [false, "Incorrect password"];
+        // vscode is stupid and says this await is unnecessary but its VERY necessary
+        if (!await bcrypt.compare(password, await sensitiveDB.get(username))) {
+            return [false, "pasword"];
+        }
+
+        for (const char of username.toLowerCase()) {
+            if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
+                return [false, "username"];
+            }
+        }
+
+        for (const char of password.toLowerCase()) {
+            if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
+                return [false, "password"];
+            }
         }
 
         let token = this._generateToken();
 
         await dataDB.set(`${username}.token`, token);
-        console.log(token)
         await dataDB.set(`${username}.lastLogin`, Date.now());
 
         return [true, "Login successful", token];
@@ -56,8 +71,21 @@ module.exports = class LoginManager {
         let sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
         
         if (await sensitiveDB.get(username)) {
-            return [false, "Username already taken"];
+            return [false, "uat"];
         }
+
+        for (const char of username.toLowerCase()) {
+            if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
+                return [false, "username"];
+            }
+        }
+
+        for (const char of password.toLowerCase()) {
+            if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
+                return [false, "password"];
+            }
+        }
+
         await sensitiveDB.set(username, this._hashPassword(password, 10));
         let token = this._generateToken();
         dataDB.set(username, {
