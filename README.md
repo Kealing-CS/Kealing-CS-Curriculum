@@ -2,6 +2,17 @@
 
 This is the curriculum website made for the Kealing Computer Science Program.
 
+## Table of Contents
+
+- [Kealing-CS-Curriculum](#kealing-cs-curriculum)
+  - [Table of Contents](#table-of-contents)
+  - [Authors](#authors)
+  - [Resources for Contributing](#resources-for-contributing)
+    - [Color Palette - Rich Black, Teal, Cambridge Blue, Ash Gray, and Parchment](#color-palette---rich-black-teal-cambridge-blue-ash-gray-and-parchment)
+  - [How to start](#how-to-start)
+    - [Running the Server](#running-the-server)
+    - [Coding for the Server](#coding-for-the-server)
+
 ## Authors
 
 Ian Hawthorne\
@@ -19,26 +30,12 @@ Parchment - #f4e9cdff
 
 ## How to start
 
+### Running the Server
+
 clone the repo with `git clone https://github.com/Kealing-CS/Kealing-CS-Curriculum`  
 run the server with `npm start`  
 the server will start on port 8008  
 
-## To Do
+### Coding for the Server
 
-### Levels of importance
-
-🔴 - ASAP  
-🟡 - Get it done soon  
-⚪ - Get it done on your own time  
-🟢 - Completed  
-
-- Fully implement teacher accounts 🟡
-- Fully implement classes 🟡
-- Add screenshotting to the answer checking 🟡
-- Move data into one file with multiple tables 🟡
-- Create The home page ⚪
-- Have the code be put on a subdomain (different port/ip) so we dont have to worry about xss and can have better error messages ⚪
-- Stop the parent.document xss trick 🟢
-- change to a non-json db 🟢
-- Create Lessons 🟢
-- Admin Accounts 🟢 (mostly finished)
+when making a new api endpoint, make sure to add one or multiple tests to test.js  
