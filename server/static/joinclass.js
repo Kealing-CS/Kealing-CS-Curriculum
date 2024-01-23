@@ -1,12 +1,12 @@
 module.exports = function ({app, getStatic, UserManager, banned}) {
     app.get('/joinclass', async function(req, res) {
         if (!username || !token) {
-            res.redirect('/login');
+            res.redirect('/login?redirect=/joinclass');
             return;
         }
 
         if (!(await UserManager.checkLogin(username, token))[0]) {
-            res.redirect('/login');
+            res.redirect('/login?redirect=/joinclass');
             return;
         }
 
@@ -15,6 +15,5 @@ module.exports = function ({app, getStatic, UserManager, banned}) {
         }
 
         res.sendFile(getStatic('docs/joinclass.html'));
-        //res.redirect('/login');
     });
 }

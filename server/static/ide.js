@@ -4,12 +4,12 @@ module.exports = function ({app, getStatic, UserManager, banned}) {
         const token = req.cookies.token;
 
         if (!username || !token) {
-            res.redirect('/login');
+            res.redirect('/login?redirect=/ide');
             return;
         }
 
         if (!(await UserManager.checkLogin(username, token))[0]) {
-            res.redirect('/login');
+            res.redirect('/login?redirect=/ide');
             return;
         }
 
@@ -18,6 +18,5 @@ module.exports = function ({app, getStatic, UserManager, banned}) {
         }
 
         res.sendFile(getStatic('docs/IDE.html'));
-        //res.redirect('/login');
     });
 }

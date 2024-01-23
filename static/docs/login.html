@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="static/css/logreg.css">
+    <script src="/static/js/login.js"></script>
 </head>
 <body>
     <!-- nav bar owo -->
@@ -17,66 +18,5 @@
         <p style="color: var(--white);">Don't have an account? <a href="register" class="register-link">Register here!</a></p>
     </container>
 
-    <script>
-        const LETTERS = "abcdefghijklmnopqrstuvwxyz";
-        const NUMBERS = "0123456789";
-
-        function wrong(element) {
-            element.classList.remove("wrong");
-            
-            element.classList.add("wrong");
-            
-            element.addEventListener("animationend", () => {
-                element.classList.remove("wrong");
-            })
-        }
-
-        function login() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-
-            for (const char of username.toLowerCase()) {
-                if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
-                    wrong(document.getElementById("username"));
-                    return;
-                }
-            }
-
-            for (const char of password.toLowerCase()) {
-                if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
-                    wrong(document.getElementById("password"));
-                    return;
-                }
-            }
-
-            let out = fetch("api/freshLogin", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "user": username,
-                    "password": password // TODO: should prob be encrypted
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data[0]) {
-                    // TODO: should prob sanitize on server side
-                    
-                    document.cookie = "username=" + username;
-                    let token = data[2];
-                    document.cookie = "token=" + token;
-                    window.location.href = "/tree";
-                } else {
-                    if (data[1] == "username") {
-                        wrong(document.getElementById("username"));
-                    } else if (data[1] == "password") {
-                        wrong(document.getElementById("password"));
-                    }
-                }
-            })
-        }
-    </script>
 </body>
 </html>
