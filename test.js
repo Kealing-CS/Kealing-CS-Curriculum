@@ -1,3 +1,5 @@
+const colors = require("colors")
+
 if (process.argv.indexOf("--reset") === -1 && process.argv.indexOf("-R") === -1) {
     console.log("Please include the --reset flag in the start script")
     process.exit()
@@ -20,9 +22,11 @@ async function t() {
     .then(res => res.json())
     if (create[0] !== true) {
         console.log(create)
-        console.log("Failed to create account")
+        console.log("[", "BAD".red, "]", "Failed to create account")
         process.exit(1)
     }
+
+    console.log("[", "OK".green, "]", "Created account")
 
     let login = await fetch("http://localhost:8008/api/login", {
         method: "POST",
@@ -37,9 +41,11 @@ async function t() {
     .then(res => res.status)
     
     if (login != 200) {
-        console.log("Failed to login")
+        console.log("[", "BAD".red, "]", "Failed to login")
         process.exit(1)
     }
+
+    console.log("[", "OK".green, "]", "Logged in")
 
     let freshLogin = await fetch("http://localhost:8008/api/freshLogin", {
         method: "POST",
@@ -54,9 +60,11 @@ async function t() {
     .then(res => res.json())
 
     if (freshLogin[0] !== true) {
-        console.log("Failed to freshLogin")
+        console.log("[", "BAD".red, "]", "Failed to freshLogin")
         process.exit(1)
     }
+
+    console.log("[", "OK".green, "]", "fresh logged in")
 
     let submitWrong = await fetch("http://localhost:8008/api/submit", {
         method: "POST",
@@ -77,9 +85,11 @@ async function t() {
     .then(res => res.json())
 
     if (submitWrong) {
-        console.log("Wrong output for wrong code")
+        console.log("[", "BAD".red, "]", "Wrong output for wrong code")
         process.exit(1)
     }
+
+    console.log("[", "OK".green, "]", "Right output for wrong code")
 
     let submitRight = await fetch("http://localhost:8008/api/submit", {
         method: "POST",
@@ -100,11 +110,12 @@ async function t() {
     .then(res => res.json())
 
     if (!submitRight) {
-        console.log("Wrong output for right code")
+        console.log("[", "BAD".red, "]", "Wrong output for right code")
         process.exit(1)
     }
+    console.log("[", "OK".green, "]", "Right output for right code")
 
-    console.log("All tests passed!")
+    console.log("[", "OK".green, "]", "All tests passed!")
     process.exit(0)
 }
 
