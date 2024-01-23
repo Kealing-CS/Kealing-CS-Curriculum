@@ -316,5 +316,11 @@ async function run() {
     iframe.srcdoc = code;
 }
 
+function home() {
+    window.location.href = "/";
+}
+
 
 run()
+// opens instructions container
+instructionsContainer.style.display = "flow";

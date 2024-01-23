@@ -14,11 +14,12 @@ async function t() {
         },
         body: JSON.stringify({
             user: "test",
-            password: "test"
+            password: "testword"
         })
     })
     .then(res => res.json())
     if (create[0] !== true) {
+        console.log(create)
         console.log("Failed to create account")
         process.exit(1)
     }
@@ -47,7 +48,7 @@ async function t() {
         },
         body: JSON.stringify({
             user: "test",
-            password: "test"
+            password: "testword"
         })
     })
     .then(res => res.json())
