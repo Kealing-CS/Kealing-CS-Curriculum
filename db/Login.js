@@ -16,7 +16,6 @@ module.exports = class LoginManager {
             return [false, "Username not found"];
         }
         if (await dataDB.get(`${username}.token`) != token) {
-            console.log(await dataDB.get(`${username}.token`), token);
             return [false, "Incorrect token"];
         }
         if (await dataDB.get(`${username}.lastLogin`) + 604800000 < Date.now()) {
