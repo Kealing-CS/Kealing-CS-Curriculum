@@ -19,7 +19,7 @@ module.exports = function ({app, UserManager, LevelManager}) {
             return;
         }
 
-        if (!await UserManager.checkLogin(user, token)) {
+        if (!(await UserManager.checkLogin(user, token))[0]) {
             res.sendStatus(401);
             return;
         }

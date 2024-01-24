@@ -254,7 +254,12 @@ async function test() {
         }
     } catch(e) {
         console.log("[", "BAD".red, "]", "Error in test script")
-        console.log(e)
+        // log the error but not the trace, unless -d or --debug is passed
+        if (process.argv.indexOf("-d") !== -1 || process.argv.indexOf("--debug") !== -1) {
+            console.log(e)
+        } else {
+            console.log(e.message)
+        }
         process.exit(1)
     }
 }

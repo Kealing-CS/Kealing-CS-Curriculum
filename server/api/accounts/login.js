@@ -13,6 +13,6 @@ module.exports = function ({app, UserManager}) {
             return;
         }
 
-        res.send(await UserManager.checkLogin(user, token));
+        res.send((await UserManager.checkLogin(user, token))[0]);
     });
 }

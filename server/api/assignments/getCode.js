@@ -3,7 +3,7 @@ module.exports = function ({app, UserManager}) {
         const user = req.query.user;
         const token = req.query.token;
         const level = req.query.level;
-        if (!await UserManager.checkLogin(user, token)) {
+        if (!(await UserManager.checkLogin(user, token))[0]) {
             res.sendStatus(401);
             return;
         }
