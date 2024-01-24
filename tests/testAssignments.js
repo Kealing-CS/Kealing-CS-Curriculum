@@ -62,7 +62,6 @@ module.exports = async function (token, failed) {
     /* ################ */
 
     let getCode = await fetch("http://localhost:8008/api/getCode?user=test&token=" + token + "&level=start")
-
     if (getCode.status !== 200) {
         console.log("[", "BAD".red, "]", "Wrong status code for get code")
         failed["f"] = true;

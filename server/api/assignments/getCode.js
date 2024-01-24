@@ -3,7 +3,13 @@ module.exports = function ({app, UserManager}) {
         const user = req.query.user;
         const token = req.query.token;
         const level = req.query.level;
-        if (!(await UserManager.checkLogin(user, token))[0]) {
+        const response_um = await UserManager.checkLogin(user, token)
+        
+        // I have zero idea why this snippet doesn't work even though it's the same thing??????
+        // Probably some weird delay thing
+        // if (!((await UserManager.checkLogin(user, token)[0]))) {
+
+        if (!(response_um[0])) {
             res.sendStatus(401);
             return;
         }
