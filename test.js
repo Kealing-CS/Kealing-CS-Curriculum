@@ -42,6 +42,7 @@ async function test() {
         })
         .then(res => res.json())
         if (createNormal[0] !== true) {
+            console.log(createNormal)
             console.log("[", "BAD".red, "]", "Failed to create normal account")
             failed = true;
         } else {
