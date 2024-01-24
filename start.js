@@ -9,7 +9,7 @@ if (process.argv.indexOf("--reset") > -1 || process.argv.indexOf("-R") > -1) {
 }
 
 if (process.argv.indexOf("--test") > -1 || process.argv.indexOf("-T") > -1) {
-    require("./test")
+    require("./tests/test")
 } else {
     require("./server/server")
 }

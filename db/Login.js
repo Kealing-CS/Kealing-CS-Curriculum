@@ -74,7 +74,7 @@ module.exports = class LoginManager {
             return [false, "uat"];
         }
 
-        if (username.length < 654 || username.length > 16) {
+        if (username.length < 3 || username.length > 16) {
             return [false, "username"];
         }
         if (password.length < 8 || password.length > 32) {

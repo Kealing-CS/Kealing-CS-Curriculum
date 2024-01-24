@@ -25,6 +25,7 @@ module.exports = function ({app, UserManager, puppeteer}) {
 
         */
         if (!(await UserManager.checkLogin(user, token))[0]) {
+            console.log(user, token)
             res.sendStatus(401);
             return;
         }
@@ -50,12 +51,13 @@ module.exports = function ({app, UserManager, puppeteer}) {
             // this is the logs, i was too lazy to work on plugging xss shit at the time so i just made a weird variable
             logs = await page.evaluate("BGVavnha2vyCqDt6tGrjWWHwn")
             // the blank string means theres no error
-            if (UserManager.submitLevel(user, level, logs, '')) 
-            // logs were correct
-            res.status(200);
-            else
-            // this means the logs were incorrect, i just was too lazy to find the actual status code for this
-            res.status(418);
+            if (UserManager.submitLevel(user, level, logs, '')) {
+                // logs were correct
+                res.sendStatus(200);
+            } else {
+                // this means the logs were incorrect, i just was too lazy to find the actual status code for this
+                res.sendStatus(418);
+            }
         }
         catch(e) {
             try {logs = await page.evaluate("BGVavnha2vyCqDt6tGrjWWHwn")}
@@ -68,7 +70,7 @@ module.exports = function ({app, UserManager, puppeteer}) {
             }
             // submit it with the error
             UserManager.submitLevel(user, level, logs, `${e.name}: ${e.message}`);
-            res.send(418)
+            res.sendStatus(418)
             return;
         }
         await browser.close();

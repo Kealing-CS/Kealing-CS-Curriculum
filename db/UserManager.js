@@ -44,13 +44,7 @@ module.exports = class UserManager extends Login {
     }
 
     async getCompleted(username) {
-        try {
-            return await this.dataDB.get(`${username}.completed`)
-        }
-        catch {
-            console.log("couldnt get completed")
-            return [];
-        }
+        return await this.dataDB.get(`${username}.completed`)
     }
 
     completeLevel(username, level) {

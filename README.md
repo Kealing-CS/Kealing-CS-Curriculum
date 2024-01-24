@@ -39,3 +39,4 @@ the server will start on port 8008
 ### Coding for the Server
 
 when making a new api endpoint, make sure to add one or multiple tests to test.js  
+When making a test, include at least one for the successful case and one for the unsuccessful case  

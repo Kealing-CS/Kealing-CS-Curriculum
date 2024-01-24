@@ -9,5 +9,6 @@ module.exports = function ({app, UserManager}) {
             return;
         }
         UserManager.setCode(user, level, code);
+        res.sendStatus(200);
     });
 }
