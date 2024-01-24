@@ -3,14 +3,12 @@ module.exports = function ({app, UserManager}) {
         const user = req.query.user;
         const token = req.query.token;
         const level = req.query.level;
-        const response_um = await UserManager.checkLogin(user, token)
         
-        // I have zero idea why this snippet doesn't work even though it's the same thing??????
-        // Probably some weird delay thing
-        // Max your solution doesnt work (same thing; only breaks some of the time) and idk why
-        // if (!((await UserManager.checkLogin(user, token)[0]))) {
+        // the problem was the + is counted as a space in the url. god fucking damnit
 
-        if (!(response_um[0])) {
+        const t = await UserManager.checkLogin(user, token)
+
+        if (!t[0]) {
             res.sendStatus(401);
             return;
         }
