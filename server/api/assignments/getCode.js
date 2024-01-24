@@ -7,6 +7,7 @@ module.exports = function ({app, UserManager}) {
         
         // I have zero idea why this snippet doesn't work even though it's the same thing??????
         // Probably some weird delay thing
+        // Max your solution doesnt work (same thing; only breaks some of the time) and idk why
         // if (!((await UserManager.checkLogin(user, token)[0]))) {
 
         if (!(response_um[0])) {
