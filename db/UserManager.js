@@ -9,7 +9,7 @@ module.exports = class UserManager extends Login {
     constructor() {
         super();
         this.dataDB = new QuickDB({ filePath: './db/userdata.db'});
-        this.sensativeDB = new QuickDB({ filePath: './db/sensitivedata.db'});
+        this.sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
         this.classDB = new QuickDB({ filePath: './db/classes.db'});
     }
 
@@ -67,7 +67,7 @@ module.exports = class UserManager extends Login {
 
     // checks if the user exists
     async exists(username) {
-        return await this.sensativeDB.has(username);
+        return await this.sensitiveDB.has(username);
     }
 
     // checks if the user is a teacher

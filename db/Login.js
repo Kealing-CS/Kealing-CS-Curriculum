@@ -2,9 +2,6 @@ const { QuickDB } = require("quick.db");
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 
-const LETTERS = "abcdefghijklmnopqrstuvwxyz";
-const NUMBERS = "0123456789";
-
 module.exports = class LoginManager {
     constructor() {}
 
@@ -14,7 +11,7 @@ module.exports = class LoginManager {
         let sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
 
         // make sure the person exists
-        if (!await sensitiveDB.get(username)) {
+        if (!await sensitiveDB.has(username)) {
             return [false, "Username not found"];
         }
         // make sure the token is correct

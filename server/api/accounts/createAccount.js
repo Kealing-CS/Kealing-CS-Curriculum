@@ -3,7 +3,10 @@ module.exports = function ({app, UserManager}) {
         const username = req.body.user;
         const password = req.body.password;
 
-        if (!(await UserManager.exists(username))) {
+        const LETTERS = "qwertyuiopasdfghjklzxcbnm"
+        const NUMBERS = "1234567890"
+
+        if (await UserManager.exists(username)) {
             res.send([false, "uat"]);
             return;
         }
@@ -15,11 +18,13 @@ module.exports = function ({app, UserManager}) {
 
         if (password.length < 8 || password.length > 32) {
             res.send([false, "password_length"]);
+            return;
         }
 
         for (const char of username.toLowerCase()) {
             if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
                 res.send([false, "username_bad_text"]);
+                return;
             }
         }
 

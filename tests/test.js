@@ -30,12 +30,13 @@ Current tests:
 
 async function test() {
     let failed = false;
+    let debug = process.argv.indexOf("--debug") !== -1
 
     try {
         // pass failed by reference so that it can be modified by the test functions
         temp = {"f": failed}
-        let token = await testlogin(temp)
-        await testAssignments(token, temp)
+        let token = await testlogin(temp, debug);
+        await testAssignments(token, temp, debug);
 
         if (!temp["f"]) {
             console.log("[", "OK".green, "]", "All tests passed!")
@@ -46,8 +47,7 @@ async function test() {
         }
     } catch(e) {
         console.log("[", "BAD".red, "]", "Error in test script")
-        if (process.argv.indexOf("--debug") !== -1) {
-            console.log("huh")
+        if (debug) {
             console.log(e)
         } else {
             console.log(e.message)

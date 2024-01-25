@@ -6,7 +6,7 @@ module.exports = function ({app, UserManager}) {
         
         // the problem was the + is counted as a space in the url. god fucking damnit
 
-        const checkLogin = await UserManager.checkLogin(user, token)
+        const checkLogin = await UserManager.checkLogin(user, token);
 
         if (!checkLogin[0]) {
             res.sendStatus(401);

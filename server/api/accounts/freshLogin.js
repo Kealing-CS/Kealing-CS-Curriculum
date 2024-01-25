@@ -15,6 +15,6 @@ module.exports = function ({app, UserManager}) {
         
         let tn = await UserManager.freshLogin(user, password);
 
-        res.send([false, tn]);
+        res.send([true, tn]);
     });
 }
