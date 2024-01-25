@@ -1,7 +1,8 @@
 const colors = require("colors")
 
 module.exports = async function (failed, debug) {
-let createNormal = await fetch("http://localhost:8008/api/createAccount", {
+    // test normal create account
+    let createNormal = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -21,6 +22,8 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
     } else {
         console.log("[", "OK".green, "]", "Succeeded in creating a normal account")
     }
+
+    // test doing a too short username
 
     let createShortU = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
@@ -43,6 +46,8 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
         console.log("[", "OK".green, "]", "Failed in creating an account with a short username")
     }
 
+    // test doing a too short password
+
     let createShortP = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
@@ -63,6 +68,8 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
     } else {
         console.log("[", "OK".green, "]", "Failed in creating an account with a short password")
     }
+
+    // test doing a too long username
 
     let createLongU = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
@@ -85,13 +92,15 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
         console.log("[", "OK".green, "]", "Failed in creating an account with a long username")
     }
 
+    // test doing a too long password
+
     let createLongP = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
         },
         body: JSON.stringify({
-            user: "test",
+            user: "testLP",
             password: "qwertyuiopasdfghjklzxcvbnmqwerty"
         })
     })
@@ -105,6 +114,8 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
     } else {
         console.log("[", "OK".green, "]", "Failed in creating an account with a long password")
     }
+
+    // test not allowed chars in username
 
     let createNACU = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
@@ -127,6 +138,8 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
         console.log("[", "OK".green, "]", "Failed to create account with bad username")
     }
 
+    // test doing a not allowed char in password
+
     let createNACP = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
@@ -147,6 +160,8 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
     } else {
         console.log("[", "OK".green, "]", "Failed to create account with bad password")
     }
+
+    // test doing a normal token login
 
     let login = await fetch("http://localhost:8008/api/login", {
         method: "POST",
@@ -172,6 +187,30 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
         console.log("[", "OK".green, "]", "Logged in")
     }
 
+    // test doing a wrong token login
+
+    let loginWrong = await fetch("http://localhost:8008/api/login", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            user: "test",
+            token: "im lying to you!!"
+        })
+    })
+    .then(res => res.status)
+
+    if (loginWrong === 200) {
+        if (debug) {
+            console.log(loginWrong)
+        }
+        console.log("[", "BAD".red, "]", "Succeeded in logging in with a wrong token")
+        failed["f"] = true;
+    }
+
+    // test getting a new token
+
     let freshLogin = await fetch("http://localhost:8008/api/freshLogin", {
         method: "POST",
         headers: {
@@ -192,6 +231,27 @@ let createNormal = await fetch("http://localhost:8008/api/createAccount", {
         failed["f"] = true;
     } else {
         console.log("[", "OK".green, "]", "fresh logged in")
+    }
+
+    // test getting a new token with wrong password
+
+    let freshLoginWrong = await fetch("http://localhost:8008/api/freshLogin", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            user: "test",
+            password: "im lying to you p2!!!!"
+        })
+    });
+
+    if (freshLoginWrong.status === 200) {
+        if (debug) {
+            console.log(freshLoginWrong)
+        }
+        console.log("[", "BAD".red, "]", "Succeeded in fresh logging in with a wrong password")
+        failed["f"] = true;
     }
 
     // return the token for future use
