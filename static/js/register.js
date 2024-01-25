@@ -109,10 +109,14 @@ function createAccount() {
             document.cookie = "token=" + token;
             window.location.href = redir || "/";
         } else {
-            if (data[1] === "username") {
+            if (data[1] === "username_length") {
                 wrong(document.getElementById("username"), "usernameBadLength");
-            } else if (data[1] === "password") {
+            } else if (data[1] === "password_length") {
                 wrong(document.getElementById("password"), "passwordBadLength");
+            } else if (data[1] === "username_bad_text") {
+                wrong(document.getElementById("username"), "usernameBadCharacters");
+            } else if (data[1] === "password_bad_text") {
+                wrong(document.getElementById("password"), "passwordBadCharacters");
             } else if (data[1] === "uat") {
                 /* username already taken */
                 wrong(document.getElementById("username"), "uat");
