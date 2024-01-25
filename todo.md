@@ -12,6 +12,9 @@
 - [ ] Teacher Accounts
 - [ ] Better tests
 - [ ] Better Comments
+- [ ] Finish Admin Dashboard
+- [ ] Finish Teacher Dashboard
+- [ ] Finish Student Dashboard
 
 ### Done ✓
 
