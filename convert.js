@@ -1,3 +1,5 @@
+// this is used if you want to change the format that stuff is saved
+// (changes it from a db file to a json file)
 
 const fs = require('fs');
 const { QuickDB } = require("quick.db");

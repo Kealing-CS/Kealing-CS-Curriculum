@@ -1,3 +1,5 @@
+// this gets all the files in a directory and subdirectories
+
 const fs = require('fs');
 
 function readFiles(path) {
@@ -21,6 +23,4 @@ function readFiles(path) {
     return flat;
 }
 
-module.exports = function(path) {
-    return readFiles(path);
-}
+module.exports = (path) => readFiles(path);

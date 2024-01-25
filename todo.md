@@ -11,10 +11,10 @@
 
 - [ ] Teacher Accounts
 - [ ] Better tests
+- [ ] Better Comments
 
 ### Done ✓
 
-- [x] Create my first TODO.md  
 - [x] Admin Accounts
 - [x] Create Levels
 - [x] Non-JSON DB  

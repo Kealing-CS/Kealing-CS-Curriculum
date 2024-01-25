@@ -9,6 +9,9 @@ const ip = require('ip');
 const rateLimiter = require('express-rate-limit');
 const port = 8008;
 
+// this is the server
+// (wowza)
+
 
 // make sure all the gitignore shit exists
 if (!fs.existsSync('./db/sensitivedata.db')) {

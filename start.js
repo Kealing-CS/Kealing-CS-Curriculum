@@ -1,3 +1,5 @@
+// this is for the funnsies
+
 var fs = require('fs')
 
 if (process.argv.indexOf("--reset") > -1 || process.argv.indexOf("-R") > -1) {

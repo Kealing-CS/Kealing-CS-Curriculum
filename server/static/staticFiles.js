@@ -1,3 +1,5 @@
+// gets all the endpoints (non api (aka the website))
+
 const readFiles = require('../readFiles');
 const path = require('path');
 const UM = require('../../db/UserManager');

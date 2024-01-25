@@ -5,6 +5,8 @@ const LevelManager = require("../../db/LevelManager.js");
 const path = require('path');
 const fs = require('fs');
 
+// runs all the api code
+
 module.exports = function (app) {
     const UserManager = new UM();
     const levelManager = new LevelManager();
