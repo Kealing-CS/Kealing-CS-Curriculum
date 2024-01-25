@@ -47,7 +47,7 @@ function login() {
     .then(data => {
         if (data[0]) {
             document.cookie = "username=" + username;
-            let token = data[2];
+            let token = data[1];
             document.cookie = "token=" + token;
             window.location.href = redir || "/";
         } else {
