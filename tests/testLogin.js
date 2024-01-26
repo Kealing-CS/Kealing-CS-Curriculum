@@ -36,7 +36,7 @@ module.exports = async function (failed, debug) {
         })
     })
     .then(res => res.json())
-    if (createShortU[0] === true) {
+    if (createShortU[0]) {
         if (debug) {
             console.log(createShortU)
         }
@@ -59,7 +59,7 @@ module.exports = async function (failed, debug) {
         })
     })
     .then(res => res.json())
-    if (createShortP[0] === true) {
+    if (createShortP[0]) {
         if (debug) {
             console.log(createShortP)
         }
@@ -82,7 +82,7 @@ module.exports = async function (failed, debug) {
         })
     })
     .then(res => res.json())
-    if (createLongU[0] === true) {
+    if (createLongU[0]) {
         if (debug) {
             console.log(createLongU)
         }
@@ -105,7 +105,7 @@ module.exports = async function (failed, debug) {
         })
     })
     .then(res => res.json())
-    if (createLongP[0] === true) {
+    if (createLongP[0]) {
         if (debug) {
             console.log(createLongP)
         }
@@ -128,7 +128,7 @@ module.exports = async function (failed, debug) {
         })
     })
     .then(res => res.json())
-    if (createNACU[0] === true) {
+    if (createNACU[0]) {
         if (debug) {
             console.log(createNACU)
         }
@@ -151,7 +151,7 @@ module.exports = async function (failed, debug) {
         })
     })
     .then(res => res.json())
-    if (createNACP[0] === true) {
+    if (createNACP[0]) {
         if (debug) {
             console.log(createNACP)
         }
@@ -199,11 +199,11 @@ module.exports = async function (failed, debug) {
             token: "im lying to you!!"
         })
     })
-    .then(res => res.status)
+    .then(res => res.json())
 
-    if (loginWrong === 200) {
+    if (loginWrong) {
         if (debug) {
-            console.log(loginWrong)
+            console.log(await loginWrong.json());
         }
         console.log("[", "BAD".red, "]", "Succeeded in logging in with a wrong token")
         failed["f"] = true;
@@ -244,11 +244,12 @@ module.exports = async function (failed, debug) {
             user: "test",
             password: "im lying to you p2!!!!"
         })
-    });
+    })
+    .then(res => res.json())
 
-    if (freshLoginWrong.status === 200) {
+    if (freshLoginWrong[0]) {
         if (debug) {
-            console.log(freshLoginWrong)
+            console.log(await freshLoginWrong.json());
         }
         console.log("[", "BAD".red, "]", "Succeeded in fresh logging in with a wrong password")
         failed["f"] = true;
