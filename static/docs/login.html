@@ -9,12 +9,13 @@
 </head>
 <body>
 
-    <container id="login-box">
+    <div id="error"></div>
+    <form onsubmit="login();return false" id="login-box">
         <input type="text" class="login-input" id="username" placeholder="Username"> <br>
         <input type="password" class="login-input" id="password" placeholder="Password"> <br>
-        <button onclick="login()" class="login-button">Login</button>
+        <input type="submit" class="login-button" value="Login">
         <p style="color: var(--white);">Don't have an account? <a href="register" class="register-link">Register here!</a></p>
-    </container>
+    </form>
 
 </body>
 </html>

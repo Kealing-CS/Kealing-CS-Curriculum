@@ -6,88 +6,80 @@ const LETTERS = "abcdefghijklmnopqrstuvwxyz";
 const NUMBERS = "0123456789";
 
 function wrong(element, error) {
-    var errorBox = document.getElementById("error");
+    let errorBox = document.getElementById("error");
 
-    // Reset animation if spammed
+    // reset anim
     element.classList.remove("wrong");
-    errorBox.classList.remove("error-wrong");
-    element.offsetHeight;
+    element.offsetHeight
+
+    // add anim
     element.classList.add("wrong");
-    errorBox.classList.add("error-wrong");
 
     element.addEventListener("animationend", () => {
         element.classList.remove("wrong");
     });
 
-    errorBox.addEventListener("animationend", () => {
-        errorBox.classList.remove("error-wrong");
-        errorBox.innerText = "";
-    });
-
-    if (error) {
-        switch (error) {
-            case "empty":
-                errorBox.innerText = "One or more fields are empty";
-                return;
-            case "uat":
-                errorBox.innerText = "Username already taken";
-                return;
-            case "usernameBadLength":
-                errorBox.innerText = "Username must be between 3 and 16 characters";
-                return;
-            case "passwordBadLength":
-                errorBox.innerText = "Password must be between 8 and 32 characters";
-                return;
-            case "usernameBadCharacters":
-                errorBox.innerText = "Username can only have numbers, letters, and _";
-                return;
-            case "passwordBadCharacters":
-                errorBox.innerText = "Password can only have numbers, letters, and _";
-                return;
-            case "passwordConfirmDifference":
-                errorBox.innerText = "Entered passwords are different";
-                return;
-        }
-    }
+    errorBox.innerText = error;
 }
 
 
 function createAccount() {
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
-    var retypedPassword = document.getElementById("passwordConfirm").value;
-    var errIndex = [];
+    let usernameElement = document.getElementById("username");
+    let passwordElement = document.getElementById("password");
+    let passwordConfirmElement = document.getElementById("passwordConfirm");
+
+    var username = usernameElement.value;
+    var password = passwordElement.value;
+    var retypedPassword = passwordConfirmElement.value;
 
     // Managing errors
     if (username === "") {
-        errIndex.push("username");
+        wrong(usernameElement, "The username is empty");
+        return;
+    }
+
+    if (username.length < 3) {
+        wrong(usernameElement, "The username is too short");
+        return;
+    }
+
+    if (username.length > 16) {
+        wrong(usernameElement, "The username is too long");
+        return;
+    }
+
+    if (password != retypedPassword) {
+        wrong(passwordElement, "The passwords do not match");
+        wrong(passwordConfirmElement, "The passwords do not match");
+        return;
     }
 
     if (password === "") {
-        errIndex.push("password");
-    }
-
-    // Pushes errors for empty fields
-    // Not doing this for all fields since somebody thinks that it's best to spoonfeed the user what's wrong
-    // (what max means is that HE thinks that it's best to spoonfeed the user what's wrong)
-    if (errIndex.length > 0) {
-        errIndex.forEach((badField) => {
-            wrong(document.getElementById(badField), "empty");
-        })
+        wrong(passwordElement, "The password is empty");
         return;
     }
-    // No error for password confirmation because that's covered in field comparison
+
+    if (password.length < 8) {
+        wrong(passwordElement, "The password is too short");
+        return;
+    }
+
+    if (password.length > 32) {
+        wrong(passwordElement, "The password is too long");
+        return;
+    }
+
 
     for (const char of username.toLowerCase()) {
         if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
-            wrong(document.getElementById("username"), "usernameBadCharacters");
+            wrong(usernameElement, "The username contains invalid characters");
             return;
         }
     }
 
     for (const char of password.toLowerCase()) {
         if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
-            wrong(document.getElementById("password"), "passwordBadCharacters");
+            wrong(passwordElement, "The password contains invalid characters");
             return;
         }
     }    
@@ -114,7 +106,7 @@ function createAccount() {
             document.cookie = "username=" + username;
             let token = data[1];
             document.cookie = "token=" + token;
-            //window.location.href = redir || "/";
+            window.location.href = redir || "/";
         } else {
             if (data[1] === "username_length") {
                 wrong(document.getElementById("username"), "usernameBadLength");
@@ -132,7 +124,4 @@ function createAccount() {
             }
         }
     });
-
-    // so the form tag doesnt redirect
-    return false;
 }

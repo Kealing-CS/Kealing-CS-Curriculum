@@ -5,33 +5,29 @@ const redir = urlParams.get('redirect');
 const LETTERS = "abcdefghijklmnopqrstuvwxyz";
 const NUMBERS = "0123456789";
 
-function wrong(element) {
+function wrong(element, error) {
+    console.log("hi")
+
+    let errorBox = document.getElementById("error");
+
+    // reset anim
     element.classList.remove("wrong");
-    
+    element.offsetHeight
+
+    // add anim
     element.classList.add("wrong");
-    
+
     element.addEventListener("animationend", () => {
         element.classList.remove("wrong");
-    })
+    });
+
+    errorBox.innerText = error;
 }
 
 function login() {
+
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
-
-    for (const char of username.toLowerCase()) {
-        if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
-            wrong(document.getElementById("username"));
-            return;
-        }
-    }
-
-    for (const char of password.toLowerCase()) {
-        if (!LETTERS.includes(char) && !NUMBERS.includes(char) && char !== "_") {
-            wrong(document.getElementById("password"));
-            return;
-        }
-    }
 
     fetch("api/freshLogin", {
         method: "POST",
@@ -45,16 +41,17 @@ function login() {
     })
     .then(response => response.json())
     .then(data => {
+        console.log(data)
         if (data[0]) {
             document.cookie = "username=" + username;
             let token = data[1];
             document.cookie = "token=" + token;
             window.location.href = redir || "/";
         } else {
-            if (data[1] == "username") {
-                wrong(document.getElementById("username"));
-            } else if (data[1] == "password") {
-                wrong(document.getElementById("password"));
+            if (data[1] == "username does not exist") {
+                wrong(document.getElementById("username"), "The username does not exist");
+            } else if (data[1] == "password is incorrect") {
+                wrong(document.getElementById("password"), "The password is incorrect");
             }
         }
     })

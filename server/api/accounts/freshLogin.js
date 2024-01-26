@@ -4,12 +4,12 @@ module.exports = function ({app, UserManager}) {
         const password = req.body.password;
 
         if (!(await UserManager.exists(user))) {
-            res.send([false, "username"]);
+            res.send([false, "username does not exist"]);
             return;
         }
 
         if (!(await UserManager.checkPassword(user, password))) {
-            res.send([false, "password"]);
+            res.send([false, "password is incorrect"]);
             return;
         }
         

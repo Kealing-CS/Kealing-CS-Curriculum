@@ -43,20 +43,6 @@ body {
 	color: red;
 }
 
-.error-wrong {
-	animation: error-fadeout 3.5s;
-}
-
-@keyframes error-fadeout {
-	from {
-		color: red;
-	}
-
-	to {
-		color: var(--black);
-	}
-}
-
 #login-box {
 	position: absolute;
 	margin: 0;
@@ -112,7 +98,7 @@ body {
 }
 
 .wrong {
-	animation: fadeout 2s;
+	animation: fadeout 3s;
 }
 
 
