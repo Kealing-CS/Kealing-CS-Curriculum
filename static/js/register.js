@@ -10,12 +10,19 @@ function wrong(element, error) {
 
     // Reset animation if spammed
     element.classList.remove("wrong");
+    errorBox.classList.remove("error-wrong");
     element.offsetHeight;
     element.classList.add("wrong");
+    errorBox.classList.add("error-wrong");
 
     element.addEventListener("animationend", () => {
         element.classList.remove("wrong");
-    })
+    });
+
+    errorBox.addEventListener("animationend", () => {
+        errorBox.classList.remove("error-wrong");
+        errorBox.innerText = "";
+    });
 
     if (error) {
         switch (error) {
@@ -52,16 +59,17 @@ function createAccount() {
     var errIndex = [];
 
     // Managing errors
-    if (username == "") {
+    if (username === "") {
         errIndex.push("username");
     }
 
-    if (password == "") {
+    if (password === "") {
         errIndex.push("password");
     }
 
     // Pushes errors for empty fields
     // Not doing this for all fields since somebody thinks that it's best to spoonfeed the user what's wrong
+    // (what max means is that HE thinks that it's best to spoonfeed the user what's wrong)
     if (errIndex.length > 0) {
         errIndex.forEach((badField) => {
             wrong(document.getElementById(badField), "empty");
@@ -104,8 +112,7 @@ function createAccount() {
     .then(data => {
         if (data[0]) {
             document.cookie = "username=" + username;
-            let token = data[2];
-            console.log(token)
+            let token = data[1];
             document.cookie = "token=" + token;
             window.location.href = redir || "/";
         } else {
@@ -124,5 +131,8 @@ function createAccount() {
                 alert("Unknown error!");
             }
         }
-    })
+    });
+
+    // so the form tag doesnt redirect
+    return false;
 }

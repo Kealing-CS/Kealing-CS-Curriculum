@@ -4,11 +4,14 @@ module.exports = function ({app, getStatic, UserManager, banned}) {
         const token = req.cookies.token;
 
         if (!username || !token) {
+            console.log("No username or token")
             res.redirect('/login?redirect=/');
             return;
         }
 
         if (!(await UserManager.checkLogin(username, token))[0]) {
+            console.log(token)
+            console.log(await UserManager.checkLogin(username, token));
             res.redirect('/login?redirect=/');
             return;
         }
