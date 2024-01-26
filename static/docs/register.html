@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="error"></div>
-    <form onsubmit="return createAccount();" id="login-box">
+    <form onsubmit="createAccount();return false" id="login-box">
         <input type="text" class="login-input" id="username" placeholder="Username"><br>
         <input type="password" class="login-input" id="password" placeholder="Password"><br>
         <input type="password" class="login-input" id="passwordConfirm" placeholder="Retype Password"><br>

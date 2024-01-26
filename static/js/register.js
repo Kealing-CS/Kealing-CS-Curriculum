@@ -114,7 +114,7 @@ function createAccount() {
             document.cookie = "username=" + username;
             let token = data[1];
             document.cookie = "token=" + token;
-            window.location.href = redir || "/";
+            //window.location.href = redir || "/";
         } else {
             if (data[1] === "username_length") {
                 wrong(document.getElementById("username"), "usernameBadLength");
