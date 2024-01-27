@@ -50,6 +50,13 @@ app.use(cookieParser());
 staticFiles(app);
 api(app);
 
+// 404
+app.all('*', async (req, res) => {
+    res.status(404);
+
+    res.sendFile(path.join(__dirname, `../static/docs/404.html`));
+});
+
 app.listen(port, () => {
     console.log(`Server running on http://${ip.address()}:${port}/`);
     console.log(`or use http://localhost:${port}/`)
