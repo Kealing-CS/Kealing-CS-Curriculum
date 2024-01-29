@@ -50,7 +50,7 @@ module.exports = function ({app, UserManager, puppeteer}) {
             // this is the logs, i was too lazy to work on plugging xss shit at the time so i just made a weird variable
             logs = await page.evaluate("BGVavnha2vyCqDt6tGrjWWHwn")
             // the blank string means theres no error
-            if (UserManager.submitLevel(user, level, logs, '')) {
+            if (await UserManager.submitLevel(user, level, logs, '')) {
                 // logs were correct
                 res.sendStatus(200);
             } else {

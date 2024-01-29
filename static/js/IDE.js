@@ -207,10 +207,11 @@ async function submit() {
         }
     })
     .then(res => {
-        return res.text()
+        return res.status
     });
 
-    if (works === "true") {
+    if (works === 200) {
+        console.log(works)
         alert("Submitted. Your teacher will check it out shortly.")
     } else {
         alert("Your code might not work. This could mean you have a stray whitespace in your logs or your code simply gives an error. Either way, it has been submitted.")

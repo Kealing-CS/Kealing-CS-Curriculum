@@ -32,7 +32,7 @@ Parchment - #f4e9cdff
 
 ### Running the Server
 
-clone the repo with `git clone https://github.com/Kealing-CS/Kealing-CS-Curriculum`  
+clone the repo with `git clone https://github.com/Kealing-CS/Kealing-CS-Curriculum.git` (although you've probably already done this!)  
 run the server with `npm start`  
 the server will start on port 8008  
 

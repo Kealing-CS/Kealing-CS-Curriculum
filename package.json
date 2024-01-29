@@ -18,7 +18,8 @@
   "main": "start.js",
   "scripts": {
     "test": "node start.js -T -R",
-    "start": "node start.js"
+    "start": "node start.js",
+    "reset": "node start.js -R"
   },
   "repository": {
     "type": "git",
