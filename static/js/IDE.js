@@ -72,6 +72,30 @@ async function checks() {
 checks()
 
 /*
+get the code for the level
+*/
+
+async function baseCode() {
+    let baseCode = await fetch(`/api/getBaseCode?level=${level}`)
+    .then(res => res.json())
+    .then(res => {
+        return res;
+    });
+
+    return baseCode;
+}
+
+async function getCode() {
+    let code = await fetch(`/api/getCode?level=${level}&user=${user}&token=${getCookie("token")}`)
+    console.log(code.status)
+    if (code.status !== 200) {
+        return baseCode();
+    }
+
+    return code.json();
+}
+
+/*
 TODO: give the browser some test data so it can tell the user if it works. Dont give it all the data though,
 or the user can just console.log it instead of actually doing what they are meant to do
 */
@@ -122,30 +146,6 @@ instructions.addEventListener("click", function() {
 instructionsClose.addEventListener("click", function() {
     instructionsContainer.style.display = "none";
 });
-
-/*
-get the base code for the level
-*/
-
-async function baseCode() {
-    let baseCode = await fetch(`/api/getBaseCode?level=${level}`)
-    .then(res => res.json())
-    .then(res => {
-        return res;
-    });
-
-    baseJsCode = baseCode.js;
-    baseHTMLCode = baseCode.html;
-    baseCSSCode = baseCode.css;
-
-    jsFile.setValue(baseJsCode);
-    htmlFile.setValue(baseHTMLCode);
-    cssFile.setValue(baseCSSCode);
-    
-    run();
-}
-
-baseCode();
 
 /*
 base log
@@ -298,6 +298,26 @@ async function run() {
     code += await htmlFile.getValue()
     code += runJS(iframe, jsFile.getValue());
     code += runCSS(iframe, cssFile.getValue());
+    iframe.srcdoc = code;
+}
+
+function home() {
+    window.location.href = "/";
+}
+
+
+run();
+(async () => {
+    getCode().then(res => {
+        jsFile.setValue(res.js);
+        htmlFile.setValue(res.html);
+        cssFile.setValue(res.css);
+    });
+})();
+// opens instructions container
+instructionsContainer.style.display = "flow";
+
+setInterval(() => {
     fetch("/api/setCode", {
         method: "POST",
         body: JSON.stringify({
@@ -313,15 +333,5 @@ async function run() {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    })
-    iframe.srcdoc = code;
-}
-
-function home() {
-    window.location.href = "/";
-}
-
-
-run()
-// opens instructions container
-instructionsContainer.style.display = "flow";
+    });
+}, 1000 * 30); // auto saves every 30 seconds

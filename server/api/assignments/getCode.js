@@ -12,6 +12,14 @@ module.exports = function ({app, UserManager}) {
             res.sendStatus(401);
             return;
         }
-        res.send(await UserManager.getCode(user, level));
+
+        let code = await UserManager.getCode(user, level)
+
+        if (code === "") {
+            res.sendStatus(404);
+            return;
+        }
+
+        res.send(code);
     });
 }

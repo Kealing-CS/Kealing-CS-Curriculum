@@ -55,6 +55,11 @@ module.exports = class UserManager extends Login {
         this.dataDB.push(`${username}.completed`, level);
     }
 
+    // check if the code for a level for a user exists
+    async codeExists(username, level) {
+        return await this.dataDB.has(`${username}.code.${level}`);
+    }
+
     // get the code for a level for a user
     async getCode(username, level) {
         return await this.dataDB.get(`${username}.code.${level}`);
