@@ -60,7 +60,6 @@ async function checks() {
     await fetch(`/api/getInstructions?level=${level}`)
     .then(res => {
         if (res.status == 404) {
-            console.log("404")
             window.location.href = "/tree";
         }
         return res.text();
@@ -77,17 +76,13 @@ get the code for the level
 
 async function baseCode() {
     let baseCode = await fetch(`/api/getBaseCode?level=${level}`)
-    .then(res => res.json())
-    .then(res => {
-        return res;
-    });
+    .then(res => res.json());
 
     return baseCode;
 }
 
 async function getCode() {
     let code = await fetch(`/api/getCode?level=${level}&user=${user}&token=${getCookie("token")}`)
-    console.log(code.status)
     if (code.status !== 200) {
         return baseCode();
     }
@@ -211,7 +206,6 @@ async function submit() {
     });
 
     if (works === 200) {
-        console.log(works)
         alert("Submitted. Your teacher will check it out shortly.")
     } else {
         alert("Your code might not work. This could mean you have a stray whitespace in your logs or your code simply gives an error. Either way, it has been submitted.")

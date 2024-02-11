@@ -8,14 +8,12 @@ const path = require('path');
 module.exports = class UserManager extends Login {
     constructor() {
         super();
-        this.dataDB = new QuickDB({ filePath: './db/userdata.db'});
-        this.sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
         this.classDB = new QuickDB({ filePath: './db/classes.db'});
     }
 
     async getUnlocked(username) {
         try {
-            return await this.dataDB.get(`${username}.unlocked`)
+            return await this.dataDB.get(`users.${username}.unlocked`)
         }
         catch {
             console.log("couldnt get unlocked")
@@ -24,18 +22,18 @@ module.exports = class UserManager extends Login {
     }
 
     unlockLevel(username, level) {
-        this.dataDB.push(`${username}.unlocked`, level);
+        this.dataDB.push(`users.${username}.unlocked`, level);
     }
 
     async getSubmitted(username) {
-        return await this.dataDB.get(`${username}.submitted`).keys();
+        return await this.dataDB.get(`users.${username}.submitted`).keys();
     }
 
     async submitLevel(username, level, logs, err) {
         let lm = new LevelManager();
         let correctLogs = await lm.getCorrectLogs(level)
 
-        this.dataDB.set(`${username}.submitted.${level}`, [logs, err]); // set the submitted code
+        this.dataDB.set(`users.${username}.submitted.${level}`, [logs, err]); // set the submitted code
 
         logs = JSON.stringify(logs)
         correctLogs = JSON.stringify(correctLogs)
@@ -47,27 +45,27 @@ module.exports = class UserManager extends Login {
     // get the completed levels of a user
     // (completed means ones that were submitted and correct)
     async getCompleted(username) {
-        return await this.dataDB.get(`${username}.completed`)
+        return await this.dataDB.get(`users.${username}.completed`)
     }
 
     // set a level as completed for a user
     completeLevel(username, level) {
-        this.dataDB.push(`${username}.completed`, level);
+        this.dataDB.push(`users.${username}.completed`, level);
     }
 
     // check if the code for a level for a user exists
     async codeExists(username, level) {
-        return await this.dataDB.has(`${username}.code.${level}`);
+        return await this.dataDB.has(`users.${username}.code.${level}`);
     }
 
     // get the code for a level for a user
     async getCode(username, level) {
-        return await this.dataDB.get(`${username}.code.${level}`);
+        return await this.dataDB.get(`users.${username}.code.${level}`);
     }
 
     //set the code for a level for a user
     setCode(username, level, code) {
-        this.dataDB.set(`${username}.code.${level}`, code);
+        this.dataDB.set(`users.${username}.code.${level}`, code);
     }
 
     // checks if the user exists
@@ -77,12 +75,12 @@ module.exports = class UserManager extends Login {
 
     // checks if the user is a teacher
     async isTeacher(username) {
-        return await this.dataDB.get(`${username}.teacher`);
+        return await this.dataDB.get(`users.${username}.teacher`);
     }
 
     // get the class code of a user
     async getClass(username) {
-        return await this.dataDB.get(`${username}.class`);
+        return await this.dataDB.get(`users.${username}.class`);
     }
 
     // get the students of a class
@@ -111,24 +109,24 @@ module.exports = class UserManager extends Login {
 
     // check if a user is banned
     async isBanned(username) {
-        return await this.dataDB.get(`${username}.banned`);
+        return await this.dataDB.get(`users.${username}.banned`);
     }
 
     // get the ban reason of a user
     async getBanReason(username) {
-        return await this.dataDB.get(`${username}.banReason`);
+        return await this.dataDB.get(`users.${username}.banReason`);
     }
 
     // ban a user
     async ban(username, reason) {
-        await this.dataDB.set(`${username}.banned`, true);
-        await this.dataDB.set(`${username}.banReason`, reason);
+        await this.dataDB.set(`users.${username}.banned`, true);
+        await this.dataDB.set(`users.${username}.banReason`, reason);
     }
 
     // unban a user
     async unban(username) {
-        await this.dataDB.set(`${username}.banned`, false);
-        await this.dataDB.set(`${username}.banReason`, "");
+        await this.dataDB.set(`users.${username}.banned`, false);
+        await this.dataDB.set(`users.${username}.banReason`, "");
     }
 
     // check if a class code exists
@@ -151,7 +149,7 @@ module.exports = class UserManager extends Login {
     // create a class
     async createClass(username) {
         let classCode = await this._generateClassCode();
-        this.dataDB.set(`${username}.class`, classCode);
+        this.dataDB.push(`users.${username}.class`, classCode);
         this.classDB.set(`${classCode}.teacher`, username);
         this.classDB.set(`${classCode}.students`, []);
         return classCode;
@@ -160,7 +158,7 @@ module.exports = class UserManager extends Login {
     //  set a users class to a class code & add them to the class
     async joinClass(username, classCode) {
         if (!(await this.classCodeExists(classCode))) {
-            this.dataDB.set(`${username}.class`, classCode);
+            this.dataDB.set(`users.${username}.class`, classCode);
             this.classDB.push(`${classCode}.students`, username);
             return true;
         }
@@ -170,7 +168,21 @@ module.exports = class UserManager extends Login {
     // set a users class to null & remove them from the class
     async leaveClass(username) {
         let classCode = await this.getClass(username);
-        this.dataDB.set(`${username}.class`, null);
+        this.dataDB.set(`users.${username}.class`, null);
         this.classDB.pull(`${classCode}.students`, username);
+    }
+
+    requestTeacher(username) {
+        this.dataDB.push("teacherRequests", username);
+    }
+
+    async getTeacherRequests() {
+        return await this.dataDB.get("teacherRequests");
+    }
+
+    async acceptTeacher(username) {
+        this.dataDB.set(`users.${username}.teacher`, true);
+        this.dataDB.set(`users.${username}.class`, []);
+        this.dataDB.pull("teacherRequests", username);
     }
 }
