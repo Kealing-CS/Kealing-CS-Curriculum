@@ -23,16 +23,7 @@ if (!user || !token) {
 
 // check if the users login info is correct
 
-fetch("/api/login", {
-    method: "POST",
-    body: JSON.stringify({
-        user: user,
-        token: token
-    }),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
+fetch("/api/login")
 .then(res => res.status)
 .then(res => {
     if (res != 200) {
@@ -56,8 +47,6 @@ function deleteLevel() {
     fetch("/api/deleteLevel", {
         method: "POST",
         body: JSON.stringify({
-            user: user,
-            token: token,
             id: id
         }),
         headers: {
@@ -111,8 +100,6 @@ function setLevel(id, name, parents, instructions, baseCode, correctLogs, positi
     fetch("/api/setLevel", {
         method: "POST",
         body: JSON.stringify({
-            user: user,
-            token: token,
             data: {
                 id: id,
                 name: name,
@@ -138,8 +125,6 @@ function banUser() {
     fetch("/api/ban", {
         method: "POST",
         body: JSON.stringify({
-            username: user,
-            token: token,
             user: username,
             reason: reason
         }),
@@ -158,8 +143,6 @@ function unbanUser() {
     fetch("/api/unban", {
         method: "POST",
         body: JSON.stringify({
-            username: user,
-            token: token,
             user: username
         }),
         headers: {
@@ -180,4 +163,16 @@ function getBanReason() {
     });
 
     return false;
+}
+
+function getTeacherRequests() {
+    // get the requests
+    fetch(`/api/getTeacherRequests`)
+    .then(res => res.json())
+
+    // put the data in the modal
+    .then(res => {
+        let modal = document.getElementById("teacherModal");
+        modal.style.display = "block";
+    });
 }

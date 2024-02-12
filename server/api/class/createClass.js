@@ -1,7 +1,7 @@
 module.exports = function ({ app, UserManager }) {
     app.post("/api/createClass", function (req, res) {
-        const user = req.body.user;
-        const token = req.body.token;
+        const user = req.cookies.user;
+        const token = req.cookies.token;
 
         if (UserManager.checkLogin(user, token)) {
             res.sendStatus(401);

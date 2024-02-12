@@ -1,29 +1,11 @@
 module.exports = function ({app, UserManager, puppeteer}) {
     app.post("/api/submit", async function(req, res) {
-        const code = req.body.code;
-        const user = req.body.user;
-        const token = req.body.token;
+        const user = req.cookies.user;
+        const token = req.cookies.token;
+
         const level = req.body.level;
+        const code = req.body.code;
 
-        /*
-        fetch("/api/submit", {
-            method: "POST",
-            body: JSON.stringify({
-                user: "username",
-                token: "token",
-                level: "level",
-                code: {
-                    html: "htmlcode",
-                    js: "jscode",
-                    css: "csscode"
-                }
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        });
-
-        */
         if (!(await UserManager.checkLogin(user, token))[0]) {
             res.sendStatus(401);
             return;

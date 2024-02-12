@@ -1,7 +1,7 @@
 module.exports = function ({app, UserManager}) {
     app.get("/api/getCode", async function(req, res) {
-        const user = req.query.user;
-        const token = req.query.token;
+        const user = req.cookies.user;
+        const token = req.cookies.token;
         const level = req.query.level;
         
         // the problem was the + is counted as a space in the url. god fucking damnit

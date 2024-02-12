@@ -23,16 +23,7 @@ if (!user || !token) {
 
 // check if the users login info is correct
 
-fetch("/api/login", {
-    method: "POST",
-    body: JSON.stringify({
-        user: user,
-        token: token
-    }),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
+fetch("/api/login")
 .then(res => res.status)
 .then(res => {
     if (res != 200) {
@@ -44,4 +35,39 @@ function signOut() {
     document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.href = "/login";
+}
+
+function openTeacherModal() {
+    // open the modal
+    document.getElementById("teacherModal").style.display = "block";
+}
+
+function closeTeacherModal() {
+    // close the modal
+    document.getElementById("teacherModal").style.display = "none";
+}
+
+function requestTeacherAccount() {
+    // get the data from the form
+    const school = document.getElementById("school").value;
+    const email = document.getElementById("email").value;
+
+    // send the request to the server
+    fetch("/api/requestTeacher", {
+        method: "POST",
+        body: JSON.stringify({
+            school: school,
+            email: email
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then(res => {
+        if (res.status == 200) {
+            closeTeacherModal();
+        }
+    });
+
+    return false;
 }

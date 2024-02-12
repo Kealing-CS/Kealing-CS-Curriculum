@@ -78,7 +78,11 @@
                 <input class="dashboard-submit" type="submit" value="Ban">
             </form>
         </div>
-        <div class="main-content-filler square-3"></div>
+        <div class="main-content-filler get-teacher-requests">
+            <h2 style="margin-bottom: 2em;">Get Teacher Requests</h2>
+            <button class="dashboard-submit" onclick="getTeacherRequests()">Get Requests</button>
+        </div>
+        <div class="main-content-filler square-7"></div>
         <div class="main-content-filler unban-user">
             <h2 style="margin-bottom: 2em;">Unban User</h2>
             <form onsubmit="return unbanUser();" class="create-level-form">
@@ -95,5 +99,11 @@
         </div>
         <div class="main-content-filler square-6"></div>
     </div>
+
+    <div class="modal" id="teacherModal">
+        <span class="modal-close" onclick="closeTeacherModal()">&times;</span>
+        <div class="modal-content">
+            <h1>Teacher Requests</h1>
+        </div>
 </body>
 </html>

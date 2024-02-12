@@ -21,16 +21,7 @@ if (!username || !token) {
     window.location.href = "/login";
 }
 
-let correctLogin = fetch("/api/login", {
-    method: "POST",
-    body: JSON.stringify({
-        user: username,
-        token: token
-    }),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
+fetch("/api/login")
 .then(res => res.status)
 .then(res => {
     if (res != 200) {

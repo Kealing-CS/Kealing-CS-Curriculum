@@ -14,16 +14,7 @@ function getCookie(cname) {
     return "";
 }
 
-let correctLogin = fetch("/api/login", {
-    method: "POST",
-    body: JSON.stringify({
-        user: getCookie("user"),
-        token: getCookie("token")
-    }),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
+fetch("/api/login")
 .then(res => res.status)
 .then(res => {
     console.log(res)

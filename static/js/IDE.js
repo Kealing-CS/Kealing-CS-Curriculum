@@ -31,17 +31,8 @@ The checking that it exists is kinda messy, it just checks if the level has inst
 This should work but for clarity should mabye be changed later
 */
 
-async function checks() {
-    await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify({
-            user: user,
-            token: getCookie("token")
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    })
+function checks() {
+    fetch("/api/login")
     .then(res => res.status)
     .then(res => {
         if (res != 200) {
@@ -49,7 +40,7 @@ async function checks() {
         }
     });
 
-    await fetch(`/api/getUnlocked?user=${user}`)
+    fetch(`/api/getUnlocked?user=${user}`)
     .then(res => res.json())
     .then(res => {
         if (!res.includes(level)) {
@@ -57,7 +48,7 @@ async function checks() {
         }
     });
 
-    await fetch(`/api/getInstructions?level=${level}`)
+    fetch(`/api/getInstructions?level=${level}`)
     .then(res => {
         if (res.status == 404) {
             window.location.href = "/tree";
@@ -188,8 +179,6 @@ async function submit() {
     let works = await fetch("/api/submit", {
         method: "POST",
         body: JSON.stringify({
-            user: user,
-            token: getCookie("token"),
             level: level,
             code: {
                 html: htmlFile.getValue(),
@@ -315,8 +304,6 @@ setInterval(() => {
     fetch("/api/setCode", {
         method: "POST",
         body: JSON.stringify({
-            user: user,
-            token: getCookie("token"),
             level: level,
             code: {
                 html: htmlFile.getValue(),

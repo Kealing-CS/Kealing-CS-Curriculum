@@ -1,7 +1,7 @@
 module.exports = function ({app, UserManager, LevelManager}) {
     app.post("/api/setLevel", async function(req, res) {
-        const user = req.body.user;
-        const token = req.body.token;
+        const user = req.cookies.user;
+        const token = req.cookies.token;
         const data = req.body.data;
 
         if (
@@ -42,25 +42,3 @@ module.exports = function ({app, UserManager, LevelManager}) {
         res.sendStatus(200);
     });
 }
-
-/*
-fetch("/api/setLevel", {
-    method: "POST",
-    body: JSON.stringify({
-        user: user,
-        token: token,
-        data: {
-            id: id,
-            name: name,
-            parents: parents,
-            instructions: instructions,
-            baseCode: baseCode,
-            correctLogs: correctLogs,
-            position: position
-        }
-    }),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
-*/

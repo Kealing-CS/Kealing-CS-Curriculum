@@ -37,7 +37,22 @@
         </div>
 
         <div class="account-tools filler">
-            
+            <div class="button" onclick="openTeacherModal()">
+                <span class="material-symbols-outlined">school</span>
+                <span>Request Teacher Account</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="teacherModal">
+        <span class="modal-close" onclick="closeTeacherModal()">&times;</span>
+        <div class="modal-content">
+            <h1>Request Teacher Account</h1>
+            <form onsubmit="requestTeacherAccount(); return false">
+                <input type="text" name="email" placeholder="Email">
+                <input type="text" name="school" placeholder="School">
+                <input type="submit" value="Request">
+            </form>
         </div>
     </div>
 </body>

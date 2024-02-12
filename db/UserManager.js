@@ -172,8 +172,12 @@ module.exports = class UserManager extends Login {
         this.classDB.pull(`${classCode}.students`, username);
     }
 
-    requestTeacher(username) {
-        this.dataDB.push("teacherRequests", username);
+    requestTeacher(username, school, email) {
+        this.dataDB.push("teacherRequests", {
+            username: username,
+            school: school,
+            email: email
+        });
     }
 
     async getTeacherRequests() {

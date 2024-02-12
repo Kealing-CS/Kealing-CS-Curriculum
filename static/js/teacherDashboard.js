@@ -23,16 +23,7 @@ if (!user || !token) {
 
 // check if the users login info is correct
 
-fetch("/api/login", {
-    method: "POST",
-    body: JSON.stringify({
-        user: user,
-        token: token
-    }),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
+fetch("/api/login")
 .then(res => res.status)
 .then(res => {
     if (res != 200) {

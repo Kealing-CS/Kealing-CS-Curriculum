@@ -3,6 +3,9 @@ module.exports = function ({app, UserManager}) {
         const username = req.body.username;
         const token = req.body.token;
 
+        const school = req.body.school;
+        const email = req.body.email;
+
 
         if (!(await UserManager.checkLogin(username, token))[0]) {
             res.status(401);
@@ -14,7 +17,7 @@ module.exports = function ({app, UserManager}) {
             return;
         }
 
-        UserManager.requestTeacher(username);
+        UserManager.requestTeacher(username, school, email);
 
         res.status(200);
     });
