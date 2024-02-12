@@ -1,6 +1,6 @@
 module.exports = function ({ app, UserManager }) {
     app.post("/api/createClass", function (req, res) {
-        const user = req.cookies.user;
+        const user = req.cookies.username;
         const token = req.cookies.token;
 
         if (UserManager.checkLogin(user, token)) {

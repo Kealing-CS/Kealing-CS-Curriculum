@@ -1,6 +1,6 @@
 module.exports = function ({app, UserManager}) {
     app.get("/api/getCode", async function(req, res) {
-        const user = req.cookies.user;
+        const user = req.cookies.username;
         const token = req.cookies.token;
         const level = req.query.level;
         

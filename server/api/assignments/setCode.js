@@ -1,6 +1,6 @@
 module.exports = function ({app, UserManager}) {
     app.post("/api/setCode", async function(req, res) {
-        const user = req.cookies.user;
+        const user = req.cookies.username;
         const token = req.cookies.token;
         
         const level = req.body.level;

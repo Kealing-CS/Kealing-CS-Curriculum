@@ -1,6 +1,6 @@
 module.exports = function ({app, UserManager, LevelManager}) {
     app.post("/api/setLevel", async function(req, res) {
-        const user = req.cookies.user;
+        const user = req.cookies.username;
         const token = req.cookies.token;
         const data = req.body.data;
 

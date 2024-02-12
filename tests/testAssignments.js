@@ -7,11 +7,15 @@ module.exports = async function (token, failed, debug) {
     /* ### SUBMIT ### */
     /* ############## */
 
+    let cookies = {
+        headers: {
+            "cookie": `username=test; token=${token}`
+        }
+    }
+
     let submitWrong = await fetch("http://localhost:8008/api/submit", {
         method: "POST",
         body: JSON.stringify({
-            user: "test",
-            token: token,
             level: "start",
             code: {
                 html: "htmlcode",
@@ -20,7 +24,8 @@ module.exports = async function (token, failed, debug) {
             }
         }),
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json; charset=UTF-8",
+            "cookie": `username=test; token=${token}`
         }
     })
     .then(res => res.status)
@@ -38,11 +43,10 @@ module.exports = async function (token, failed, debug) {
     let submitRight = await fetch("http://localhost:8008/api/submit", {
         method: "POST",
         headers: {
-            "content-type": "application/json"
+            "content-type": "application/json",
+            "cookie": `username=test; token=${token}`
         },
         body: JSON.stringify({
-            user: "test",
-            token: token,
             level: "start",
             code: {
                 html: "<div id='test'></div>",
@@ -67,7 +71,7 @@ module.exports = async function (token, failed, debug) {
     /* ### GET CODE ### */
     /* ################ */
 
-    let getCode = await fetch(`http://localhost:8008/api/getCode?user=test&token=${token}&level=start`)
+    let getCode = await fetch(`http://localhost:8008/api/getCode?level=start`, cookies)
     if (getCode.status !== 200) {
         if (debug) {
             console.log(getCode.status)
@@ -111,11 +115,10 @@ module.exports = async function (token, failed, debug) {
     let setCode = await fetch("http://localhost:8008/api/setCode", {
         method: "POST",
         headers: {
-            "content-type": "application/json"
+            "content-type": "application/json",
+            "cookie": `username=test; token=${token}`
         },
         body: JSON.stringify({
-            user: "test",
-            token: token,
             level: "start",
             code: {
                 html: "<div id='test'></div>",

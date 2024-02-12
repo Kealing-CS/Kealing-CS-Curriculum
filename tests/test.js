@@ -56,6 +56,4 @@ async function test() {
     }
 }
 
-//test()
-
-process.exit(0);
+test();
