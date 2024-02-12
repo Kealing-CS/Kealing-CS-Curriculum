@@ -288,15 +288,13 @@ function home() {
     window.location.href = "/";
 }
 
+getCode().then(res => {
+    jsFile.setValue(res.js);
+    htmlFile.setValue(res.html);
+    cssFile.setValue(res.css);
+    run();
+});
 
-run();
-(async () => {
-    getCode().then(res => {
-        jsFile.setValue(res.js);
-        htmlFile.setValue(res.html);
-        cssFile.setValue(res.css);
-    });
-})();
 // opens instructions container
 instructionsContainer.style.display = "flow";
 
