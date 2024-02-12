@@ -1,7 +1,7 @@
 module.exports = function ({app, UserManager}) {
     app.post("/api/requestTeacher", async function(req, res) {
-        const username = req.body.username;
-        const token = req.body.token;
+        const username = req.cookies.username;
+        const token = req.cookies.token;
 
         const school = req.body.school;
         const email = req.body.email;

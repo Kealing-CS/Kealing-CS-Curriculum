@@ -167,9 +167,19 @@ function getBanReason() {
 
 async function getTeacherRequests() {
     // get the requests
-    await fetch(`/api/getTeacherRequests`)
+    let requests = await fetch(`/api/getTeacherRequests`)
     .then(res => {return res.status === 200 ? res.json() : []});
 
+    // display the requests
+    let requestList = document.getElementById("teacherRequests");
+    requestList.innerHTML = "";
+    requests.forEach(request => {
+        let req = document.createElement("li");
+        req.appendChild(document.createTextNode(`${request.username} - ${request.email}, ${request.school}`));
+        requestList.appendChild(req);
+    });
+
+    // show the modal
     let modal = document.getElementById("teacherModal");
     modal.style.display = "block";
 }

@@ -178,9 +178,13 @@ module.exports = class UserManager extends Login {
             school: school,
             email: email
         });
+
+        console.log("pushed")
     }
 
     async getTeacherRequests() {
+        console.log("getting")
+
         return await this.dataDB.get("teacherRequests");
     }
 
