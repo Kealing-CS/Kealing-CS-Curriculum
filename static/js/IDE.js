@@ -268,7 +268,7 @@ function runCSS(iframe, code) {
 }
 
 async function run() {
-    let existing = document.getElementsByTagName("iframe");
+    let existing = document.getElementsByClassName("code-iframe");
     for (var i = 0; i < existing.length; i++) {
         existing[i].remove()
     }
