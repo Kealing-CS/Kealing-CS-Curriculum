@@ -165,14 +165,15 @@ function getBanReason() {
     return false;
 }
 
-function getTeacherRequests() {
+async function getTeacherRequests() {
     // get the requests
-    fetch(`/api/getTeacherRequests`)
-    .then(res => res.json())
+    await fetch(`/api/getTeacherRequests`)
+    .then(res => {return res.status === 200 ? res.json() : []});
 
-    // put the data in the modal
-    .then(res => {
-        let modal = document.getElementById("teacherModal");
-        modal.style.display = "block";
-    });
+    let modal = document.getElementById("teacherModal");
+    modal.style.display = "block";
+}
+
+function closeTeacherModal() {
+    document.getElementById("teacherModal").style.display = "none";
 }

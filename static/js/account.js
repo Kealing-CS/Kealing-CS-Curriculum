@@ -71,3 +71,5 @@ function requestTeacherAccount() {
 
     return false;
 }
+
+document.getElementById("username").innerText = user;
