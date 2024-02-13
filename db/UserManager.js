@@ -189,17 +189,25 @@ module.exports = class UserManager extends Login {
         return await this.dataDB.get("teacherRequests");
     }
 
+    async _filterObjectsById(array, id) {
+        let newArray = [];
+        array.forEach((object) => {
+            if (object.id != id) {
+                newArray.push(object);
+            }
+        });
+        return newArray;
+    }
+
     async acceptTeacher(id) {
         let requests = await this.dataDB.get("teacherRequests");
         let request = requests.find(r => r.id === id);
         this.dataDB.set(`users.${request.username}.teacher`, true);
-        this.dataDB.pull("teacherRequests", request);
+        this.dataDB.set("teacherRequests", this._filterObjectsById(requests, id))
     }
 
     async denyTeacher(id) {
-        console.log(id)
         let requests = await this.dataDB.get("teacherRequests");
-        let request = requests.find(r => r.id === id);
-        console.log(request)
+        this.dataDB.set("teacherRequests", this._filterObjectsById(requests, id))
     }
 }
