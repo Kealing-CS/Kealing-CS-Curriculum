@@ -34,7 +34,8 @@
     <div class="main-content">
         <div class="account-info filler">
              <!-- no alt bc it looks kinda weird -->
-            <img src="https://avatars.githubusercontent.com/u/104151459" class="profile-picture">
+	     <!-- alt text always looks weird, it's an accessibility feature when things go wrong -->
+            <img src="https://avatars.githubusercontent.com/u/104151459" class="profile-picture" alt="Profile picture">
             <h1 id="username">Username</h1>
         </div>
 
@@ -51,9 +52,9 @@
         <div class="modal-content">
             <h1>Request Teacher Account</h1>
             <form onsubmit="requestTeacherAccount(); return false">
-                <input type="text" name="email" placeholder="Email" id="email">
-                <input type="text" name="school" placeholder="School" id="school">
-                <input type="submit" value="Request">
+                <input type="text" name="email" placeholder="Email" id="email" class="requestTeacherInput">
+                <input type="text" name="school" placeholder="School" id="school" class="requestTeacherInput">
+                <input type="submit" value="Request" class="requestTeacherSubmit">
             </form>
         </div>
     </div>
