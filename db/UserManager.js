@@ -135,13 +135,17 @@ module.exports = class UserManager extends Login {
         return classes.includes(code);
     }
 
+    _generateID(length = 16) {
+        return Math.random().toString(36).substring(2, length+2);
+    }
+
     // generate a class code
     async _generateClassCode() {
         let code;
         // js is such a weird language
         // this runs the code inside, then checks the while condition
         do {
-            code = Math.random().toString(36).substring(2, 8);
+            code = this._generateID();
         } while (await this.classCodeExists(code));
         return code;
     }
@@ -176,21 +180,26 @@ module.exports = class UserManager extends Login {
         this.dataDB.push("teacherRequests", {
             username: username,
             school: school,
-            email: email
+            email: email,
+            id: this._generateID() // generate a random id, dont check if it exists because the chance is so low
         });
-
-        console.log("pushed")
     }
 
     async getTeacherRequests() {
-        console.log("getting")
-
         return await this.dataDB.get("teacherRequests");
     }
 
-    async acceptTeacher(username) {
-        this.dataDB.set(`users.${username}.teacher`, true);
-        this.dataDB.set(`users.${username}.class`, []);
-        this.dataDB.pull("teacherRequests", username);
+    async acceptTeacher(id) {
+        let requests = await this.dataDB.get("teacherRequests");
+        let request = requests.find(r => r.id === id);
+        this.dataDB.set(`users.${request.username}.teacher`, true);
+        this.dataDB.pull("teacherRequests", request);
+    }
+
+    async denyTeacher(id) {
+        console.log(id)
+        let requests = await this.dataDB.get("teacherRequests");
+        let request = requests.find(r => r.id === id);
+        console.log(request)
     }
 }

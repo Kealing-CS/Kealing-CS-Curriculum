@@ -176,6 +176,20 @@ async function getTeacherRequests() {
     requests.forEach(request => {
         let req = document.createElement("li");
         req.appendChild(document.createTextNode(`${request.username} - ${request.email}, ${request.school}`));
+        let accept = document.createElement("button");
+        accept.appendChild(document.createTextNode("Accept"));
+        accept.onclick = async () => {
+            await fetch(`/api/acceptTeacherRequest?id=${request.id}`);
+            getTeacherRequests();
+        };
+        req.appendChild(accept);
+        let deny = document.createElement("button");
+        deny.appendChild(document.createTextNode("Deny"));
+        deny.onclick = async () => {
+            await fetch(`/api/denyTeacherRequest?id=${request.id}`);
+            getTeacherRequests();
+        };
+        req.appendChild(deny);
         requestList.appendChild(req);
     });
 
