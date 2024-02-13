@@ -27,7 +27,7 @@ fetch("/api/login")
 .then(res => res.status)
 .then(res => {
     if (res != 200) {
-        window.location.href = "/login?redir=";
+        window.location.href = `/login?redirect=${window.location.pathname}${window.location.search}`;
     }
 });
 

@@ -125,3 +125,7 @@ function createAccount() {
         }
     });
 }
+
+function login() {
+    window.location.href = `/login?redirect=${redir || "/"}`;
+}

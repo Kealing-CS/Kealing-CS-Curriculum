@@ -4,12 +4,12 @@ module.exports = function ({app, getStatic, UserManager, banned}) {
         const token = req.cookies.token;
 
         if (!username || !token) {
-            res.redirect('/login?redirect=/');
+            res.redirect(`/login?redirect=/${req._parsedUrl.search || ""}`);
             return;
         }
 
         if (!(await UserManager.checkLogin(username, token))[0]) {
-            res.redirect('/login?redirect=/');
+            res.redirect(`/login?redirect=/${req._parsedUrl.search || ""}`);
             return;
         }
 
