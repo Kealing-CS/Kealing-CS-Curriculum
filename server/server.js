@@ -4,8 +4,7 @@ const cors = require('cors');
 const staticFiles = require('./static/staticFiles.js');
 const cookieParser = require("cookie-parser");
 const api = require('./api/api.js');
-const fs = require('fs')
-const ip = require('ip');
+const fs = require('fs');
 const rateLimiter = require('express-rate-limit');
 const port = 8008;
 
@@ -57,7 +56,8 @@ app.all('*', async (req, res) => {
     res.sendFile(path.join(__dirname, `../static/docs/404.html`));
 });
 
-app.listen(port, () => {
-    console.log(`Server running on http://${ip.address()}:${port}/`);
+app.listen(port, async () => {
+    let ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(res => res.ip);
+    console.log(`Server running at http://${ip}:${port}/`)
     console.log(`or use http://localhost:${port}/`)
 });
