@@ -189,7 +189,7 @@ module.exports = class UserManager extends Login {
         return await this.dataDB.get("teacherRequests");
     }
 
-    async _filterObjectsById(array, id) {
+    _filterObjectsById(array, id) {
         let newArray = [];
         array.forEach((object) => {
             if (object.id != id) {
@@ -209,5 +209,9 @@ module.exports = class UserManager extends Login {
     async denyTeacher(id) {
         let requests = await this.dataDB.get("teacherRequests");
         this.dataDB.set("teacherRequests", this._filterObjectsById(requests, id))
+    }
+
+    async resetTeacherRequests() {
+        this.dataDB.set("teacherRequests", []);
     }
 }
