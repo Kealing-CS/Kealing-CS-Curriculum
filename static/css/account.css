@@ -89,7 +89,6 @@ body {
     margin: 15% auto;
     padding: 20px;
     transform: translateY(-20%);
-    /* border: 1px solid #888; */
     width: 80%;
     color: var(--white);
 }
