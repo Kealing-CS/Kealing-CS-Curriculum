@@ -131,7 +131,7 @@ module.exports = class UserManager extends Login {
 
     // check if a class code exists
     async classCodeExists(code) {
-        let classes = await this.classDB.keys();
+        let classes = await this.classDB.all();
         return classes.includes(code);
     }
 
@@ -151,17 +151,16 @@ module.exports = class UserManager extends Login {
     }
 
     // create a class
-    async createClass(username) {
+    async createClass(username, name) {
         let classCode = await this._generateClassCode();
-        this.dataDB.push(`users.${username}.class`, classCode);
-        this.classDB.set(`${classCode}.teacher`, username);
-        this.classDB.set(`${classCode}.students`, []);
-        return classCode;
+        await this.dataDB.push(`users.${username}.class`, {name: name, classCode: classCode});
+        await this.classDB.set(`${classCode}.teacher`, username);
+        await this.classDB.set(`${classCode}.students`, []);
     }
 
     //  set a users class to a class code & add them to the class
     async joinClass(username, classCode) {
-        if (!(await this.classCodeExists(classCode))) {
+        if (await this.classCodeExists(classCode)) {
             this.dataDB.set(`users.${username}.class`, classCode);
             this.classDB.push(`${classCode}.students`, username);
             return true;
@@ -174,6 +173,11 @@ module.exports = class UserManager extends Login {
         let classCode = await this.getClass(username);
         this.dataDB.set(`users.${username}.class`, null);
         this.classDB.pull(`${classCode}.students`, username);
+    }
+
+    async getClasses(username) {
+        let user = await this.dataDB.get(`users.${username}`);
+        return user.class; // will return null if the user does not have any class
     }
 
     requestTeacher(username, school, email) {
@@ -199,10 +203,14 @@ module.exports = class UserManager extends Login {
         return newArray;
     }
 
+    forceTeacher(username) {
+        this.dataDB.set(`users.${username}.teacher`, true);
+    }
+
     async acceptTeacher(id) {
         let requests = await this.dataDB.get("teacherRequests");
         let request = requests.find(r => r.id === id);
-        this.dataDB.set(`users.${request.username}.teacher`, true);
+        this.forceTeacher(request.username);
         this.dataDB.set("teacherRequests", this._filterObjectsById(requests, id))
     }
 

@@ -1,9 +1,7 @@
-module.exports = function ({app, UserManager}) {
-    app.post("/api/joinClass", function(req, res) {
+module.exports = function ({ app, UserManager }) {
+    app.get("/api/getClasses", async function(req, res) {
         const user = req.cookies.username;
         const token = req.cookies.token;
-
-        const classCode = req.body.classCode;
 
         if (!UserManager.checkLogin(user, token)) {
             res.sendStatus(401);
@@ -15,11 +13,13 @@ module.exports = function ({app, UserManager}) {
             return;
         }
 
-        if (!UserManager.joinClass(user, classCode)) {
-            res.sendStatus(404);
+        let classes = await UserManager.getClasses(user);
+
+        if (!classes) {
+            res.send([]);
             return;
         }
-        
-        res.sendStatus(200);
+
+        res.send(classes);
     });
 }
