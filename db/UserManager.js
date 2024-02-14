@@ -214,4 +214,14 @@ module.exports = class UserManager extends Login {
     async resetTeacherRequests() {
         this.dataDB.set("teacherRequests", []);
     }
+
+    async getTeacherRequest(id) {
+        let requests = await this.dataDB.get("teacherRequests");
+        return requests.find(r => r.id === id);
+    }
+
+    async hasTeacherRequest(username) {
+        let requests = await this.dataDB.get("teacherRequests");
+        return requests.find(r => r.username === username) !== undefined;
+    }
 }

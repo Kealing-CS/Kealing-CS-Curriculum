@@ -17,6 +17,11 @@ module.exports = function ({app, UserManager}) {
             return;
         }
 
+        if (await UserManager.hasTeacherRequest(username)) {
+            res.status(409);
+            return;
+        }
+
         UserManager.requestTeacher(username, school, email);
 
         res.status(200);
