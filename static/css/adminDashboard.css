@@ -94,9 +94,12 @@ body {
     padding: .1em;
     padding-left: .5em;
     border-radius: 5px;
-    border: none;
+    border: .17em var(--white);
     outline: none;
     font-family: 'Monaco';
+    color: var(--white);
+    border-style: solid;
+    background-color: var(--blue-blacker);
 }
 
 .dashboard-input:focus {
