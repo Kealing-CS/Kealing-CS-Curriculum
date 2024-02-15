@@ -95,9 +95,13 @@ module.exports = class UserManager extends Login {
     }
 
     // make a user an admin
-    setAdmin(username) {
+    setAdmin(username, set = true) {
         const admins = JSON.parse(fs.readFileSync(path.join(__dirname, "./admins.json")));
-        admins.push(username);
+        if (set) {
+            admins.push(username);
+        } else {
+            admins.splice(admins.indexOf(username), 1);
+        }
         fs.writeFileSync(path.join(__dirname, "./admins.json"), JSON.stringify(admins));
     }
 
@@ -204,7 +208,23 @@ module.exports = class UserManager extends Login {
     }
 
     forceTeacher(username) {
+        if (this.isAdmin(username)) {
+            this.setAdmin(username, false);
+        }
         this.dataDB.set(`users.${username}.teacher`, true);
+    }
+
+    forceAdmin(username) {
+        this.dataDB.set(`users.${username}.teacher`, false);
+
+        this.setAdmin(username);
+    }
+
+    forceStudent(username) {
+        if (this.isAdmin(username)) {
+            this.setAdmin(username, false);
+        }
+        this.dataDB.set(`users.${username}.teacher`, false);
     }
 
     async acceptTeacher(id) {
