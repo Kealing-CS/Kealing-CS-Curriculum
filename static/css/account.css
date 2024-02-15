@@ -79,13 +79,13 @@ body {
     left: 15%;
     border: 1px solid #888;
     overflow: auto;
-    background-color: var(--blue-black);
+    background-color: var(--blue-blacker);
     vertical-align: middle;
     overflow: hidden;
 }
 
 .modal-content {
-    background-color: var(--blue-black);
+    background-color: var(--blue-blacker);
     margin: 15% auto;
     padding: 20px;
     transform: translateY(-20%);
