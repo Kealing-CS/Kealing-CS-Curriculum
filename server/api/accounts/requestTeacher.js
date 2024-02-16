@@ -8,22 +8,22 @@ module.exports = function ({app, UserManager}) {
 
 
         if (!(await UserManager.checkLogin(username, token))[0]) {
-            res.status(401);
+            res.sendStatus(401);
             return;
         }
 
         if (await UserManager.isTeacher(username)) {
-            res.status(409);
+            res.sendStatus(409);
             return;
         }
 
         if (await UserManager.hasTeacherRequest(username)) {
-            res.status(409);
+            res.sendStatus(409);
             return;
         }
 
         UserManager.requestTeacher(username, school, email);
 
-        res.status(200);
+        res.sendStatus(200);
     });
 }

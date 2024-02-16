@@ -48,6 +48,7 @@ function closeTeacherModal() {
 }
 
 function requestTeacherAccount() {
+    console.log("AGH")
     // get the data from the form
     const school = document.getElementById("school").value;
     const email = document.getElementById("email").value;
