@@ -31,7 +31,7 @@ module.exports = class LoginManager {
     async checkPassword(username, password) {
 
         // vscode is stupid and says this await is unnecessary but its VERY necessary
-        return await bcrypt.compare(password, await this.sensitiveDB.get(username))
+        return (await bcrypt.compare(password, await this.sensitiveDB.get(username)))
     }
 
     // make a new token for a user

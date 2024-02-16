@@ -53,33 +53,33 @@ body {
 }
 
 .ban-user {
-    grid-column: 1 / 2;
-    grid-row: 3 / 4;
-}
-
-.get-teacher-requests {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
 }
 
-.square-7 {
+.get-teacher-requests {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+}
+
+.set-teacher {
     grid-column: 3 / 4;
     grid-row: 2 / 3;
 }
 
 .unban-user {
-    grid-column: 3 / 4;
-    grid-row: 3 / 4;
+    grid-column: 4 / 5;
+    grid-row: 2 / 3;
 }
 
-.square-5 {
+.get-ban-reason {
     grid-column: 4 / 5;
     grid-row: 1 / 2;
 }
 
-.square-6 {
-    grid-column: 4 / 5;
-    grid-row: 2 / 4;
+.set-admin {
+    grid-column: 3 / 4;
+    grid-row: 3 / 4;
 }
 
 .create-level-form {
@@ -154,4 +154,33 @@ body {
     font-weight: bold;
     cursor: pointer;
     margin-right: 1%;
+}
+
+
+.succeeded {
+    animation: fadeout-success 1s;
+}
+
+.failed {
+    animation: fadeout-fail 1s;
+}
+
+@keyframes fadeout-fail {
+	from {
+		border-color: red;
+	}
+
+	to {
+		border-color: var(--white);
+	}
+}
+
+@keyframes fadeout-success {
+    from {
+        border-color: var(--green);
+    }
+
+    to {
+        border-color: var(--white);
+    }
 }
