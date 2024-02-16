@@ -175,8 +175,11 @@ async function getTeacherRequests() {
     requestList.innerHTML = "";
     requests.forEach(request => {
         let req = document.createElement("li");
-        req.appendChild(document.createTextNode(`${request.username} - ${request.email}, ${request.school}`));
+        let para = document.createElement("p");
+        para.appendChild(document.createTextNode(`${request.username} - ${request.email}, ${request.school}`));
+        req.appendChild(para);
         let accept = document.createElement("button");
+        accept.classList.add("dashboard-submit");
         accept.appendChild(document.createTextNode("Accept"));
         accept.onclick = async () => {
             await fetch(`/api/acceptTeacherRequest?id=${request.id}`);
@@ -184,6 +187,7 @@ async function getTeacherRequests() {
         };
         req.appendChild(accept);
         let deny = document.createElement("button");
+        deny.classList.add("dashboard-submit");
         deny.appendChild(document.createTextNode("Deny"));
         deny.onclick = async () => {
             await fetch(`/api/denyTeacherRequest?id=${request.id}`);
