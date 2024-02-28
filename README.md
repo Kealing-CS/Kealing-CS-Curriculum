@@ -13,11 +13,6 @@ This is the curriculum website made for the Kealing Computer Science Program.
     - [Running the Server](#running-the-server)
     - [Coding for the Server](#coding-for-the-server)
 
-## Authors
-
-Ian Hawthorne\
-Max Wang
-
 ## Resources for Contributing
 
 ### Color Palette - Rich Black, Teal, Cambridge Blue, Ash Gray, and Parchment

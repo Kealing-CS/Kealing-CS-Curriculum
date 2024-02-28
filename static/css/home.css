@@ -37,3 +37,27 @@ body {
     grid-column: 1 / 4;
     grid-row: 1 / 2;
 }
+
+.button {
+	border-style: solid;
+	font-size: x-large;
+	margin: 5px;
+	border-radius: 7.5px;
+	color: var(--black);
+	background-color: var(--green);
+	border-color: var(--green);
+	transition-property: transform, box-shadow;
+	transition-duration: 0.25s;
+    text-align: left;
+}
+
+.button:active {
+	transform: translateY(2.5px) scale(0.95);
+	border-color: var(--white);
+	color: var(--teal);
+	background-color: var(--white);
+}
+
+.center-hr {
+    width: 50%;
+}

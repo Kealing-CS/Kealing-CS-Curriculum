@@ -35,7 +35,6 @@ body {
     flex-direction: column;
     color: var(--white);
     font-family: 'Monaco';
-    margin: .5em;
 }
 
 .account-info {
@@ -134,4 +133,8 @@ body {
         border-color: var(--white);
         color: var(--teal);
         background-color: var(--white);
+}
+
+.center-hr {
+    width: 50%;
 }
