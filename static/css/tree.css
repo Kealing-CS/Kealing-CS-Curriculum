@@ -59,7 +59,6 @@ body {
     flex-direction: column;
     color: var(--white);
     font-family: 'Monaco';
-    margin: .5em;
 }
 
 .tree-container {
