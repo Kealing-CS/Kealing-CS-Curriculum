@@ -17,6 +17,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
+    overflow: hidden;
     grid-gap: .7em;
     padding: 1em;
 }
@@ -30,7 +31,6 @@ body {
     flex-direction: column;
     color: var(--white);
     font-family: 'Monaco';
-    margin: .5em;
 }
 
 .placeholder-container {
