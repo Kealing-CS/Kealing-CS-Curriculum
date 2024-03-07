@@ -6,7 +6,6 @@ This is the curriculum website made for the Kealing Computer Science Program.
 
 - [Kealing-CS-Curriculum](#kealing-cs-curriculum)
   - [Table of Contents](#table-of-contents)
-  - [Authors](#authors)
   - [Resources for Contributing](#resources-for-contributing)
     - [Color Palette - Rich Black, Teal, Cambridge Blue, Ash Gray, and Parchment](#color-palette---rich-black-teal-cambridge-blue-ash-gray-and-parchment)
   - [How to start](#how-to-start)
@@ -27,11 +26,18 @@ Parchment - #f4e9cdff
 
 ### Running the Server
 
-clone the repo with `git clone https://github.com/Kealing-CS/Kealing-CS-Curriculum.git` (although you've probably already done this!)  
-run the server with `npm start`  
-the server will start on port 8008  
+```
+# clone repository
+$ git clone https://github.com/Kealing-CS/Kealing-CS-Curriculum.git
+
+# change directory
+$ cd Kealing-CS-Curriculum
+
+# start server on port 8008
+$ npm run start
+```
 
 ### Coding for the Server
 
-when making a new api endpoint, make sure to add one or multiple tests to test.js  
-When making a test, include at least one for the successful case and one for the unsuccessful case  
+When making a new api endpoint, make sure to add at least one test case to test.js  
+When making a test, create at least one test for the successful case and at least one for the unsuccessful case.
