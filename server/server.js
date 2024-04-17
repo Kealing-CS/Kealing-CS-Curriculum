@@ -38,6 +38,8 @@ const limit = rateLimiter.rateLimit({
 // cors
 app.use(cors());
 
+//Rate limit
+app.use(limit);
 // for parsing json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
