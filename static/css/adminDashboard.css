@@ -53,28 +53,33 @@ body {
 }
 
 .ban-user {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+}
+
+.get-teacher-requests {
     grid-column: 1 / 2;
     grid-row: 3 / 4;
 }
 
-.square-3 {
+.set-teacher {
     grid-column: 3 / 4;
-    grid-row: 1 / 3;
+    grid-row: 2 / 3;
 }
 
 .unban-user {
-    grid-column: 3 / 4;
-    grid-row: 3 / 4;
+    grid-column: 4 / 5;
+    grid-row: 2 / 3;
 }
 
-.square-5 {
+.get-ban-reason {
     grid-column: 4 / 5;
     grid-row: 1 / 2;
 }
 
-.square-6 {
-    grid-column: 4 / 5;
-    grid-row: 2 / 4;
+.set-admin {
+    grid-column: 3 / 4;
+    grid-row: 3 / 4;
 }
 
 .create-level-form {
@@ -89,9 +94,12 @@ body {
     padding: .1em;
     padding-left: .5em;
     border-radius: 5px;
-    border: none;
+    border: .17em var(--white);
     outline: none;
     font-family: 'Monaco';
+    color: var(--white);
+    border-style: solid;
+    background-color: var(--blue-blacker);
 }
 
 .dashboard-input:focus {
@@ -110,4 +118,78 @@ body {
     background-color: var(--blue-blacker);
     color: var(--white);
     font-size: 1.1em;
+    cursor: pointer;
+	transition-property: transform, box-shadow;
+	transition-duration: 0.25s;
+}
+
+.dashboard-submit:active {
+	transform: translateY(2.5px), scale(0.95);
+	border: var(--blue-blacker) solid .15em;
+	color: var(--blue-blacker);
+	background-color: var(--white);
+}
+
+.modal {
+    display: none;
+    z-index: 999;
+    width: 70%;
+    height: 50%;
+    position: fixed;
+    top: 20%;
+    left: 15%;
+    border: 1px solid #888;
+    overflow: auto;
+    background-color: var(--blue-blacker);
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.modal-content {
+    margin-top: 3%;
+    background-color: var(--blue-blacker);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    transform: translateY(-20%);
+    width: 80%;
+    color: var(--white);
+}
+
+.modal-close {
+    color: var(--white);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 1%;
+}
+
+
+.succeeded {
+    animation: fadeout-success 1s;
+}
+
+.failed {
+    animation: fadeout-fail 1s;
+}
+
+@keyframes fadeout-fail {
+	from {
+		border-color: red;
+	}
+
+	to {
+		border-color: var(--white);
+	}
+}
+
+@keyframes fadeout-success {
+    from {
+        border-color: var(--green);
+    }
+
+    to {
+        border-color: var(--white);
+    }
 }

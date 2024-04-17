@@ -1,21 +1,17 @@
 // this is used if you want to change the format that stuff is saved
 // (changes it from a db file to a json file)
 
-const fs = require('fs');
 const { QuickDB } = require("quick.db");
 
-let levels = JSON.parse(fs.readFileSync("./levels.json", "utf8"));
-
-let levelDB = new QuickDB({ filePath: './db/levelinformation.db'});
+let userDB = new QuickDB({ filePath: './db/userdata.db'});
+let userDBTemp = new QuickDB({ filePath: './db/userdataTemp.db'});
 
 async function t() {
-    await levelDB.deleteAll();
-
-    for (let i = 0; i < levels.length; i++) {
-        await levelDB.set(levels[i].id, levels[i]);
-    }
-
-console.log(await levelDB.all());
+    // write userDBTemp to userDB
+    let all = await userDBTemp.all();
+    all.forEach((item) => {
+        userDB.set(item.id, item.value);
+    })
 }
 
 t();

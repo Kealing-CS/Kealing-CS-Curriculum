@@ -22,7 +22,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
-    grid-gap: .7em;
+    grid-gap: 1em;
     padding: 1em;
 }
 
@@ -35,7 +35,6 @@ body {
     flex-direction: column;
     color: var(--white);
     font-family: 'Monaco';
-    margin: .5em;
 }
 
 .account-info {
@@ -53,4 +52,89 @@ body {
 .account-tools {
     grid-column: 2 / 4;
     grid-row: 1 / 2;
+}
+
+.button {
+    background-color: var(--teal);
+    border: none;
+    border-radius: 5px;
+    color: var(--white);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    z-index: 999;
+    width: 70%;
+    height: 50%;
+    position: fixed;
+    top: 20%;
+    left: 15%;
+    border: 1px solid #888;
+    overflow: auto;
+    background-color: var(--blue-blacker);
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.modal-content {
+    background-color: var(--blue-blacker);
+    margin: 15% auto;
+    padding: 20px;
+    transform: translateY(-20%);
+    width: 80%;
+    color: var(--white);
+}
+
+.modal-close {
+    color: var(--white);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.requestTeacherInput {
+	margin: 5px;
+	border-width: 2px;
+	border-radius: 11px;
+	box-shadow: none;
+	outline: none;
+	font-size: x-large;
+	padding: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-style: solid;
+	color: var(--white);
+	background-color: var(--teal);
+	border-color: var(--teal);
+}
+
+.requestTeacherSubmit {
+        border-style: solid;
+        font-size: x-large;
+        margin: 5px;
+        border-radius: 7.5px;
+        color: var(--black);
+        background-color: var(--green);
+        border-color: var(--green);
+        transition-property: transform, box-shadow;
+        transition-duration: 0.25s;
+}
+
+.requestTeacherSubmit:active {
+        transform: translateY(2.5px) scale(0.95);
+        border-color: var(--white);
+        color: var(--teal);
+        background-color: var(--white);
+}
+
+.center-hr {
+    width: 50%;
 }

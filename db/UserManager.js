@@ -8,14 +8,12 @@ const path = require('path');
 module.exports = class UserManager extends Login {
     constructor() {
         super();
-        this.dataDB = new QuickDB({ filePath: './db/userdata.db'});
-        this.sensitiveDB = new QuickDB({ filePath: './db/sensitivedata.db'});
         this.classDB = new QuickDB({ filePath: './db/classes.db'});
     }
 
     async getUnlocked(username) {
         try {
-            return await this.dataDB.get(`${username}.unlocked`)
+            return await this.dataDB.get(`users.${username}.unlocked`)
         }
         catch {
             console.log("couldnt get unlocked")
@@ -24,18 +22,18 @@ module.exports = class UserManager extends Login {
     }
 
     unlockLevel(username, level) {
-        this.dataDB.push(`${username}.unlocked`, level);
+        this.dataDB.push(`users.${username}.unlocked`, level);
     }
 
     async getSubmitted(username) {
-        return await this.dataDB.get(`${username}.submitted`).keys();
+        return await this.dataDB.get(`users.${username}.submitted`).keys();
     }
 
     async submitLevel(username, level, logs, err) {
         let lm = new LevelManager();
         let correctLogs = await lm.getCorrectLogs(level)
 
-        this.dataDB.set(`${username}.submitted.${level}`, [logs, err]); // set the submitted code
+        this.dataDB.set(`users.${username}.submitted.${level}`, [logs, err]); // set the submitted code
 
         logs = JSON.stringify(logs)
         correctLogs = JSON.stringify(correctLogs)
@@ -47,22 +45,27 @@ module.exports = class UserManager extends Login {
     // get the completed levels of a user
     // (completed means ones that were submitted and correct)
     async getCompleted(username) {
-        return await this.dataDB.get(`${username}.completed`)
+        return await this.dataDB.get(`users.${username}.completed`)
     }
 
     // set a level as completed for a user
     completeLevel(username, level) {
-        this.dataDB.push(`${username}.completed`, level);
+        this.dataDB.push(`users.${username}.completed`, level);
+    }
+
+    // check if the code for a level for a user exists
+    async codeExists(username, level) {
+        return await this.dataDB.has(`users.${username}.code.${level}`);
     }
 
     // get the code for a level for a user
     async getCode(username, level) {
-        return await this.dataDB.get(`${username}.code.${level}`);
+        return await this.dataDB.get(`users.${username}.code.${level}`);
     }
 
     //set the code for a level for a user
     setCode(username, level, code) {
-        this.dataDB.set(`${username}.code.${level}`, code);
+        this.dataDB.set(`users.${username}.code.${level}`, code);
     }
 
     // checks if the user exists
@@ -72,12 +75,12 @@ module.exports = class UserManager extends Login {
 
     // checks if the user is a teacher
     async isTeacher(username) {
-        return await this.dataDB.get(`${username}.teacher`);
+        return await this.dataDB.get(`users.${username}.teacher`);
     }
 
     // get the class code of a user
     async getClass(username) {
-        return await this.dataDB.get(`${username}.class`);
+        return await this.dataDB.get(`users.${username}.class`);
     }
 
     // get the students of a class
@@ -92,9 +95,13 @@ module.exports = class UserManager extends Login {
     }
 
     // make a user an admin
-    setAdmin(username) {
+    setAdmin(username, set = true) {
         const admins = JSON.parse(fs.readFileSync(path.join(__dirname, "./admins.json")));
-        admins.push(username);
+        if (set) {
+            admins.push(username);
+        } else {
+            admins.splice(admins.indexOf(username), 1);
+        }
         fs.writeFileSync(path.join(__dirname, "./admins.json"), JSON.stringify(admins));
     }
 
@@ -106,30 +113,34 @@ module.exports = class UserManager extends Login {
 
     // check if a user is banned
     async isBanned(username) {
-        return await this.dataDB.get(`${username}.banned`);
+        return await this.dataDB.get(`users.${username}.banned`);
     }
 
     // get the ban reason of a user
     async getBanReason(username) {
-        return await this.dataDB.get(`${username}.banReason`);
+        return await this.dataDB.get(`users.${username}.banReason`);
     }
 
     // ban a user
     async ban(username, reason) {
-        await this.dataDB.set(`${username}.banned`, true);
-        await this.dataDB.set(`${username}.banReason`, reason);
+        await this.dataDB.set(`users.${username}.banned`, true);
+        await this.dataDB.set(`users.${username}.banReason`, reason);
     }
 
     // unban a user
     async unban(username) {
-        await this.dataDB.set(`${username}.banned`, false);
-        await this.dataDB.set(`${username}.banReason`, "");
+        await this.dataDB.set(`users.${username}.banned`, false);
+        await this.dataDB.set(`users.${username}.banReason`, "");
     }
 
     // check if a class code exists
     async classCodeExists(code) {
-        let classes = await this.classDB.keys();
+        let classes = await this.classDB.all();
         return classes.includes(code);
+    }
+
+    _generateID(length = 16) {
+        return Math.random().toString(36).substring(2, length+2);
     }
 
     // generate a class code
@@ -138,24 +149,23 @@ module.exports = class UserManager extends Login {
         // js is such a weird language
         // this runs the code inside, then checks the while condition
         do {
-            code = Math.random().toString(36).substring(2, 8);
+            code = this._generateID();
         } while (await this.classCodeExists(code));
         return code;
     }
 
     // create a class
-    async createClass(username) {
+    async createClass(username, name) {
         let classCode = await this._generateClassCode();
-        this.dataDB.set(`${username}.class`, classCode);
-        this.classDB.set(`${classCode}.teacher`, username);
-        this.classDB.set(`${classCode}.students`, []);
-        return classCode;
+        await this.dataDB.push(`users.${username}.class`, {name: name, classCode: classCode});
+        await this.classDB.set(`${classCode}.teacher`, username);
+        await this.classDB.set(`${classCode}.students`, []);
     }
 
     //  set a users class to a class code & add them to the class
     async joinClass(username, classCode) {
-        if (!(await this.classCodeExists(classCode))) {
-            this.dataDB.set(`${username}.class`, classCode);
+        if (await this.classCodeExists(classCode)) {
+            this.dataDB.set(`users.${username}.class`, classCode);
             this.classDB.push(`${classCode}.students`, username);
             return true;
         }
@@ -165,7 +175,81 @@ module.exports = class UserManager extends Login {
     // set a users class to null & remove them from the class
     async leaveClass(username) {
         let classCode = await this.getClass(username);
-        this.dataDB.set(`${username}.class`, null);
+        this.dataDB.set(`users.${username}.class`, null);
         this.classDB.pull(`${classCode}.students`, username);
+    }
+
+    async getClasses(username) {
+        let user = await this.dataDB.get(`users.${username}`);
+        return user.class; // will return null if the user does not have any class
+    }
+
+    requestTeacher(username, school, email) {
+        this.dataDB.push("teacherRequests", {
+            username: username,
+            school: school,
+            email: email,
+            id: this._generateID() // generate a random id, dont check if it exists because the chance is so low
+        });
+    }
+
+    async getTeacherRequests() {
+        return await this.dataDB.get("teacherRequests");
+    }
+
+    _filterObjectsById(array, id) {
+        let newArray = [];
+        array.forEach((object) => {
+            if (object.id != id) {
+                newArray.push(object);
+            }
+        });
+        return newArray;
+    }
+
+    forceTeacher(username) {
+        if (this.isAdmin(username)) {
+            this.setAdmin(username, false);
+        }
+        this.dataDB.set(`users.${username}.teacher`, true);
+    }
+
+    forceAdmin(username) {
+        this.dataDB.set(`users.${username}.teacher`, false);
+
+        this.setAdmin(username);
+    }
+
+    forceStudent(username) {
+        if (this.isAdmin(username)) {
+            this.setAdmin(username, false);
+        }
+        this.dataDB.set(`users.${username}.teacher`, false);
+    }
+
+    async acceptTeacher(id) {
+        let requests = await this.dataDB.get("teacherRequests");
+        let request = requests.find(r => r.id === id);
+        this.forceTeacher(request.username);
+        this.dataDB.set("teacherRequests", this._filterObjectsById(requests, id))
+    }
+
+    async denyTeacher(id) {
+        let requests = await this.dataDB.get("teacherRequests");
+        this.dataDB.set("teacherRequests", this._filterObjectsById(requests, id))
+    }
+
+    async resetTeacherRequests() {
+        this.dataDB.set("teacherRequests", []);
+    }
+
+    async getTeacherRequest(id) {
+        let requests = await this.dataDB.get("teacherRequests");
+        return requests.find(r => r.id === id);
+    }
+
+    async hasTeacherRequest(username) {
+        let requests = await this.dataDB.get("teacherRequests");
+        return requests.find(r => r.username === username) !== undefined;
     }
 }

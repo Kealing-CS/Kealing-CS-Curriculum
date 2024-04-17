@@ -2,6 +2,9 @@ const colors = require("colors")
 
 module.exports = async function (failed, debug) {
     // test normal create account
+
+    let token;
+
     let createNormal = await fetch("http://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
@@ -21,6 +24,7 @@ module.exports = async function (failed, debug) {
         failed["f"] = true;
     } else {
         console.log("[", "OK".green, "]", "Succeeded in creating a normal account")
+        token = createNormal[1]
     }
 
     // test doing a too short username
@@ -164,22 +168,15 @@ module.exports = async function (failed, debug) {
     // test doing a normal token login
 
     let login = await fetch("http://localhost:8008/api/login", {
-        method: "POST",
         headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify({
-            user: "test",
-            token: createNormal[1]
-        })
+            "cookie": `username=test; token=${token}`
+        }
     })
     .then(res => res.status)
 
     if (login != 200) {
         if (debug) {
-            console.log("A")
             console.log(login)
-            console.log("B")
         }
         console.log("[", "BAD".red, "]", "Failed to login")
         failed["f"] = true;
@@ -190,23 +187,20 @@ module.exports = async function (failed, debug) {
     // test doing a wrong token login
 
     let loginWrong = await fetch("http://localhost:8008/api/login", {
-        method: "POST",
         headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify({
-            user: "test",
-            token: "im lying to you!!"
-        })
+            "cookie": `username=test; token=im lying to you p2!!!!`
+        }
     })
     .then(res => res.json())
 
     if (loginWrong) {
         if (debug) {
-            console.log(await loginWrong.json());
+            console.log(loginWrong);
         }
         console.log("[", "BAD".red, "]", "Succeeded in logging in with a wrong token")
         failed["f"] = true;
+    } else {
+        console.log("[", "OK".green, "]", "Failed to login with a wrong token")
     }
 
     // test getting a new token
@@ -231,6 +225,7 @@ module.exports = async function (failed, debug) {
         failed["f"] = true;
     } else {
         console.log("[", "OK".green, "]", "fresh logged in")
+        token = freshLogin[1]
     }
 
     // test getting a new token with wrong password
@@ -242,19 +237,19 @@ module.exports = async function (failed, debug) {
         },
         body: JSON.stringify({
             user: "test",
-            password: "im lying to you p2!!!!"
+            password: "im lying to you p3!!!!"
         })
     })
     .then(res => res.json())
 
     if (freshLoginWrong[0]) {
         if (debug) {
-            console.log(await freshLoginWrong.json());
+            console.log(freshLoginWrong);
         }
         console.log("[", "BAD".red, "]", "Succeeded in fresh logging in with a wrong password")
         failed["f"] = true;
     }
 
     // return the token for future use
-    return freshLogin[1]
+    return token;
 }

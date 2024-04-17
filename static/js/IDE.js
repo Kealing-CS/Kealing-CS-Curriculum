@@ -31,17 +31,8 @@ The checking that it exists is kinda messy, it just checks if the level has inst
 This should work but for clarity should mabye be changed later
 */
 
-async function checks() {
-    await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify({
-            user: user,
-            token: getCookie("token")
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    })
+function checks() {
+    fetch("/api/login")
     .then(res => res.status)
     .then(res => {
         if (res != 200) {
@@ -49,7 +40,7 @@ async function checks() {
         }
     });
 
-    await fetch(`/api/getUnlocked?user=${user}`)
+    fetch(`/api/getUnlocked?user=${user}`)
     .then(res => res.json())
     .then(res => {
         if (!res.includes(level)) {
@@ -57,10 +48,9 @@ async function checks() {
         }
     });
 
-    await fetch(`/api/getInstructions?level=${level}`)
+    fetch(`/api/getInstructions?level=${level}`)
     .then(res => {
         if (res.status == 404) {
-            console.log("404")
             window.location.href = "/tree";
         }
         return res.text();
@@ -70,6 +60,26 @@ async function checks() {
     });
 }
 checks()
+
+/*
+get the code for the level
+*/
+
+async function baseCode() {
+    let baseCode = await fetch(`/api/getBaseCode?level=${level}`)
+    .then(res => res.json());
+
+    return baseCode;
+}
+
+async function getCode() {
+    let code = await fetch(`/api/getCode?level=${level}&user=${user}&token=${getCookie("token")}`)
+    if (code.status !== 200) {
+        return baseCode();
+    }
+
+    return code.json();
+}
 
 /*
 TODO: give the browser some test data so it can tell the user if it works. Dont give it all the data though,
@@ -124,30 +134,6 @@ instructionsClose.addEventListener("click", function() {
 });
 
 /*
-get the base code for the level
-*/
-
-async function baseCode() {
-    let baseCode = await fetch(`/api/getBaseCode?level=${level}`)
-    .then(res => res.json())
-    .then(res => {
-        return res;
-    });
-
-    baseJsCode = baseCode.js;
-    baseHTMLCode = baseCode.html;
-    baseCSSCode = baseCode.css;
-
-    jsFile.setValue(baseJsCode);
-    htmlFile.setValue(baseHTMLCode);
-    cssFile.setValue(baseCSSCode);
-    
-    run();
-}
-
-baseCode();
-
-/*
 base log
 */
 
@@ -193,8 +179,6 @@ async function submit() {
     let works = await fetch("/api/submit", {
         method: "POST",
         body: JSON.stringify({
-            user: user,
-            token: getCookie("token"),
             level: level,
             code: {
                 html: htmlFile.getValue(),
@@ -207,10 +191,10 @@ async function submit() {
         }
     })
     .then(res => {
-        return res.text()
+        return res.status
     });
 
-    if (works === "true") {
+    if (works === 200) {
         alert("Submitted. Your teacher will check it out shortly.")
     } else {
         alert("Your code might not work. This could mean you have a stray whitespace in your logs or your code simply gives an error. Either way, it has been submitted.")
@@ -284,7 +268,7 @@ function runCSS(iframe, code) {
 }
 
 async function run() {
-    let existing = document.getElementsByTagName("iframe");
+    let existing = document.getElementsByClassName("code-iframe");
     for (var i = 0; i < existing.length; i++) {
         existing[i].remove()
     }
@@ -297,11 +281,27 @@ async function run() {
     code += await htmlFile.getValue()
     code += runJS(iframe, jsFile.getValue());
     code += runCSS(iframe, cssFile.getValue());
+    iframe.srcdoc = code;
+}
+
+function home() {
+    window.location.href = "/";
+}
+
+getCode().then(res => {
+    jsFile.setValue(res.js);
+    htmlFile.setValue(res.html);
+    cssFile.setValue(res.css);
+    run();
+});
+
+// opens instructions container
+instructionsContainer.style.display = "flow";
+
+setInterval(() => {
     fetch("/api/setCode", {
         method: "POST",
         body: JSON.stringify({
-            user: user,
-            token: getCookie("token"),
             level: level,
             code: {
                 html: htmlFile.getValue(),
@@ -312,15 +312,5 @@ async function run() {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    })
-    iframe.srcdoc = code;
-}
-
-function home() {
-    window.location.href = "/";
-}
-
-
-run()
-// opens instructions container
-instructionsContainer.style.display = "flow";
+    });
+}, 1000 * 30); // auto saves every 30 seconds

@@ -1,11 +1,9 @@
 module.exports = function ({app, UserManager}) {
-    app.post("/api/ban", async function(req, res) {
+    app.post("/api/forceAdmin", async function(req, res) {
         const username = req.cookies.username;
         const token = req.cookies.token;
 
         const user = req.body.user;
-        const reason = req.body.reason;
-
 
         if (!(await UserManager.checkLogin(username, token))[0]) {
             res.status(401);
@@ -17,12 +15,7 @@ module.exports = function ({app, UserManager}) {
             return;
         }
 
-        if (await UserManager.isBanned(user)) {
-            res.status(409);
-            return;
-        }
-
-        UserManager.ban(user, reason);
+        UserManager.forceAdmin(user);
 
         res.status(200);
     });

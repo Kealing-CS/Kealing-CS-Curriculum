@@ -1,7 +1,7 @@
 module.exports = function ({app, UserManager}) {
-    app.post("/api/login", async function(req, res) {
-        const user = req.body.user;
-        const token = req.body.token;
+    app.get("/api/login", async function(req, res) {
+        const user = req.cookies.username;
+        const token = req.cookies.token;
 
         if (!user) {
             res.sendStatus(418);

@@ -23,20 +23,11 @@ if (!user || !token) {
 
 // check if the users login info is correct
 
-fetch("/api/login", {
-    method: "POST",
-    body: JSON.stringify({
-        user: user,
-        token: token
-    }),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
+fetch("/api/login")
 .then(res => res.status)
 .then(res => {
     if (res != 200) {
-        window.location.href = "/login?redir=";
+        window.location.href = `/login?redirect=${window.location.pathname}${window.location.search}`;
     }
 });
 
@@ -56,8 +47,6 @@ function deleteLevel() {
     fetch("/api/deleteLevel", {
         method: "POST",
         body: JSON.stringify({
-            user: user,
-            token: token,
             id: id
         }),
         headers: {
@@ -65,18 +54,14 @@ function deleteLevel() {
         }
     })
     .then(res => {
-        if (res.status !== 200) {
-            alert(res.status);
-        }
+        success(document.getElementById("deleteLevelButton"), res.status === 200);
     });
-
-    return false;
 }
 
 function createLevel() {
     let id = document.getElementById("createLevelID").value;
     let name = document.getElementById("createLevelName").value;
-    let parents = JSON.parse(document.getElementById("createParents"));
+    let parents = JSON.parse(document.getElementById("createParents").value);
     let instructions = document.getElementById("createInstructions").value;
     let baseJS = document.getElementById("createBaseJS").value;
     let baseHTML = document.getElementById("createBaseHTML").value;
@@ -87,7 +72,7 @@ function createLevel() {
     let ypos = document.getElementById("createYpos").value;
     let pos = {"x": xpos, "y": ypos};
 
-    setLevel(id, name, parents, instructions, baseCode, correctLogs, pos);
+    setLevel(id, name, parents, instructions, baseCode, correctLogs, pos, document.getElementById("createLevelButton"));
 }
 
 function editLevel() {
@@ -104,15 +89,15 @@ function editLevel() {
     let ypos = document.getElementById("editYpos").value;
     let pos = {"x": xpos, "y": ypos};
 
-    setLevel(id, name, parents, instructions, baseCode, correctLogs, pos);
+    setLevel(id, name, parents, instructions, baseCode, correctLogs, pos, document.getElementById("editLevelButton"));
+
+    
 }
 
-function setLevel(id, name, parents, instructions, baseCode, correctLogs, position) {
-    fetch("/api/setLevel", {
+async function setLevel(id, name, parents, instructions, baseCode, correctLogs, position, button) {
+    let status = await fetch("/api/setLevel", {
         method: "POST",
         body: JSON.stringify({
-            user: user,
-            token: token,
             data: {
                 id: id,
                 name: name,
@@ -126,9 +111,14 @@ function setLevel(id, name, parents, instructions, baseCode, correctLogs, positi
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    });
+    })
+    .then(res => res.status);
 
-    return false;
+    if (button) {
+        success(button, status === 200);
+    }    
+
+    return status;
 }
 
 function banUser() {
@@ -138,17 +128,17 @@ function banUser() {
     fetch("/api/ban", {
         method: "POST",
         body: JSON.stringify({
-            username: user,
-            token: token,
             user: username,
             reason: reason
         }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
+    })
+    .then(res => res.status)
+    .then(res => {
+        success(document.getElementById("banUserButton"), res === 200);
     });
-
-    return false;
 }
 
 function unbanUser() {
@@ -158,16 +148,18 @@ function unbanUser() {
     fetch("/api/unban", {
         method: "POST",
         body: JSON.stringify({
-            username: user,
-            token: token,
             user: username
         }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
+    })
+    .then(res => res.status)
+    .then(res => {
+        success(document.getElementById("unbanUserButton"), res === 200); 
     });
 
-    return false;
+    
 }
 
 function getBanReason() {
@@ -179,5 +171,98 @@ function getBanReason() {
         alert(`Reason: ${res}`);
     });
 
-    return false;
+    
+}
+
+async function getTeacherRequests() {
+    // get the requests
+    let requests = await fetch(`/api/getTeacherRequests`)
+    .then(res => {return res.status === 200 ? res.json() : []});
+
+    // display the requests
+    let requestList = document.getElementById("teacherRequests");
+    requestList.innerHTML = "";
+    requests.forEach(request => {
+        let req = document.createElement("li");
+        let para = document.createElement("p");
+        para.appendChild(document.createTextNode(`${request.username} - ${request.email}, ${request.school}`));
+        req.appendChild(para);
+        let accept = document.createElement("button");
+        accept.classList.add("dashboard-submit");
+        accept.appendChild(document.createTextNode("Accept"));
+        accept.onclick = async () => {
+            await fetch(`/api/acceptTeacherRequest?id=${request.id}`);
+            getTeacherRequests();
+        };
+        req.appendChild(accept);
+        let deny = document.createElement("button");
+        deny.classList.add("dashboard-submit");
+        deny.appendChild(document.createTextNode("Deny"));
+        deny.onclick = async () => {
+            await fetch(`/api/denyTeacherRequest?id=${request.id}`);
+            getTeacherRequests();
+        };
+        req.appendChild(deny);
+        requestList.appendChild(req);
+    });
+
+    // show the modal
+    let modal = document.getElementById("teacherModal");
+    modal.style.display = "block";
+}
+
+function closeTeacherModal() {
+    document.getElementById("teacherModal").style.display = "none";
+}
+
+function setTeacher() {
+    let username = document.getElementById("setTeacherUsername").value;
+
+    fetch("/api/forceTeacher", {
+        method: "POST",
+        body: JSON.stringify({
+            user: username
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then(res => res.status)
+    .then(res => {
+        success(document.getElementById("setTeacherButton"), res === 200);
+    });
+}
+
+function setAdmin() {
+    let username = document.getElementById("setAdminUsername").value;
+
+    fetch("/api/forceAdmin", {
+        method: "POST",
+        body: JSON.stringify({
+            user: username
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then(res => res.status)
+    .then(res => {
+        success(document.getElementById("setAdminButton"), res === 200);
+    });
+}
+
+function success(button, success) {
+    if (success) {
+        button.classList.add("succeeded");
+
+        button.addEventListener("animationend", () => {
+            button.classList.remove("succeeded");
+        });
+    } else {
+        button.classList.add("failed");
+
+        button.addEventListener("animationend", () => {
+            button.classList.remove("failed");
+        });
+    }
 }

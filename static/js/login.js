@@ -43,9 +43,9 @@ function login() {
     .then(data => {
         console.log(data)
         if (data[0]) {
-            document.cookie = "username=" + username;
+            document.cookie = "username=".concat(username, "; SameSite=Strict");
             let token = data[1];
-            document.cookie = "token=" + token;
+            document.cookie = "token=".concat(token, "; SameSite=Strict");
             window.location.href = redir || "/";
         } else {
             if (data[1] == "username does not exist") {
@@ -55,4 +55,8 @@ function login() {
             }
         }
     })
+}
+
+function register() {
+    window.location.href = `/register?redirect=${redir || "/"}`;
 }

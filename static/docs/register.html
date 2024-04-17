@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
+    <title>{{ GAME NAME }} | Create Account</title>
     <link rel="stylesheet" href="static/css/logreg.css">
+    <link rel="icon" href="/static/assets/images/logo.png" type="image/x-icon">
     <script src="/static/js/register.js"></script>
 </head>
 <body>
@@ -17,7 +18,7 @@
         <input type="password" class="login-input" id="password" placeholder="Password"><br>
         <input type="password" class="login-input" id="passwordConfirm" placeholder="Retype Password"><br>
         <input type="submit" value="Create" class="login-button">
-        <p style="color: var(--white);">Already have an account? <a href="login" class="register-link">Login here!</a></p>
+        <p style="color: var(--white);">Already have an account? <a onclick="login()" class="register-link">Login here!</a></p>
     </container>
 </body>
 </html>

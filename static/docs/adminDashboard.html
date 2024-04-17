@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ Game Name }} | Admin Dashboard</title>
+    <title>{{ GAME NAME }} | Admin Dashboard</title>
     <link rel="stylesheet" href="/static/css/adminDashboard.css">
     <link rel="stylesheet" href="static/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-    <script src="/static/js/adminDashboard.js"></script>
+    <script src="/static/js/adminDashboard.js" defer></script>
+    <link rel="icon" href="/static/assets/images/logo.png" type="image/x-icon">
 </head>
 <body>
     <div class="sidebar">
@@ -33,7 +34,7 @@
     <div class="main-content">
         <div class="main-content-filler create-level">
             <h2 style="margin-bottom: 2em;">Create Level</h2>
-            <form onsubmit="return createLevel();" class="create-level-form">
+            <form onsubmit="createLevel();return false" class="create-level-form">
                 <input class="dashboard-input" type="text" name="levelId" id="createLevelID" placeholder="Level ID" required>
                 <input class="dashboard-input" type="text" name="levelName" id="createLevelName" placeholder="Level Name" required>
                 <input class="dashboard-input" type="text" name="parents" id="createParents" placeholder="Parents" required>
@@ -44,19 +45,19 @@
                 <input class="dashboard-input" type="text" name="correctLogs" id="createCorrectLogs" placeholder="Correct Logs" required>
                 <input class="dashboard-input" type="number" name="xpos" id="createXpos" placeholder="X Position" required>
                 <input class="dashboard-input" type="number" name="ypos" id="createYpos" placeholder="Y Position" required>
-                <input class="dashboard-submit" type="submit" value="Create">
+                <input class="dashboard-submit" type="submit" id="createLevelButton" value="Create">
             </form>
         </div>
         <div class="main-content-filler delete-level">
             <h2 style="margin-bottom: 2em;">Delete Level</h2>
-            <form onsubmit="return deleteLevel();" class="create-level-form">
+            <form onsubmit="deleteLevel();return false" class="create-level-form">
                 <input class="dashboard-input" type="text" name="levelId" id="deleteLevelID" placeholder="Level ID" required>
-                <input class="dashboard-submit" type="submit" value="Delete">
+                <input class="dashboard-submit" type="submit" id="deleteLevelButton" value="Delete">
             </form>
         </div>
         <div class="main-content-filler edit-level">
             <h2 style="margin-bottom: 2em;">Edit Level</h2>
-            <form onsubmit="return editLevel();" class="create-level-form">
+            <form onsubmit="editLevel();return false" class="create-level-form">
                 <input class="dashboard-input" type="text" name="levelId" id="editLevelID" placeholder="Level ID" required>
                 <input class="dashboard-input" type="text" name="levelName" id="editLevelName" placeholder="Level Name" required>
                 <input class="dashboard-input" type="text" name="parents" id="editParents" placeholder="Parents" required>
@@ -67,33 +68,71 @@
                 <input class="dashboard-input" type="text" name="correctLogs" id="editCorrectLogs" placeholder="Correct Logs" required>
                 <input class="dashboard-input" type="number" name="xpos" id="editXpos" placeholder="X Position" required>
                 <input class="dashboard-input" type="number" name="ypos" id="editYpos" placeholder="Y Position" required>
-                <input class="dashboard-submit" type="submit" value="Edit">
+                <input class="dashboard-submit" type="submit" id="editLevelButton" value="Edit">
             </form>
         </div>
         <div class="main-content-filler ban-user">
             <h2 style="margin-bottom: 2em;">Ban User</h2>
-            <form onsubmit="return banUser();" class="create-level-form">
+            <form onsubmit="banUser();return false" class="create-level-form">
                 <input class="dashboard-input" type="text" name="username" id="banUsername" placeholder="Username" required>
                 <input class="dashboard-input" type="text" name="reason" id="banReason" placeholder="Reason" required>
-                <input class="dashboard-submit" type="submit" value="Ban">
+                <input class="dashboard-submit" type="submit" id="banUserButton" value="Ban">
             </form>
         </div>
-        <div class="main-content-filler square-3"></div>
+        <div class="main-content-filler get-teacher-requests">
+            <h2 style="margin-bottom: 2em;">Get Teacher Requests</h2>
+            <button class="dashboard-submit" onclick="getTeacherRequests();return false">Get Requests</button>
+        </div>
+        <div class="main-content-filler set-teacher">
+            <h2 style="margin-bottom: 2em;">Set Teacher</h2>
+            <form onsubmit="setTeacher();return false" class="create-level-form">
+                <input class="dashboard-input" type="text" name="username" id="setTeacherUsername" placeholder="Username" required>
+                <span>
+                    toggle<input class="dashboard-submit" type="checkbox" value="Set Teacher">
+                </span>
+                <input class="dashboard-submit" id="setTeacherButton" type="submit" value="Set Teacher">
+            </form>
+        </div>
         <div class="main-content-filler unban-user">
             <h2 style="margin-bottom: 2em;">Unban User</h2>
-            <form onsubmit="return unbanUser();" class="create-level-form">
+            <form onsubmit="unbanUser();return false" class="create-level-form">
                 <input class="dashboard-input" type="text" name="username" id="unbanUsername" placeholder="Username" required>
-                <input class="dashboard-submit" type="submit" value="Unban">
+                <input class="dashboard-submit" type="submit" id="unbanUserButton" value="Unban">
             </form>
         </div>
         <div class="main-content-filler get-ban-reason">
             <h2 style="margin-bottom: 2em;">Get Ban Reason</h2>
-            <form onsubmit="return getBanReason();" class="create-level-form">
+            <form onsubmit="getBanReason();return false" class="create-level-form">
                 <input class="dashboard-input" type="text" name="username" id="gbrUsername" placeholder="Username" required>
                 <input class="dashboard-submit" type="submit" value="Get Reason">
             </form>
         </div>
-        <div class="main-content-filler square-6"></div>
+        <div class="main-content-filler set-admin">
+            <h2 style="margin-bottom: 2em;">Set Admin</h2>
+            <form onsubmit="setAdmin();return false" class="create-level-form">
+                <input class="dashboard-input" type="text" name="username" id="setTeacherUsername" placeholder="Username" required>
+                <span>
+                    toggle<input class="dashboard-submit" type="checkbox" value="Set Admin">
+                </span>
+                <input class="dashboard-submit" id="setAdminButton" type="submit" value="Set Admin">
+            </form>
+        </div>
+
+        <div class="main-content-filler get-users">
+            <h2 style="margin-bottom: 2em;">Get Users</h2>
+            <button class="dashboard-submit" onclick="getUsers();return false">Get Users</button>
+            <!-- will open a modal with a search thing ig -->
+        </div>
+    
+    </div>
+
+    <div class="modal" id="teacherModal">
+        <span class="modal-close" onclick="closeTeacherModal();return false">&times;</span>
+        <div class="modal-content">
+            <h1>Teacher Requests</h1>
+            <div class="teacher-requests" id="teacherRequests">
+            </div>
+        </div>
     </div>
 </body>
 </html>

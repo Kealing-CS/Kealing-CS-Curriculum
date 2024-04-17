@@ -23,20 +23,11 @@ if (!user || !token) {
 
 // check if the users login info is correct
 
-fetch("/api/login", {
-    method: "POST",
-    body: JSON.stringify({
-        user: user,
-        token: token
-    }),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
+fetch("/api/login")
 .then(res => res.status)
 .then(res => {
     if (res != 200) {
-        window.location.href = "/login?redir=dashboard";
+        window.location.href = `/login?redirect=${window.location.pathname}${window.location.search}`;
     }
 });
 

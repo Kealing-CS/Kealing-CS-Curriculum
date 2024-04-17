@@ -103,9 +103,9 @@ function createAccount() {
     }).then(response => response.json())
     .then(data => {
         if (data[0]) {
-            document.cookie = "username=" + username;
+            document.cookie = "username=".concat(username, "; SameSite=Strict");
             let token = data[1];
-            document.cookie = "token=" + token;
+            document.cookie = "token=".concat(token, "; SameSite=Strict");
             window.location.href = redir || "/";
         } else {
             if (data[1] === "username_length") {
@@ -124,4 +124,8 @@ function createAccount() {
             }
         }
     });
+}
+
+function login() {
+    window.location.href = `/login?redirect=${redir || "/"}`;
 }
