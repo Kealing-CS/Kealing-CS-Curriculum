@@ -13,7 +13,7 @@ const port = 8008;
 // (wowza)
 
 
-// make sure all the gitignore shit exists
+// make sure all the gitignore junk exists
 if (!fs.existsSync('./db/sensitivedata.db')) {
     fs.writeFileSync('./db/sensitivedata.db', '')
 }
