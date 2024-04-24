@@ -19,21 +19,28 @@ module.exports = class certificate {
         delete options.expiration;
         this.options = options;
     }
-    sortoptions(options){
+    sortoptions(options) {
         var keys = Object.keys(options);
         var result = [];
-        keys.forEach((value,i) => {
-            if(this.#names.includes(value)){
-            result.push({"name": value,"value":options[value]});
+        keys.forEach((value, i) => {
+            if (this.#names.includes(value) || this.#shortnames.includes(value)) {
+                result.push({ [this.#names.includes(value) ? "name" : "shortName"]: value, "value": options[value] });
             }
         });
+        return result;
     }
     build() {
         var rsakeys = forge.pki.rsa.generateKeyPair(2048);
         var certificate = forge.pki.createCertificate();
+        var options = this.sortoptions(this.options);
         certificate.publicKey = rsakeys.publicKey;
         certificate.serialNumber = "01" + crypto.randomBytes(19).toString("hex");
         certificate.validity = this.expiration;
-
+        certificate.setSubject(options);
+        certificate.setIssuer(options);
+        // Todo: add alt names
+        certificate.sign(rsakeys.privateKey);
+        console.log(options);
+        return { "certificate": forge.pki.certificateToPem(certificate), "privateKey": forge.pki.privateKeyToPem(rsakeys.privateKey) };
     }
 }
