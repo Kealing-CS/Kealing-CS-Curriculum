@@ -4,7 +4,7 @@ var forge = require("node-forge");
 module.exports = class certificate {
     ips;
     URIs;
-    expiration;
+    expration;
     options;
     #names = ["countryName", "organizationName"];
     #shortnames = ["ST"];
@@ -15,8 +15,8 @@ module.exports = class certificate {
     constructor(altIPs, altURIs, options) {
         this.ips = altIPs;
         this.URIs = altURIs;
-        this.expiration = options.expiration;
-        delete options.expiration;
+        this.expration = options.Expration;
+        //delete options.Expration;
         this.options = options;
     }
     sortoptions(options) {
@@ -35,7 +35,10 @@ module.exports = class certificate {
         var options = this.sortoptions(this.options);
         certificate.publicKey = rsakeys.publicKey;
         certificate.serialNumber = "01" + crypto.randomBytes(19).toString("hex");
-        certificate.validity = this.expiration;
+        Object.keys(this.expration).forEach((val) => {
+            certificate.validity[val] = new Date(this.expration[val]);
+        });
+        console.log(certificate.validity)
         certificate.setSubject(options);
         certificate.setIssuer(options);
         // Todo: add alt names

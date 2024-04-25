@@ -57,7 +57,6 @@ app.all('*', async (req, res) => {
 
     res.sendFile(path.join(__dirname, `../static/docs/404.html`));
 });
-
 app.listen(port, async () => {
     let ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(res => res.ip);
     console.log(`Server running at http://${ip}:${port}/`)
