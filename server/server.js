@@ -7,7 +7,7 @@ const api = require('./api/api.js');
 const fs = require('fs');
 const rateLimiter = require('express-rate-limit');
 const port = 8008;
-
+const listen = require("../security/https.js").listen;
 // this is the server
 // (wowza)
 
@@ -57,7 +57,7 @@ app.all('*', async (req, res) => {
 
     res.sendFile(path.join(__dirname, `../static/docs/404.html`));
 });
-app.listen(port, async () => {
+listen(app,port, async () => {
     let ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(res => res.ip);
     console.log(`Server running at http://${ip}:${port}/`)
     console.log(`or use http://localhost:${port}/`)
