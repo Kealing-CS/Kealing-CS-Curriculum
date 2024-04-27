@@ -32,8 +32,8 @@ let app = express();
 
 // rate limiter
 const limit = rateLimiter.rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes in milliseconds
-    max: 300, // Limit each IP to 30 requests per minute
+    windowMs: 5 * 60 * 1000, // 5 minutes in milliseconds
+    limit: 500, // Limit each IP to 500 requests per minute
     message: 'Too many requests from this IP, please try again after 10 minutes'
 });
 
