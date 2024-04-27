@@ -1,36 +1,55 @@
 var https = require("https");
 var tls = require("tls");
 var http = require("http");
-//var { storeHTTPOptions } = require("_http_server.js")
-var ser = require("_http_server");
 var net = require("net");
 var fs = require("fs");
 module.exports.listen = function (app, port, callbackFunction) {
- var options = {
-   key: fs.readFileSync("./security/certificates/key.pem"),
-   cert: fs.readFileSync("./security/certificates/cert.pem"),
- };
-var tcpserver = net.createServer();
-var server = https.createServer(options,app);
- tcpserver.listen(port);
- callbackFunction();
- tcpserver.on("connection", (socket) => {
-    var sock = new tls.TLSSocket(socket, {  isServer: true,...options });
-    http._connectionListener.call(server,sock);
-    return
-   console.log("connect");
-   socket.once("data", (data) => {
-     console.log("data");
-     if (data[0] === 22) {
-       //https
-     }else{
-        http._connectionListener.call(server,socket);
-        socket.emit("data", data);
-     }
-    
-    
-});
- });
- //server.listen(port,callbackFunction);
-};
+  var options = {
+    key: fs.readFileSync("./security/certificates/key.pem"),
+    cert: fs.readFileSync("./security/certificates/cert.pem"),
+  };
+  var tcpserver = net.createServer();
+  var server = https.createServer(options, app);
+  var redirectServer = https.createServer(options,function(req,res){
+    res.writeHead("302",{"location" : `https://${req.headers.host + req.url}`});
+    res.end();
+  });
+  tcpserver.listen(port);
+  callbackFunction();
+  tcpserver.on("connection", (socket) => {
+    var chunks = [];
+    var reade = new (require("events"))();
+    reade.emited = false;
+    socket.on("readable", () => {
+      var chunk;
+      while (null !== (chunk = socket.read())) {
+        chunks.push(chunk);
+      }
+      reade.emited = true;
+      reade.emit("readable");
+    });
 
+    console.log("connect");
+    socket.once("data", (data) => {
+      console.log("data");
+      if (data[0] === 22) {
+        //https
+        var sock = new tls.TLSSocket(socket, { isServer: true, ...options });
+        http._connectionListener.call(server, sock);
+        // Tls sockets extend net socket, meaning I can't refire the eventEmiter to pass it the data.
+        if (reade.emited) {
+          chunks.forEach((d) => socket.push(d, "binary"));
+        } else {
+          reade.on("readable", () => {
+            chunks.forEach((d) => socket.push(d, "binary"));
+          });
+        }
+      } else {
+        // Http
+        http._connectionListener.call(redirectServer, socket);
+        // Http views the events, meaning I can just refire the eventEmiter
+        socket.emit("data", data);
+      }
+    });
+  });
+};
