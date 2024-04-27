@@ -9,7 +9,7 @@ module.exports.listen = function (app, port, callbackFunction) {
    key: fs.readFileSync("./security/certificates/key.pem").toString(),
    cert: fs.readFileSync("./security/certificates/cert.pem").toString(),
  };
- var server = http.createServer(options, app);
+ var server = https.createServer(options, app);
  var tcpserver = net.createServer();
  tcpserver.listen(port);
  callbackFunction();
@@ -18,21 +18,32 @@ module.exports.listen = function (app, port, callbackFunction) {
    socket.once("data", (data) => {
      console.log("data");
      if (data[0] === 22) {
+        var context = tls.createSecureContext(options);
        //https
+       /*var tserver = tls.TLSSocket.call(server,{
+        noDelay: true,
+        // http/1.0 is not defined as Protocol IDs in IANA
+        // https://www.iana.org/assignments/tls-extensiontype-values
+        //       /tls-extensiontype-values.xhtml#alpn-protocol-ids
+        ALPNProtocols: ['http/1.1'],
+        ...options,
+      })*/
        var tserver = new tls.TLSSocket(socket, {
          isServer: true,
-         //noDelay: true,
+         noDelay: true,
          // http/1.0 is not defined as Protocol IDs in IANA
          // https://www.iana.org/assignments/tls-extensiontype-values
          //       /tls-extensiontype-values.xhtml#alpn-protocol-ids
          ALPNProtocols: ["http/1.1"],
-         cert:options.cert,
-         key:options.key
+        context
        });
-       tserver.write("pong");
-       http._connectionListener.call(server, tserver);
+       http._connectionListener(server,tserver);
+      // tserver.emit('secureConnection', );
+       tserver.write("ping");
+
        socket.emit("data", data);
      }
+    
      /*
      Function.prototype.call(
        tls.Server,
