@@ -61,6 +61,6 @@ app.all('*', async (req, res) => {
 });
 listen(app,port, async () => {
     let ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(res => res.ip);
-    console.log(`Server running at htts://${ip}:${port}/`)
-    console.log(`or use htts://localhost:${port}/`)
+    console.log(`Server running at https://${ip}:${port}/`)
+    console.log(`or use https://localhost:${port}/`)
 });
