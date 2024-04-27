@@ -5,7 +5,7 @@ module.exports = async function (failed, debug) {
 
     let token;
 
-    let createNormal = await fetch("http://localhost:8008/api/createAccount", {
+    let createNormal = await fetch("https://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -29,7 +29,7 @@ module.exports = async function (failed, debug) {
 
     // test doing a too short username
 
-    let createShortU = await fetch("http://localhost:8008/api/createAccount", {
+    let createShortU = await fetch("https://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -52,7 +52,7 @@ module.exports = async function (failed, debug) {
 
     // test doing a too short password
 
-    let createShortP = await fetch("http://localhost:8008/api/createAccount", {
+    let createShortP = await fetch("https://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -75,7 +75,7 @@ module.exports = async function (failed, debug) {
 
     // test doing a too long username
 
-    let createLongU = await fetch("http://localhost:8008/api/createAccount", {
+    let createLongU = await fetch("https://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -98,7 +98,7 @@ module.exports = async function (failed, debug) {
 
     // test doing a too long password
 
-    let createLongP = await fetch("http://localhost:8008/api/createAccount", {
+    let createLongP = await fetch("https://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -121,7 +121,7 @@ module.exports = async function (failed, debug) {
 
     // test not allowed chars in username
 
-    let createNACU = await fetch("http://localhost:8008/api/createAccount", {
+    let createNACU = await fetch("https://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -144,7 +144,7 @@ module.exports = async function (failed, debug) {
 
     // test doing a not allowed char in password
 
-    let createNACP = await fetch("http://localhost:8008/api/createAccount", {
+    let createNACP = await fetch("https://localhost:8008/api/createAccount", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -167,7 +167,7 @@ module.exports = async function (failed, debug) {
 
     // test doing a normal token login
 
-    let login = await fetch("http://localhost:8008/api/login", {
+    let login = await fetch("https://localhost:8008/api/login", {
         headers: {
             "cookie": `username=test; token=${token}`
         }
@@ -186,7 +186,7 @@ module.exports = async function (failed, debug) {
 
     // test doing a wrong token login
 
-    let loginWrong = await fetch("http://localhost:8008/api/login", {
+    let loginWrong = await fetch("https://localhost:8008/api/login", {
         headers: {
             "cookie": `username=test; token=im lying to you p2!!!!`
         }
@@ -205,7 +205,7 @@ module.exports = async function (failed, debug) {
 
     // test getting a new token
 
-    let freshLogin = await fetch("http://localhost:8008/api/freshLogin", {
+    let freshLogin = await fetch("https://localhost:8008/api/freshLogin", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -230,7 +230,7 @@ module.exports = async function (failed, debug) {
 
     // test getting a new token with wrong password
 
-    let freshLoginWrong = await fetch("http://localhost:8008/api/freshLogin", {
+    let freshLoginWrong = await fetch("https://localhost:8008/api/freshLogin", {
         method: "POST",
         headers: {
             "content-type": "application/json"

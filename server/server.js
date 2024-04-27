@@ -25,7 +25,9 @@ if (!fs.existsSync('./db/classes.db')) {
 if (!fs.existsSync('./db/admins.json')) {
     fs.writeFileSync('./db/admins.json', '[]')
 }
-
+if (!fs.existsSync('./db/tasks.json')){
+    fs.writeFileSync('./db/tasks.json', '[]')
+}
 let app = express();
 
 // rate limiter
@@ -59,6 +61,6 @@ app.all('*', async (req, res) => {
 });
 listen(app,port, async () => {
     let ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(res => res.ip);
-    console.log(`Server running at http://${ip}:${port}/`)
-    console.log(`or use http://localhost:${port}/`)
+    console.log(`Server running at htts://${ip}:${port}/`)
+    console.log(`or use htts://localhost:${port}/`)
 });

@@ -3,7 +3,9 @@
 /node_modules
 /db/admins.json
 /db/classes.db
+/db/tasks.json
 /security/certificates/
+
 # vim
 *.swp
 *.swo
