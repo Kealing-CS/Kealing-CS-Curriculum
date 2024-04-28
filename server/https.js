@@ -10,8 +10,8 @@ module.exports.listen = function (app, port, callbackFunction) {
   };
   var tcpserver = net.createServer();
   var server = https.createServer(options, app);
-  var redirectServer = https.createServer(options,function(req,res){
-    res.writeHead("302",{"location" : `https://${req.headers.host + req.url}`});
+  var redirectServer = https.createServer(options, function (req, res) {
+    res.writeHead("302", { location: `https://${req.headers.host + req.url}` });
     res.end();
   });
   tcpserver.listen(port);
@@ -29,9 +29,7 @@ module.exports.listen = function (app, port, callbackFunction) {
       reade.emit("readable");
     });
 
-    console.log("connect");
     socket.once("data", (data) => {
-      console.log("data");
       if (data[0] === 22) {
         //https
         var sock = new tls.TLSSocket(socket, { isServer: true, ...options });
