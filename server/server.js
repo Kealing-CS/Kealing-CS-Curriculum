@@ -60,7 +60,7 @@ app.all('*', async (req, res) => {
     res.sendFile(path.join(__dirname, `../static/docs/404.html`));
 });
 listen(app,port, async () => {
-    let ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(res => res.ip);
-    console.log(`Server running at https://${ip}:${port}/`)
+    let ips = Object.values(require("os").networkInterfaces()).flat(2).filter(val => !val.internal && val.address).map(val => (val.family == "IPv6" ? `[${val.address}]` : val.address));
+    ips.forEach((ip,i) => {console.log(`Server running at https://${ip}:${port}/${i < (ips.length - 2) ? "," : (i == (ips.length - 1) ? "" : " and")}`)})
     console.log(`or use https://localhost:${port}/`)
 });
