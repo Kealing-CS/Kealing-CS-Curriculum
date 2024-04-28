@@ -5,8 +5,8 @@ var net = require("net");
 var fs = require("fs");
 module.exports.listen = function (app, port, callbackFunction) {
   var options = {
-    key: fs.readFileSync("./security/certificates/key.pem"),
-    cert: fs.readFileSync("./security/certificates/cert.pem"),
+    key: fs.readFileSync("./server/certificates/key.pem"),
+    cert: fs.readFileSync("./server/certificates/cert.pem"),
   };
   var tcpserver = net.createServer();
   var server = https.createServer(options, app);
