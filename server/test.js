@@ -17,5 +17,8 @@ var mycert = new cert(
     },
   }
 ).build();
+if(!fs.existsSync("./certificates")){
+  fs.mkdirSync("./certificates")
+}
 fs.writeFileSync("./certificates/cert.pem", mycert.certificate);
 fs.writeFileSync("./certificates/key.pem", mycert.privateKey);
