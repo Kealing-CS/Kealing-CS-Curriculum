@@ -3,11 +3,20 @@ var tls = require("tls");
 var http = require("http");
 var net = require("net");
 var fs = require("fs");
+var optionsPaths = {
+  key: "./server/certificates/key.pem",
+  cert: "./server/certificates/cert.pem",
+};
+function genarateOptions(){
+  var keys = Object.keys(optionsPaths),values = Object.values(optionsPaths).map((val,i) => fs.readFileSync(val)),output = {};
+  values.forEach((item,i) => {
+    output[keys[i]] = item;
+  });
+  return values;
+}
 module.exports.listen = function (app, port, callbackFunction) {
-  var options = {
-    key: fs.readFileSync("./server/certificates/key.pem"),
-    cert: fs.readFileSync("./server/certificates/cert.pem"),
-  };
+  var options = genarateOptions();
+  console.log(options);
   var tcpserver = net.createServer();
   var server = https.createServer(options, app);
   var redirectServer = https.createServer(options, function (req, res) {
@@ -50,4 +59,9 @@ module.exports.listen = function (app, port, callbackFunction) {
       }
     });
   });
+  return new class serverInstance{
+    refresh(){
+      options = genarateOptions();
+    }
+  }
 };
