@@ -42,8 +42,12 @@ module.exports.addListener = function (name, time, callBack) {
   ingen.time = time;
   ingen.callBack = callBack;
   var gened = JSON.parse(fs.readFileSync(path));
+  if (typeof gened.name === "undefined") {
+    return false;
+  }
   gened.push(ingen);
   fs.writeFileSync(path, JSON.stringify(gened));
+  return true;
 };
 /* 
 Database structure will be like:
@@ -56,6 +60,15 @@ module.exports.removeListener = function (name) {
     1
   );
   fs.writeFileSync(path, JSON.stringify(temp));
+};
+module.exports.exists = function (name) {
+  return (
+    typeof JSON.parse(fs.readFileSync(path)).map((val) => val.name)[name] !=
+    "undefined"
+  );
+};
+module.exports.get = function (name) {
+  return JSON.parse(fs.readFileSync(path)).filter((val) => val.name === name);
 };
 module.exports.listen = function () {
   var listeners = [];
