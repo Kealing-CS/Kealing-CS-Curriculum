@@ -8,6 +8,7 @@ const fs = require('fs');
 const rateLimiter = require('express-rate-limit');
 const port = 8008;
 const listen = require("./https.js").listen;
+const tasks = require("./tasks.js");
 // this is the server
 // (wowza)
 
@@ -28,6 +29,10 @@ if (!fs.existsSync('./db/admins.json')) {
 if (!fs.existsSync('./db/tasks.json')){
     fs.writeFileSync('./db/tasks.json', '[]')
 }
+
+// Start tasks
+tasks.listen();
+
 let app = express();
 
 // rate limiter
