@@ -3,7 +3,7 @@ const colors = require('colors')
 const testlogin = require('./testLogin')
 const testAssignments = require('./testAssignments')
 
-if (process.argv.indexOf("--reset") === -1 && process.argv.indexOf("-R") === -1) {
+if (process.argv.indexOf("--reset") > -1 && process.argv.indexOf("-R") > -1) {
     console.log("Resetting database...")
     fs.writeFileSync('./db/sensitivedata.db', '')
     fs.writeFileSync('./db/userdata.db', '')
@@ -30,7 +30,7 @@ Current tests:
 
 async function test() {
     let failed = false;
-    let debug = process.argv.indexOf("--debug") !== -1
+    let debug = process.argv.indexOf("--debug") > -1
 
     try {
         // pass failed by reference so that it can be modified by the test functions
