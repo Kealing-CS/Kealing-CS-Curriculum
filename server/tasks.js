@@ -42,7 +42,7 @@ module.exports.addListener = function (name, time, callBack) {
   ingen.time = time;
   ingen.callBack = callBack;
   var gened = JSON.parse(fs.readFileSync(path));
-  if (typeof gened.name === "undefined") {
+  if (typeof gened.name !== "undefined") {
     return false;
   }
   gened.push(ingen);
@@ -63,7 +63,7 @@ module.exports.removeListener = function (name) {
 };
 module.exports.exists = function (name) {
   return (
-    typeof JSON.parse(fs.readFileSync(path)).map((val) => val.name)[name] !=
+    typeof JSON.parse(fs.readFileSync(path)).map((val) => val.name === name)[name] !=
     "undefined"
   );
 };
@@ -88,7 +88,7 @@ module.exports.listen = function () {
     var lisenersToAdd = newc.filter((value) => !oldc.includes(value));
     var lisenersToRemove = oldc.filter((value) => !newc.includes(value));
     lisenersToRemove.forEach((value, i) => {
-      listeners[ldata.indexOf(value.name)].remove();
+      listeners[listeners.map((val) => val.tmod.tname === value.name).indexOf(true)].remove();
     });
     lisenersToAdd.forEach((value, i) => {
       // Time is in ms
