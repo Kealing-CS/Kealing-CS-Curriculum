@@ -10,7 +10,6 @@ const rateLimiter = require('express-rate-limit');
 const port = 8008;
 const listen = require("./https.js").listen;
 const tasks = require("./tasks.js");
-const EventEmitter = require('events');
 module.exports.start = function() {
 // this is the server
 // (wowza)
@@ -70,7 +69,7 @@ app.all('*', async (req, res) => {
 return new Promise((resolve,reject) => {
     listen(app,port, async () => {
         let ips = Object.values(require("os").networkInterfaces()).flat(2).filter(val => !val.internal && val.address).map(val => (val.family == "IPv6" ? `[${val.address}]` : val.address));
-        ips.forEach((ip,i) => {console.log(`Server running at https://${ip}:${port}/${i < (ips.length - 2) ? "," : (i == (ips.length - 1) ? "" : " and")}`)})
+        ips.forEach((ip,i) => {console.log(`${i == 0 ? "Server running at " : ""}https://${ip}:${port}/${i < (ips.length - 2) ? "," : (i == (ips.length - 1) ? "" : " and")}`)})
         console.log(`or use https://localhost:${port}/`);
         resolve();
     });
