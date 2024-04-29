@@ -11,7 +11,7 @@ if (process.argv.indexOf("--reset") > -1 && process.argv.indexOf("-R") > -1) {
     console.log("Done!")
 }
 
-require("../server/server")
+const { start } = require("../server/server")
 
 /*
 Current tests:
@@ -50,10 +50,11 @@ async function test() {
         if (debug) {
             console.log(e)
         } else {
-            console.log(e.message)
+            console.log(e.stack)
         }
         process.exit(1)
     }
 }
-
-test();
+// Ignore a broken cert
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+start().then(test);

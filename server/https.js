@@ -15,7 +15,7 @@ module.exports.listen = function (app, port, callbackFunction) {
     res.end();
   });
   tcpserver.listen(port);
-  callbackFunction();
+  tcpserver.on("listening",callbackFunction);
   tcpserver.on("connection", (socket) => {
     var chunks = [];
     var reade = new (require("events"))();

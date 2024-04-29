@@ -1,6 +1,7 @@
 var cert = require("./newcert.js");
 var fs = require("fs");
 var os = require("os");
+var today = new Date();
 var mycert = new cert(
   Object.values(require("os").networkInterfaces())
     .flat(2)
@@ -13,7 +14,7 @@ var mycert = new cert(
     organizationName: "Kealing",
     Expration: {
       notBefore: new Date(),
-      NotAfter: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 10),
+      NotAfter: new Date(today.setDate(today.getDate() + 10)),
     },
   }
 ).build();
