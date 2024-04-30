@@ -12,11 +12,10 @@ function genarateOptions(){
   values.forEach((item,i) => {
     output[keys[i]] = item;
   });
-  return values;
+  return output;
 }
 module.exports.listen = function (app, port, callbackFunction) {
   var options = genarateOptions();
-  console.log(options);
   var tcpserver = net.createServer();
   var server = https.createServer(options, app);
   var redirectServer = https.createServer(options, function (req, res) {
