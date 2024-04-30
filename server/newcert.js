@@ -11,7 +11,7 @@ module.exports = class certificate {
   #shortnames = ["C", "ST", "L", "CN"];
   /*
     Exsample options:
-    {"countryName":"US","ST":"Texas","organizationName":"Kealing","Expration":{"notBefore":new Date(),"NotAfter":new Date((new Date()).getTime() + 1000 * 60 * 60 * 24 * 10)}} (10 Days)
+    {"countryName":"US","ST":"Texas","organizationName":"Kealing","Expration":{"notBefore":new Date(),"notAfter":new Date((new Date()).getTime() + 1000 * 60 * 60 * 24 * 10)}} (10 Days)
     */
   constructor(altIPs, altURIs, options) {
     this.ips = altIPs;

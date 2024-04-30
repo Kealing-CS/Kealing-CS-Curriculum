@@ -14,7 +14,7 @@ var mycert = new cert(
     organizationName: "Kealing",
     Expration: {
       notBefore: new Date(),
-      NotAfter: new Date(today.setDate(today.getDate() + 10)),
+      notAfter: new Date(today.setDate(today.getDate() + 10)),
     },
   }
 ).build();
