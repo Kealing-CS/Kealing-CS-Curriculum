@@ -31,8 +31,6 @@ if (!fs.existsSync('./db/tasks.json')){
     fs.writeFileSync('./db/tasks.json', '[]')
 }
 
-// Start tasks
-tasks.listen();
 
 let app = express();
 
@@ -70,6 +68,8 @@ return new Promise((resolve,reject) => {
         let ips = Object.values(require("os").networkInterfaces()).flat(2).filter(val => !val.internal && val.address).map(val => (val.family == "IPv6" ? `[${val.address}]` : val.address));
         ips.forEach((ip,i) => {console.log(`${i == 0 ? "Server running at " : ""}https://${ip}:${port}/${i < (ips.length - 2) ? "," : (i == (ips.length - 1) ? "" : " and")}`)})
         console.log(`or use https://localhost:${port}/`);
+        // Start tasks
+        tasks.listen({serverInstance,require,console});
         resolve(serverInstance);
     });
 });
