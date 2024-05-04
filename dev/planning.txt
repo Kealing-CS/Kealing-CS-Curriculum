@@ -1,0 +1,16 @@
+Plans: Replace quick-db with something bedder.
+How: create my own database.
+Structure: Binary
+(Remember):Binary all-1 numbers :(1,2,4,8,16)  1,3,7,15,31
+AIM: MAX OF 7 FLAGS
+Flags:
+ *Object : 0
+ *Next : 1
+ *NextArray : 2
+ *NextObject : 3
+ *Array : 4
+{"chickens":["cool","great","Don't eat",{"why":["they are cool","Because I said so"]}]}
+Would look like:
+0chickens4cool1great1Don't Eat3why4they are cool1Because I said so
+
+Of couse, I would have to create my own carecter encodeing that leavs out 000,001,010,011,100 
