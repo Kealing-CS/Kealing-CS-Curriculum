@@ -7,8 +7,8 @@ module.exports = class certificate {
   URIs;
   expration;
   options;
-  #names = ["countryName", "organizationName"];
-  #shortnames = ["C", "ST", "L", "CN"];
+  #names = ["countryName", "stateOrProvinceName","commonName","organizationName","organizationalUnitName"];
+  #shortnames = ["C", "ST", "CN","L"];
   /*
     Exsample options:
     {"countryName":"US","ST":"Texas","organizationName":"Kealing","Expration":{"notBefore":new Date(),"notAfter":new Date((new Date()).getTime() + 1000 * 60 * 60 * 24 * 10)}} (10 Days)
