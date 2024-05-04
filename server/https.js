@@ -30,15 +30,17 @@ module.exports.listen = function (app, port, callbackFunction) {
       listener,
       new (class serverInstance {
         async kill() {
-          return await new Promise((resolve, fail) => {
+          return new Promise((resolve, fail) => {
             tcpserver.close((err) =>
-              typeof err == "undefined"
+              (typeof err == "undefined"
                 ? () => {
                     server.closeAllConnections();
                     redirectServer.closeAllConnections();
                     resolve();
                   }
-                : fail(err)
+                : () => {
+                    fail(err);
+                  })()
             );
           });
         }

@@ -28,7 +28,7 @@ Current tests:
 - submit for right code
 */
 
-async function test() {
+async function test(server) {
     let failed = false;
     let debug = process.argv.indexOf("--debug") > -1
 
@@ -40,9 +40,11 @@ async function test() {
 
         if (!temp["f"]) {
             console.log("[", "OK".green, "]", "All tests passed!")
+            await server.kill()
             process.exit(0)
         } else {
             console.log("[", "BAD".red, "]", "Some tests failed")
+            server.kill()
             process.exit(1)
         }
     } catch(e) {
@@ -52,6 +54,7 @@ async function test() {
         } else {
             console.log(e.stack)
         }
+        server.kill()
         process.exit(1)
     }
 }
