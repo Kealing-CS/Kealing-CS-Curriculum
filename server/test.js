@@ -11,7 +11,8 @@ var mycert = new cert(
   {
     countryName: "US",
     ST: "Texas",
-    organizationName: "Kealing",
+    CN: "Kealing",
+    organizationName: "KealingCS",
     Expration: {
       notBefore: new Date(),
       notAfter: new Date(today.setDate(today.getDate() + 10)),
