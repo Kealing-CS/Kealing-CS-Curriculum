@@ -11,7 +11,7 @@ module.exports = async function (failed, debug) {
             "content-type": "application/json"
         },
         body: JSON.stringify({
-            user: "tester",
+            user: "test",
             password: "testword"
         })
     })
