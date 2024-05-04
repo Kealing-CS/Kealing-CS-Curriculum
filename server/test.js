@@ -3,7 +3,7 @@ var fs = require("fs");
 var os = require("os");
 var today = new Date();
 var mycert = new cert(
-  Object.values(require("os").networkInterfaces())
+  Object.values(os.networkInterfaces())
     .flat(2)
     .filter((val) => !val.internal && val.address)
     .map((val) => val.address),
