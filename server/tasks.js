@@ -18,7 +18,7 @@ class listenerTemplete {
     this.name = name;
     this.vars = vars;
     if (reps) {
-      this.interval = setInterval(() => this.onInterval());
+      this.interval = setInterval(() => this.onInterval(),2147483647);
     } else {
       setTimeout(() => this.run(), ms);
     }
