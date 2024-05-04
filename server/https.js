@@ -7,9 +7,11 @@ var optionsPaths = {
   key: "./server/certificates/key.pem",
   cert: "./server/certificates/cert.pem",
 };
-function genarateOptions(){
-  var keys = Object.keys(optionsPaths),values = Object.values(optionsPaths).map((val,i) => fs.readFileSync(val)),output = {};
-  values.forEach((item,i) => {
+function genarateOptions() {
+  var keys = Object.keys(optionsPaths),
+    values = Object.values(optionsPaths).map((val, i) => fs.readFileSync(val)),
+    output = {};
+  values.forEach((item, i) => {
     output[keys[i]] = item;
   });
   return output;
@@ -23,7 +25,29 @@ module.exports.listen = function (app, port, callbackFunction) {
     res.end();
   });
   tcpserver.listen(port);
-  tcpserver.on("listening",callbackFunction);
+  tcpserver.on("listening", (listener) =>
+    callbackFunction(
+      listener,
+      new (class serverInstance {
+        async kill() {
+          return await new Promise((resolve, fail) => {
+            tcpserver.close((err) =>
+              typeof err == "undefined"
+                ? () => {
+                    server.closeAllConnections();
+                    redirectServer.closeAllConnections();
+                    resolve();
+                  }
+                : fail(err)
+            );
+          });
+        }
+        refresh() {
+          options = genarateOptions();
+        }
+      })()
+    )
+  );
   tcpserver.on("connection", (socket) => {
     var chunks = [];
     var reade = new (require("events"))();
@@ -58,9 +82,4 @@ module.exports.listen = function (app, port, callbackFunction) {
       }
     });
   });
-  return new class serverInstance{
-    refresh(){
-      options = genarateOptions();
-    }
-  }
 };
