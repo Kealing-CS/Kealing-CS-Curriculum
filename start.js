@@ -1,7 +1,14 @@
 // this is for the funnsies
 const { QuickDB } = require("quick.db");
+const { chdir, cwd } = process;
 var fs = require("fs");
-
+while(true){
+    if(fs.existsSync("./.git")){
+       break;
+    }else{
+    chdir("../");
+    }
+}
 if (process.argv.indexOf("--test") > -1 || process.argv.indexOf("-T") > -1) {
   require("./tests/test");
 } else {
