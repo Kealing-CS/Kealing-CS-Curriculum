@@ -44,7 +44,7 @@ async function test(server) {
             process.exit(0)
         } else {
             console.log("[", "BAD".red, "]", "Some tests failed")
-            server.kill()
+            await server.kill()
             process.exit(1)
         }
     } catch(e) {
@@ -54,7 +54,7 @@ async function test(server) {
         } else {
             console.log(e.stack)
         }
-        server.kill()
+        await server.kill()
         process.exit(1)
     }
 }
