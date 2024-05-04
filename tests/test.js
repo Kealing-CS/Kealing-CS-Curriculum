@@ -52,7 +52,7 @@ async function test(server) {
         if (debug) {
             console.log(e)
         } else {
-            console.log(e.stack)
+            console.log(e.message)
         }
         await server.kill()
         process.exit(1)
