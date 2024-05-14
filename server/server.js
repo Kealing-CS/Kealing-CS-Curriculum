@@ -9,6 +9,7 @@ const rateLimiter = require('express-rate-limit');
 const port = 8008;
 const listen = require("./https.js").listen;
 const tasks = require("./tasks.js");
+const vm = require("vm");
 module.exports.start = function() {
 // this is the server
 // (wowza)
@@ -30,7 +31,9 @@ if (!fs.existsSync('./db/admins.json')) {
 if (!fs.existsSync('./db/tasks.json')){
     fs.writeFileSync('./db/tasks.json', '[]')
 }
-
+if(!(fs.existsSync('./server/certificates/cert.pem') && fs.existsSync('./server/certificates/key.pem'))){
+require('./genarateCert.js')({refresh:()=>{}});
+}
 
 let app = express();
 
