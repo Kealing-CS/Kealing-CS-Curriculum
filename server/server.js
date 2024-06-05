@@ -31,8 +31,11 @@ if (!fs.existsSync('./db/admins.json')) {
 if (!fs.existsSync('./db/tasks.json')){
     fs.writeFileSync('./db/tasks.json', '[]')
 }
+if (!fs.existsSync("./server/certificates")){
+    fs.mkdirSync("./server/certificates");
+}
 if(!(fs.existsSync('./server/certificates/cert.pem') && fs.existsSync('./server/certificates/key.pem'))){
-require('./genarateCert.js')({refresh:()=>{}});
+    require('./genarateCert.js')({refresh:()=>{}});
 }
 
 let app = express();
