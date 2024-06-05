@@ -2,7 +2,7 @@
 
 This is the curriculum website made for the Kealing Computer Science Program.
 
-### I am not longer developing this. My suggestion for future contributers is to rewrite it. The backend and frontend are both giant messes, and it would be easier to write this from the ground up then try to fix them.
+### I am not longer developing this. My suggestion for future contributers is to rewrite it. The backend and frontend are both giant messes, and it would be easier to write this from the ground up then try to fix them. ( The http-to-http will be hard to rewrite, so just keep it )
 
 ## Table of Contents
 
