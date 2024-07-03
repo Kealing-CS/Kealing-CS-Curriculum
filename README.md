@@ -1,4 +1,4 @@
-# Kealing-CS-Curriculum
+# Kealing-CS-Curriculum 
 
 This is the curriculum website made for the Kealing Computer Science Program.
 
