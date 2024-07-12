@@ -83,7 +83,7 @@ app.all('*', async (req, res) => {
     res.sendFile(path.join(__dirname, `../static/docs/404.html`));
 });
 return new Promise((resolve,reject) => {
-    listen(app,genarateOptions(),port, async (listener,serverInstance ) => {
+    listen(app,genarateOptions(),port, async (serverInstance ) => {
         // Get all ips of computer
         let ips = Object.values(require("os").networkInterfaces()).flat(2).filter(val => !val.internal && val.address).map(val => (val.family == "IPv6" ? `[${val.address}]` : val.address));
         ips.forEach((ip,i) => {console.log(`${i == 0 ? "Server running at " : ""}https://${ip}:${port}/${i < (ips.length - 2) ? "," : (i == (ips.length - 1) ? "" : " and")}`)});
