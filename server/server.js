@@ -7,12 +7,28 @@ const api = require('./api/api.js');
 const fs = require('fs');
 const rateLimiter = require('express-rate-limit');
 const port = 8008;
-
+const listen = require("./https.js").listen;
+const tasks = require("./tasks.js");
+const vm = require("vm");
+var optionsPaths = {
+    key: "./server/certificates/key.pem",
+    cert: "./server/certificates/cert.pem",
+  };
+function generateOptions() {
+ var keys = Object.keys(optionsPaths),
+    values = Object.values(optionsPaths).map((val, i) => fs.readFileSync(val)),
+    output = {};
+  values.forEach((item, i) => {
+    output[keys[i]] = item;
+  });
+  return output;
+}
+module.exports.start = function() {
 // this is the server
 // (wowza)
 
 
-// make sure all the gitignore shit exists
+// make sure all the gitignore junk exists
 if (!fs.existsSync('./db/sensitivedata.db')) {
     fs.writeFileSync('./db/sensitivedata.db', '')
 }
@@ -25,19 +41,30 @@ if (!fs.existsSync('./db/classes.db')) {
 if (!fs.existsSync('./db/admins.json')) {
     fs.writeFileSync('./db/admins.json', '[]')
 }
+if (!fs.existsSync('./db/tasks.json')){
+    fs.writeFileSync('./db/tasks.json', '[]')
+}
+if (!fs.existsSync("./server/certificates")){
+    fs.mkdirSync("./server/certificates");
+}
+if(!(fs.existsSync('./server/certificates/cert.pem') && fs.existsSync('./server/certificates/key.pem'))){
+    require('./generateCert.js')({refresh:()=>{}});
+}
 
 let app = express();
 
 // rate limiter
 const limit = rateLimiter.rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes in milliseconds
-    max: 300, // Limit each IP to 30 requests per minute
-    message: 'Too many requests from this IP, please try again after 10 minutes'
+    windowMs: 5 * 60 * 1000, // 5 minutes in milliseconds
+    limit: 500, // Limit each IP to 500 requests per minute
+    message: 'Too many requests from this IP, please try again after 5 minutes'
 });
 
 // cors
 app.use(cors());
 
+//Rate limit
+app.use(limit);
 // for parsing json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -55,9 +82,15 @@ app.all('*', async (req, res) => {
 
     res.sendFile(path.join(__dirname, `../static/docs/404.html`));
 });
-
-app.listen(port, async () => {
-    let ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(res => res.ip);
-    console.log(`Server running at http://${ip}:${port}/`)
-    console.log(`or use http://localhost:${port}/`)
+return new Promise((resolve,reject) => {
+    listen(app,generateOptions(),port, async (serverInstance ) => {
+        // Get all ips of computer
+        let ips = Object.values(require("os").networkInterfaces()).flat(2).filter(val => !val.internal && val.address).map(val => (val.family == "IPv6" ? `[${val.address}]` : val.address));
+        ips.forEach((ip,i) => {console.log(`${i == 0 ? "Server running at " : ""}https://${ip}:${port}/${i < (ips.length - 2) ? "," : (i == (ips.length - 1) ? "" : " and")}`)});
+        console.log(`or use https://localhost:${port}/`);
+        // Start tasks
+        tasks.listen({serverInstance,require,console});
+        resolve(serverInstance);
+    });
 });
+}

@@ -1,8 +1,6 @@
-# Kealing-CS-Curriculum
+# Kealing-CS-Curriculum 
 
 This is the curriculum website made for the Kealing Computer Science Program.
-
-### I am not longer developing this. My suggestion for future contributers is to rewrite it. The backend and frontend are both giant messes, and it would be easier to write this from the ground up then try to fix them.
 
 ## Table of Contents
 

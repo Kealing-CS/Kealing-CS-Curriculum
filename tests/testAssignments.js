@@ -13,7 +13,7 @@ module.exports = async function (token, failed, debug) {
         }
     }
 
-    let submitWrong = await fetch("http://localhost:8008/api/submit", {
+    let submitWrong = await fetch("https://localhost:8008/api/submit", {
         method: "POST",
         body: JSON.stringify({
             level: "start",
@@ -40,7 +40,7 @@ module.exports = async function (token, failed, debug) {
         console.log("[", "OK".green, "]", "Right output for wrong code")
     }
 
-    let submitRight = await fetch("http://localhost:8008/api/submit", {
+    let submitRight = await fetch("https://localhost:8008/api/submit", {
         method: "POST",
         headers: {
             "content-type": "application/json",
@@ -71,7 +71,7 @@ module.exports = async function (token, failed, debug) {
     /* ### GET CODE ### */
     /* ################ */
 
-    let getCode = await fetch(`http://localhost:8008/api/getCode?level=start`, cookies)
+    let getCode = await fetch(`https://localhost:8008/api/getCode?level=start`, cookies)
     if (getCode.status !== 200) {
         if (debug) {
             console.log(getCode.status)
@@ -112,7 +112,7 @@ module.exports = async function (token, failed, debug) {
     /* ### SET CODE ### */
     /* ################ */
 
-    let setCode = await fetch("http://localhost:8008/api/setCode", {
+    let setCode = await fetch("https://localhost:8008/api/setCode", {
         method: "POST",
         headers: {
             "content-type": "application/json",
@@ -143,7 +143,7 @@ module.exports = async function (token, failed, debug) {
     /* ### GET COMPLETED ### */
     /* ##################### */
 
-    let getCompleted = await fetch("http://localhost:8008/api/getCompleted?user=test")
+    let getCompleted = await fetch("https://localhost:8008/api/getCompleted?user=test")
 
     if (getCompleted.status !== 200) {
         if (debug) {
@@ -166,7 +166,7 @@ module.exports = async function (token, failed, debug) {
     /* ### GET UNLOCKED ### */
     /* #################### */
 
-    let getUnlocked = await fetch("http://localhost:8008/api/getUnlocked?user=test")
+    let getUnlocked = await fetch("https://localhost:8008/api/getUnlocked?user=test")
 
     if (getUnlocked.status !== 200) {
         if (debug) {

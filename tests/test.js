@@ -3,7 +3,7 @@ const colors = require('colors')
 const testlogin = require('./testLogin')
 const testAssignments = require('./testAssignments')
 
-if (process.argv.indexOf("--reset") === -1 && process.argv.indexOf("-R") === -1) {
+if (process.argv.indexOf("--reset") > -1 || process.argv.indexOf("-R") > -1) {
     console.log("Resetting database...")
     fs.writeFileSync('./db/sensitivedata.db', '')
     fs.writeFileSync('./db/userdata.db', '')
@@ -11,7 +11,7 @@ if (process.argv.indexOf("--reset") === -1 && process.argv.indexOf("-R") === -1)
     console.log("Done!")
 }
 
-require("../server/server")
+const { start } = require("../server/server")
 
 /*
 Current tests:
@@ -28,9 +28,9 @@ Current tests:
 - submit for right code
 */
 
-async function test() {
+async function test(server) {
     let failed = false;
-    let debug = process.argv.indexOf("--debug") !== -1
+    let debug = process.argv.indexOf("--debug") > -1
 
     try {
         // pass failed by reference so that it can be modified by the test functions
@@ -40,9 +40,11 @@ async function test() {
 
         if (!temp["f"]) {
             console.log("[", "OK".green, "]", "All tests passed!")
+            await server.kill()
             process.exit(0)
         } else {
             console.log("[", "BAD".red, "]", "Some tests failed")
+            await server.kill()
             process.exit(1)
         }
     } catch(e) {
@@ -52,8 +54,10 @@ async function test() {
         } else {
             console.log(e.message)
         }
+        await server.kill()
         process.exit(1)
     }
 }
-
-test();
+// Ignore a broken cert
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+start().then(test);

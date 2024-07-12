@@ -3,6 +3,8 @@
 /node_modules
 /db/admins.json
 /db/classes.db
+/db/tasks.json
+/server/certificates/*
 
 # vim
 *.swp
