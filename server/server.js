@@ -14,7 +14,7 @@ var optionsPaths = {
     key: "./server/certificates/key.pem",
     cert: "./server/certificates/cert.pem",
   };
-function genarateOptions() {
+function generateOptions() {
  var keys = Object.keys(optionsPaths),
     values = Object.values(optionsPaths).map((val, i) => fs.readFileSync(val)),
     output = {};
@@ -48,7 +48,7 @@ if (!fs.existsSync("./server/certificates")){
     fs.mkdirSync("./server/certificates");
 }
 if(!(fs.existsSync('./server/certificates/cert.pem') && fs.existsSync('./server/certificates/key.pem'))){
-    require('./genarateCert.js')({refresh:()=>{}});
+    require('./generateCert.js')({refresh:()=>{}});
 }
 
 let app = express();
@@ -83,7 +83,7 @@ app.all('*', async (req, res) => {
     res.sendFile(path.join(__dirname, `../static/docs/404.html`));
 });
 return new Promise((resolve,reject) => {
-    listen(app,genarateOptions(),port, async (serverInstance ) => {
+    listen(app,generateOptions(),port, async (serverInstance ) => {
         // Get all ips of computer
         let ips = Object.values(require("os").networkInterfaces()).flat(2).filter(val => !val.internal && val.address).map(val => (val.family == "IPv6" ? `[${val.address}]` : val.address));
         ips.forEach((ip,i) => {console.log(`${i == 0 ? "Server running at " : ""}https://${ip}:${port}/${i < (ips.length - 2) ? "," : (i == (ips.length - 1) ? "" : " and")}`)});

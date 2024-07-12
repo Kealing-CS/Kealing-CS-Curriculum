@@ -38,7 +38,7 @@ if(!fs.existsSync("./certificates")){
 fs.writeFileSync("./server/certificates/cert.pem", mycert.certificate);
 fs.writeFileSync("./server/certificates/key.pem", mycert.privateKey);
 // Tell tasks to refrest the certificate 3 days before it expires
-tasks.addListener("refreshCert",new Date(today.setDate(today.getDate() + 357)),"require('./genarateCert.js')(serverInstance);");
+tasks.addListener("refreshCert",new Date(today.setDate(today.getDate() + 357)),"require('./generateCert.js')(serverInstance);");
 // Refresh the server's certificate
 serverInstance.refresh();
 }
