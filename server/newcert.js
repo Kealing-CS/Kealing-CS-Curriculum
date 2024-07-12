@@ -10,7 +10,7 @@ module.exports = class certificate {
   #names = ["countryName", "stateOrProvinceName","commonName","organizationName","organizationalUnitName"];
   #shortnames = ["C", "ST", "CN","L"];
   /*
-    Exsample options:
+    Example options:
     {"countryName":"US","ST":"Texas","organizationName":"Kealing","Expration":{"notBefore":new Date(),"notAfter":new Date((new Date()).getTime() + 1000 * 60 * 60 * 24 * 10)}} (10 Days)
     */
   constructor(altIPs, altURIs, options) {
@@ -34,16 +34,20 @@ module.exports = class certificate {
     return result;
   }
   build() {
+    // Create the rsa keys for verifying the certificate
     var rsakeys = forge.pki.rsa.generateKeyPair(2048);
+    // Create a certificate builder objrct
     var certificate = forge.pki.createCertificate();
     var options = this.sortoptions(this.options);
+    // Set the public key of the certificate
     certificate.publicKey = rsakeys.publicKey;
     certificate.serialNumber = "01" + crypto.randomBytes(19).toString("hex");
     Object.keys(this.expration).forEach((val) => {
       certificate.validity[val] = new Date(this.expration[val]);
     });
-    console.log(certificate.validity);
+    // Set the subject of the certificate
     certificate.setSubject(options);
+    // Set the issuer of the certificate ( In self-sigend certificates most often the subject)
     certificate.setIssuer(options);
     certificate.setExtensions([
       {
@@ -58,8 +62,8 @@ module.exports = class certificate {
         ],
       },
     ]);
+    // Sign the certificate with the private key
     certificate.sign(rsakeys.privateKey, forge.md.sha512.create());
-    console.log(options);
     return {
       certificate: forge.pki.certificateToPem(certificate),
       privateKey: forge.pki.privateKeyToPem(rsakeys.privateKey),
