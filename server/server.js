@@ -10,6 +10,19 @@ const port = 8008;
 const listen = require("./https.js").listen;
 const tasks = require("./tasks.js");
 const vm = require("vm");
+var optionsPaths = {
+    key: "./server/certificates/key.pem",
+    cert: "./server/certificates/cert.pem",
+  };
+function genarateOptions() {
+ var keys = Object.keys(optionsPaths),
+    values = Object.values(optionsPaths).map((val, i) => fs.readFileSync(val)),
+    output = {};
+  values.forEach((item, i) => {
+    output[keys[i]] = item;
+  });
+  return output;
+}
 module.exports.start = function() {
 // this is the server
 // (wowza)
@@ -70,7 +83,7 @@ app.all('*', async (req, res) => {
     res.sendFile(path.join(__dirname, `../static/docs/404.html`));
 });
 return new Promise((resolve,reject) => {
-    listen(app,port, async (listener,serverInstance ) => {
+    listen(app,genarateOptions(),port, async (listener,serverInstance ) => {
         let ips = Object.values(require("os").networkInterfaces()).flat(2).filter(val => !val.internal && val.address).map(val => (val.family == "IPv6" ? `[${val.address}]` : val.address));
         ips.forEach((ip,i) => {console.log(`${i == 0 ? "Server running at " : ""}https://${ip}:${port}/${i < (ips.length - 2) ? "," : (i == (ips.length - 1) ? "" : " and")}`)})
         console.log(`or use https://localhost:${port}/`);

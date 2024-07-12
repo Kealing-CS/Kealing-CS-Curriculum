@@ -2,8 +2,6 @@
 
 This is the curriculum website made for the Kealing Computer Science Program.
 
-### I have decided to work on this, I am a bit busy, but I will check on this repo once a week-2 days
-
 ## Table of Contents
 
 - [Kealing-CS-Curriculum](#kealing-cs-curriculum)
