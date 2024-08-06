@@ -9,6 +9,7 @@ const rateLimiter = require('express-rate-limit');
 const port = 8008;
 const listen = require("./https.js").listen;
 const tasks = require("./tasks.js");
+const crypto = require("crypto");
 const vm = require("vm");
 var optionsPaths = {
     key: "./server/certificates/key.pem",
@@ -44,6 +45,9 @@ if (!fs.existsSync('./db/admins.json')) {
 if (!fs.existsSync('./db/tasks.json')){
     fs.writeFileSync('./db/tasks.json', '[]')
 }
+if(!fs.existsSync('./new-db/database.db')){
+    fs.writeFileSync('./new-db/database.db', '')
+}
 if (!fs.existsSync("./server/certificates")){
     fs.mkdirSync("./server/certificates");
 }
@@ -60,11 +64,24 @@ const limit = rateLimiter.rateLimit({
     message: 'Too many requests from this IP, please try again after 5 minutes'
 });
 
+// Anti-timing attack function
+// Most likely not needed but you can't be too safe ( Okay, you can )
+app.use((_req,_res,next) => {
+    /**
+     * How long to wait in ms.
+     * 0-10 ms with two decimal places
+     * @type {number}
+     */
+    var delay = crypto.randomInt(0,1000) / 100;
+    setTimeout(next,delay);
+});
+
 // cors
 app.use(cors());
 
-//Rate limit
+// Rate limit
 app.use(limit);
+
 // for parsing json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

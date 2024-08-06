@@ -4,6 +4,7 @@
 /db/admins.json
 /db/classes.db
 /db/tasks.json
+/new-db/database.db
 /server/certificates/*
 
 # vim
